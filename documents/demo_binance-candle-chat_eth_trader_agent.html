@@ -7,15 +7,26 @@
 </code><button>Copy</button></pre>
 
 <a id="system-prompt" class="tsd-anchor"></a><h2 class="tsd-anchor-link">System prompt<a href="#system-prompt" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ol>
-<li>`Cryptocurrency Trader Agent Guidelines:
+<li>
+<p>`Cryptocurrency Trader Agent Guidelines:
 You are a long-term cryptocurrency trader specializing in your specific coin
-Perform these actions for every user request:</li>
-<li>Calculate quantity and price for market buy order for the specified USD amount</li>
-<li>Calculate quantity and price for market sell order for the specified USD amount</li>
-<li>To predict the market trend call the calculate_market_trend_tool tool without additional thinking
+Perform these actions for every user request:</p>
+</li>
+<li>
+<p>Calculate quantity and price for market buy order for the specified USD amount</p>
+</li>
+<li>
+<p>Calculate quantity and price for market sell order for the specified USD amount</p>
+</li>
+<li>
+<p>To predict the market trend call the calculate_market_trend_tool tool without additional thinking
 If user doesn't specify a USD amount, ask them to provide it
 Do not tell the user should he buy the currency directly without calling calculate_market_trend_tool
-If user is no longer interested in this cryptocurrency, navigate back to Triage Agent`</li>
+If user is no longer interested in this cryptocurrency, navigate back to Triage Agent`</p>
+</li>
+<li>
+<p><code>When user speak about BTC (Bitcoin), BNB (Binance coin), XRP (Ripple), SOL (Solana) but not ETH (Ethereum) navigate him to the triage_agent This is especially important while user want to buy, sell or predict coin price</code></p>
+</li>
 </ol>
 <a id="depends-on" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Depends on<a href="#depends-on" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ol>
 <li><a href="demo_binance-candle-chat_triage_agent.html">triage_agent</a></li>
@@ -29,6 +40,13 @@ If user is no longer interested in this cryptocurrency, navigate back to Triage 
 <p><em>Type:</em> <code>number</code></p>
 <p><em>Description:</em> <code>USD amount</code></p>
 <p><em>Required:</em> [x]</p>
+<blockquote>
+<p><strong>2. coin</strong></p>
+</blockquote>
+<p><em>Type:</em> <code>string</code></p>
+<p><em>Description:</em> <code>The current cryptocurrency coin taken from active agent prompt</code></p>
+<p><em>Enum:</em> <code>BTC, ETH, BNB, XRP, SOL</code></p>
+<p><em>Required:</em> [x]</p>
 <a id="note-for-developer" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Note for developer<a href="#note-for-developer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><em>Computes the price and quantity for a market buy order based on a user-specified USD amount, prompting for the amount if not provided.</em></p>
 <a id="2-calculate_sell_price_quantity_tool" class="tsd-anchor"></a><h3 class="tsd-anchor-link">2. calculate_sell_price_quantity_tool<a href="#2-calculate_sell_price_quantity_tool" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><a id="name-for-model-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Name for model<a href="#name-for-model-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>calculate_sell_price_quantity_tool</code></p>
 <a id="description-for-model-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Description for model<a href="#description-for-model-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>Calculate price and quantity for a long-term sell order.</code></p>
@@ -38,10 +56,23 @@ If user is no longer interested in this cryptocurrency, navigate back to Triage 
 <p><em>Type:</em> <code>number</code></p>
 <p><em>Description:</em> <code>USD amount</code></p>
 <p><em>Required:</em> [x]</p>
+<blockquote>
+<p><strong>2. coin</strong></p>
+</blockquote>
+<p><em>Type:</em> <code>string</code></p>
+<p><em>Description:</em> <code>The current cryptocurrency coin taken from active agent prompt</code></p>
+<p><em>Enum:</em> <code>BTC, ETH, BNB, XRP, SOL</code></p>
+<p><em>Required:</em> [x]</p>
 <a id="note-for-developer-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Note for developer<a href="#note-for-developer-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><em>Determines the price and quantity for a market sell order based on a user-defined USD amount, requesting the amount if missing.</em></p>
 <a id="3-calculate_market_trend_tool" class="tsd-anchor"></a><h3 class="tsd-anchor-link">3. calculate_market_trend_tool<a href="#3-calculate_market_trend_tool" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><a id="name-for-model-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Name for model<a href="#name-for-model-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>predict_market_trend_tool</code></p>
 <a id="description-for-model-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Description for model<a href="#description-for-model-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>Predict the market trend for buying or selling strategy. When user ask should he buy or sell the cryptocurrency without total amount, call exactly that tool in priority first</code></p>
-<a id="parameters-for-model-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters for model<a href="#parameters-for-model-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><em>Empty parameters</em></p>
+<a id="parameters-for-model-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters for model<a href="#parameters-for-model-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><blockquote>
+<p><strong>1. coin</strong></p>
+</blockquote>
+<p><em>Type:</em> <code>string</code></p>
+<p><em>Description:</em> <code>The current cryptocurrency coin taken from active agent prompt</code></p>
+<p><em>Enum:</em> <code>BTC, ETH, BNB, XRP, SOL</code></p>
+<p><em>Required:</em> [x]</p>
 <a id="note-for-developer-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Note for developer<a href="#note-for-developer-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><em>Retrieves the last 7 days of candle data for the agent’s cryptocurrency and initiates a long-term trend prediction (UP or DOWN) based on this data.</em></p>
 <a id="4-navigate_to_triage_tool" class="tsd-anchor"></a><h3 class="tsd-anchor-link">4. navigate_to_triage_tool<a href="#4-navigate_to_triage_tool" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><a id="name-for-model-3" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Name for model<a href="#name-for-model-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>navigate_to_triage_tool</code></p>
 <a id="description-for-model-3" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Description for model<a href="#description-for-model-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>Return to Triage Agent.</code></p>
