@@ -1,0 +1,259 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/test_utils | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_test_utils.html">design/test_utils</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="test-utilities" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Test Utilities<a href="#test-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This page documents the testing infrastructure and utilities available in agent-swarm-kit for validating agent behavior, system integration, and concurrent operations. The test suite provides comprehensive coverage of the framework's core functionality including agent orchestration, session management, navigation, and resource cleanup.</p>
+<p>For information about integration testing patterns, see <a href="#7.1">Integration Tests</a>. For information about building multi-agent systems in production, see <a href="#5.1">Building Multi-Agent Systems</a>.</p>
+<a id="test-framework-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Test Framework Architecture<a href="#test-framework-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The testing system is built on <code>worker-testbed</code> and provides utilities for creating mock agents, completions, and swarms to validate system behavior under various conditions.</p>
+<p><img src="../media/32_Test_Utilities_0.svg" alt="Mermaid Diagram"></p>
+<a id="core-test-utilities" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core Test Utilities<a href="#core-test-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework provides several categories of utilities for comprehensive testing of agent systems.</p>
+<a id="session-management-utilities" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session Management Utilities<a href="#session-management-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Usage Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>session()</code></td>
+<td>Creates persistent session with automatic cleanup</td>
+<td><code>const { complete } = session(clientId, swarm)</code></td>
+</tr>
+<tr>
+<td><code>makeConnection()</code></td>
+<td>Creates connection with callback for outgoing messages</td>
+<td><code>const complete = makeConnection(callback, clientId, swarm)</code></td>
+</tr>
+<tr>
+<td><code>disposeConnection()</code></td>
+<td>Manually dispose session resources</td>
+<td><code>await disposeConnection(clientId, swarm)</code></td>
+</tr>
+</tbody>
+</table>
+<a id="agent-execution-utilities" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Execution Utilities<a href="#agent-execution-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Usage Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>complete()</code></td>
+<td>Execute message through default agent flow</td>
+<td><code>await complete(message, clientId, swarm)</code></td>
+</tr>
+<tr>
+<td><code>execute()</code></td>
+<td>Execute message through specific agent</td>
+<td><code>await execute(message, clientId, agentName)</code></td>
+</tr>
+<tr>
+<td><code>getRawHistory()</code></td>
+<td>Retrieve complete message history</td>
+<td><code>const history = await getRawHistory(clientId)</code></td>
+</tr>
+</tbody>
+</table>
+<a id="navigation-testing-utilities" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Testing Utilities<a href="#navigation-testing-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Usage Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>changeToAgent()</code></td>
+<td>Switch active agent in session</td>
+<td><code>await changeToAgent(agentName, clientId)</code></td>
+</tr>
+<tr>
+<td><code>changeToDefaultAgent()</code></td>
+<td>Reset to swarm's default agent</td>
+<td><code>await changeToDefaultAgent(clientId)</code></td>
+</tr>
+<tr>
+<td><code>changeToPrevAgent()</code></td>
+<td>Navigate to previous agent</td>
+<td><code>await changeToPrevAgent(clientId)</code></td>
+</tr>
+<tr>
+<td><code>getAgentName()</code></td>
+<td>Get current active agent</td>
+<td><code>const agent = await getAgentName(clientId)</code></td>
+</tr>
+</tbody>
+</table>
+<a id="mock-component-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Mock Component Patterns<a href="#mock-component-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="mock-completion-patterns" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Mock Completion Patterns<a href="#mock-completion-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The test suite uses predictable mock completions for controlled testing scenarios:</p>
+<p><img src="../media/32_Test_Utilities_1.svg" alt="Mermaid Diagram"></p>
+<a id="mock-agent-configurations" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Mock Agent Configurations<a href="#mock-agent-configurations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Test agents are configured with specific behaviors for different testing scenarios:</p>
+<table>
+<thead>
+<tr>
+<th>Agent Type</th>
+<th>Completion</th>
+<th>Tools</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Increment Agent</td>
+<td>Mock increment completion</td>
+<td>None</td>
+<td>Concurrency testing</td>
+</tr>
+<tr>
+<td>Triage Agent</td>
+<td>Navigation completion</td>
+<td>Navigation tools</td>
+<td>Routing testing</td>
+</tr>
+<tr>
+<td>Sales Agent</td>
+<td>Echo completion</td>
+<td>Navigation tools</td>
+<td>Target agent</td>
+</tr>
+<tr>
+<td>Refund Agent</td>
+<td>Echo completion</td>
+<td>Navigation tools</td>
+<td>Target agent</td>
+</tr>
+</tbody>
+</table>
+<a id="concurrency-testing-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Concurrency Testing Patterns<a href="#concurrency-testing-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The test suite includes comprehensive concurrency testing to validate queue management and resource isolation:</p>
+<p><img src="../media/32_Test_Utilities_2.svg" alt="Mermaid Diagram"></p>
+<a id="event-system-testing" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Event System Testing<a href="#event-system-testing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework provides utilities for testing the event system and real-time communication:</p>
+<a id="event-testing-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Event Testing Functions<a href="#event-testing-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Usage Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event()</code></td>
+<td>Emit custom event to client</td>
+<td><code>await event(clientId, &quot;custom-message&quot;, data)</code></td>
+</tr>
+<tr>
+<td><code>listenEvent()</code></td>
+<td>Register event listener</td>
+<td><code>listenEvent(clientId, &quot;event-name&quot;, callback)</code></td>
+</tr>
+<tr>
+<td><code>emit()</code></td>
+<td>Legacy emit function</td>
+<td><code>await emit(clientId, data)</code></td>
+</tr>
+</tbody>
+</table>
+<a id="event-flow-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Event Flow Validation<a href="#event-flow-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/32_Test_Utilities_3.svg" alt="Mermaid Diagram"></p>
+<a id="resource-management-testing" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Resource Management Testing<a href="#resource-management-testing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="connection-disposal-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Connection Disposal Validation<a href="#connection-disposal-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The test suite validates proper cleanup of system resources:</p>
+<p><img src="../media/32_Test_Utilities_4.svg" alt="Mermaid Diagram"></p>
+<a id="configuration-testing-utilities" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Configuration Testing Utilities<a href="#configuration-testing-utilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="test-configuration-options" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Test Configuration Options<a href="#test-configuration-options" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Purpose</th>
+<th>Test Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CC_PERSIST_ENABLED_BY_DEFAULT</code></td>
+<td>Control message persistence</td>
+<td>Set to <code>false</code> for isolated tests</td>
+</tr>
+<tr>
+<td><code>CC_RESQUE_STRATEGY</code></td>
+<td>Error recovery strategy</td>
+<td>Set to <code>&quot;flush&quot;</code> for rescue testing</td>
+</tr>
+<tr>
+<td><code>CC_EMPTY_OUTPUT_PLACEHOLDERS</code></td>
+<td>Empty response handling</td>
+<td>Set to <code>[&quot;Resque&quot;]</code> for placeholder testing</td>
+</tr>
+</tbody>
+</table>
+<a id="configuration-testing-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Configuration Testing Pattern<a href="#configuration-testing-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/32_Test_Utilities_5.svg" alt="Mermaid Diagram"></p>
+<a id="validation-testing-framework" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Validation Testing Framework<a href="#validation-testing-framework" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The validation system ensures all component dependencies are properly configured:</p>
+<a id="dependency-validation-tests" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Dependency Validation Tests<a href="#dependency-validation-tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Test Scenario</th>
+<th>Missing Component</th>
+<th>Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Complete Setup</td>
+<td>None</td>
+<td>Pass validation</td>
+</tr>
+<tr>
+<td>Missing Swarm</td>
+<td>Swarm definition</td>
+<td>Fail with error</td>
+</tr>
+<tr>
+<td>Missing Completion</td>
+<td>Completion handler</td>
+<td>Fail with error</td>
+</tr>
+<tr>
+<td>Missing Agent</td>
+<td>Agent definition</td>
+<td>Fail with error</td>
+</tr>
+<tr>
+<td>Missing Tool</td>
+<td>Tool implementation</td>
+<td>Fail with error</td>
+</tr>
+<tr>
+<td>Invalid Default Agent</td>
+<td>Agent not in swarm list</td>
+<td>Fail with error</td>
+</tr>
+</tbody>
+</table>
+<a id="validation-test-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Validation Test Pattern<a href="#validation-test-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/32_Test_Utilities_6.svg" alt="Mermaid Diagram"></p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#test-utilities"><span>Test <wbr/>Utilities</span></a><ul><li><a href="#test-framework-architecture"><span>Test <wbr/>Framework <wbr/>Architecture</span></a></li><li><a href="#core-test-utilities"><span>Core <wbr/>Test <wbr/>Utilities</span></a></li><li><ul><li><a href="#session-management-utilities"><span>Session <wbr/>Management <wbr/>Utilities</span></a></li><li><a href="#agent-execution-utilities"><span>Agent <wbr/>Execution <wbr/>Utilities</span></a></li><li><a href="#navigation-testing-utilities"><span>Navigation <wbr/>Testing <wbr/>Utilities</span></a></li></ul></li><li><a href="#mock-component-patterns"><span>Mock <wbr/>Component <wbr/>Patterns</span></a></li><li><ul><li><a href="#mock-completion-patterns"><span>Mock <wbr/>Completion <wbr/>Patterns</span></a></li><li><a href="#mock-agent-configurations"><span>Mock <wbr/>Agent <wbr/>Configurations</span></a></li></ul></li><li><a href="#concurrency-testing-patterns"><span>Concurrency <wbr/>Testing <wbr/>Patterns</span></a></li><li><a href="#event-system-testing"><span>Event <wbr/>System <wbr/>Testing</span></a></li><li><ul><li><a href="#event-testing-functions"><span>Event <wbr/>Testing <wbr/>Functions</span></a></li><li><a href="#event-flow-validation"><span>Event <wbr/>Flow <wbr/>Validation</span></a></li></ul></li><li><a href="#resource-management-testing"><span>Resource <wbr/>Management <wbr/>Testing</span></a></li><li><ul><li><a href="#connection-disposal-validation"><span>Connection <wbr/>Disposal <wbr/>Validation</span></a></li></ul></li><li><a href="#configuration-testing-utilities"><span>Configuration <wbr/>Testing <wbr/>Utilities</span></a></li><li><ul><li><a href="#test-configuration-options"><span>Test <wbr/>Configuration <wbr/>Options</span></a></li><li><a href="#configuration-testing-pattern"><span>Configuration <wbr/>Testing <wbr/>Pattern</span></a></li></ul></li><li><a href="#validation-testing-framework"><span>Validation <wbr/>Testing <wbr/>Framework</span></a></li><li><ul><li><a href="#dependency-validation-tests"><span>Dependency <wbr/>Validation <wbr/>Tests</span></a></li><li><a href="#validation-test-pattern"><span>Validation <wbr/>Test <wbr/>Pattern</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

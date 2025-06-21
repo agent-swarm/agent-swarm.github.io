@@ -1,0 +1,167 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/storage_and_state | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_storage_and_state.html">design/storage_and_state</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="storage-and-state" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Storage and State<a href="#storage-and-state" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document covers the storage and state management systems in the agent-swarm-kit framework. These systems provide persistent data storage with embedding-based search capabilities and managed state with middleware support. Both systems support client-specific and shared modes of operation.</p>
+<p>For information about data persistence to the file system, see <a href="#2.6">Persistence and History</a>. For session-level coordination and lifecycle management, see <a href="#2.3">Session Management</a>. For practical guidance on using these systems, see <a href="#5.3">Managing State and Storage</a>.</p>
+<a id="system-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">System Overview<a href="#system-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The agent-swarm-kit framework provides two primary data management systems: <strong>Storage</strong> for searchable data with embedding-based retrieval, and <strong>State</strong> for managed application state with middleware processing. Both systems operate in two modes: client-specific instances scoped to individual sessions, and shared instances accessible across all clients.</p>
+<p><img src="../media/7_Storage_and_State_0.svg" alt="Mermaid Diagram"></p>
+<a id="storage-system-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Storage System Architecture<a href="#storage-system-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The storage system provides embedding-based data storage with similarity search capabilities. It centers around the <code>ClientStorage</code> class which implements the <code>IStorage</code> interface and provides operations for data manipulation with vector search.</p>
+<a id="core-storage-implementation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Core Storage Implementation<a href="#core-storage-implementation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/7_Storage_and_State_1.svg" alt="Mermaid Diagram"></p>
+<p>The <code>ClientStorage</code> class uses several key patterns:</p>
+<ul>
+<li><strong>Queued Operations</strong>: All write operations (<code>upsert</code>, <code>remove</code>, <code>clear</code>) go through a queued dispatcher to ensure sequential execution</li>
+<li><strong>Memoized Embeddings</strong>: The <code>_createEmbedding</code> method caches embedding calculations by item ID</li>
+<li><strong>Singleshot Initialization</strong>: The <code>waitForInit</code> method ensures data loading happens exactly once</li>
+</ul>
+<a id="connection-services-and-scoping" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Connection Services and Scoping<a href="#connection-services-and-scoping" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/7_Storage_and_State_2.svg" alt="Mermaid Diagram"></p>
+<p>The connection services provide instance management with different scoping strategies:</p>
+<ul>
+<li><strong>Client-Specific</strong>: <code>StorageConnectionService</code> creates instances keyed by <code>${clientId}-${storageName}</code></li>
+<li><strong>Shared</strong>: <code>SharedStorageConnectionService</code> creates instances keyed by <code>${storageName}</code> only, using fixed <code>clientId: &quot;shared&quot;</code></li>
+<li><strong>Delegation</strong>: Client-specific service delegates to shared service when <code>shared=true</code> in schema</li>
+</ul>
+<a id="state-system-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">State System Architecture<a href="#state-system-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The state system provides managed application state with middleware processing and queued operations. It centers around the <code>ClientState</code> class which implements the <code>IState</code> interface.</p>
+<a id="core-state-implementation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Core State Implementation<a href="#core-state-implementation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/7_Storage_and_State_3.svg" alt="Mermaid Diagram"></p>
+<p>The <code>ClientState</code> class implements several key patterns:</p>
+<ul>
+<li><strong>Queued Dispatch</strong>: All state operations go through a queued dispatcher for thread safety</li>
+<li><strong>Middleware Chain</strong>: State updates flow through configurable middleware functions</li>
+<li><strong>Event Emission</strong>: State changes trigger events via <code>stateChanged</code> Subject</li>
+</ul>
+<a id="state-connection-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">State Connection Services<a href="#state-connection-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/7_Storage_and_State_4.svg" alt="Mermaid Diagram"></p>
+<p>The state connection services follow similar patterns to storage:</p>
+<ul>
+<li><strong>Scoped Instances</strong>: Client-specific vs shared instances with different caching keys</li>
+<li><strong>Queued Updates</strong>: <code>setState</code> operations are wrapped with <code>queued()</code> for serialization</li>
+<li><strong>Schema Integration</strong>: Configuration from <code>StateSchemaService</code> including middleware and persistence</li>
+</ul>
+<a id="client-vs-shared-storage-and-state" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Client vs Shared Storage and State<a href="#client-vs-shared-storage-and-state" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Both storage and state systems support two operational modes that determine data visibility and isolation.</p>
+<a id="client-specific-mode" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Client-Specific Mode<a href="#client-specific-mode" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>In client-specific mode, each session gets its own isolated instance:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Storage</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Instance Key</strong></td>
+<td><code>${clientId}-${storageName}</code></td>
+<td><code>${clientId}-${stateName}</code></td>
+</tr>
+<tr>
+<td><strong>Data Isolation</strong></td>
+<td>Per-session data</td>
+<td>Per-session state</td>
+</tr>
+<tr>
+<td><strong>Use Cases</strong></td>
+<td>User documents, conversation history</td>
+<td>User preferences, session state</td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td><code>StorageConnectionService</code></td>
+<td><code>StateConnectionService</code></td>
+</tr>
+<tr>
+<td><strong>Utility Class</strong></td>
+<td><code>StorageUtils</code></td>
+<td><code>StateUtils</code></td>
+</tr>
+</tbody>
+</table>
+<a id="shared-mode" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Shared Mode<a href="#shared-mode" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>In shared mode, all sessions access the same instance:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Storage</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Instance Key</strong></td>
+<td><code>${storageName}</code> only</td>
+<td><code>${stateName}</code> only</td>
+</tr>
+<tr>
+<td><strong>Client ID</strong></td>
+<td>Fixed: <code>&quot;shared&quot;</code></td>
+<td>Fixed: <code>&quot;shared&quot;</code></td>
+</tr>
+<tr>
+<td><strong>Use Cases</strong></td>
+<td>System knowledge base, shared documents</td>
+<td>Global configuration, shared counters</td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td><code>SharedStorageConnectionService</code></td>
+<td><code>SharedStateConnectionService</code></td>
+</tr>
+<tr>
+<td><strong>Utility Class</strong></td>
+<td><code>SharedStorageUtils</code></td>
+<td><code>SharedStateUtils</code></td>
+</tr>
+</tbody>
+</table>
+<a id="mode-selection" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Mode Selection<a href="#mode-selection" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The mode is determined by the <code>shared</code> flag in the schema configuration:</p>
+<pre><code class="typescript"><span class="hl-9">// Client-specific storage</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">storageSchema</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-2">storageName:</span><span class="hl-1"> </span><span class="hl-3">&quot;user-documents&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">shared:</span><span class="hl-1"> </span><span class="hl-4">false</span><span class="hl-1">, </span><span class="hl-9">// or omitted (defaults to false)</span><br/><span class="hl-1">  </span><span class="hl-9">// ...</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-9">// Shared storage  </span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">sharedStorageSchema</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-2">storageName:</span><span class="hl-1"> </span><span class="hl-3">&quot;knowledge-base&quot;</span><span class="hl-1">, </span><br/><span class="hl-1">  </span><span class="hl-2">shared:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-9">// ...</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="session-memory-system" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Session Memory System<a href="#session-memory-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The session memory system provides lightweight, non-persistent storage for session-scoped data through <code>MemorySchemaService</code> and <code>SchemaUtils</code>.</p>
+<p><img src="../media/7_Storage_and_State_5.svg" alt="Mermaid Diagram"></p>
+<p>Session memory provides:</p>
+<ul>
+<li><strong>Object Merging</strong>: <code>writeValue()</code> merges new data with existing session data using <code>Object.assign()</code></li>
+<li><strong>Session Validation</strong>: <code>SchemaUtils</code> methods validate client sessions before memory operations</li>
+<li><strong>Optional Persistence</strong>: Memory can be persisted to files via <code>PersistMemoryAdapter</code> when <code>CC_PERSIST_MEMORY_STORAGE</code> is enabled</li>
+<li><strong>Serialization Utilities</strong>: <code>serialize()</code> method flattens objects for display or logging</li>
+</ul>
+<a id="integration-with-agent-execution" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Integration with Agent Execution<a href="#integration-with-agent-execution" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Storage and state systems integrate with agent execution through utility classes that provide validated access patterns.</p>
+<a id="agent-storage-access" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Storage Access<a href="#agent-storage-access" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/7_Storage_and_State_6.svg" alt="Mermaid Diagram"></p>
+<p>The utility classes enforce a three-layer validation:</p>
+<ol>
+<li><strong>Session Validation</strong>: Ensure the client session is valid</li>
+<li><strong>Resource Validation</strong>: Ensure the storage/state exists in schema</li>
+<li><strong>Agent Permission</strong>: Ensure the agent is registered to use the resource</li>
+</ol>
+<a id="state-access-patterns" class="tsd-anchor"></a><h3 class="tsd-anchor-link">State Access Patterns<a href="#state-access-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/7_Storage_and_State_7.svg" alt="Mermaid Diagram"></p>
+<p>State utilities support both direct value assignment and function-based dispatch:</p>
+<ul>
+<li><strong>Direct Assignment</strong>: <code>setState(newValue, payload)</code> sets state directly</li>
+<li><strong>Function Dispatch</strong>: <code>setState(async (prev) =&gt; newValue, payload)</code> computes new state from previous</li>
+<li><strong>Shared Access</strong>: Shared state utilities bypass agent validation since shared resources are globally accessible</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#storage-and-state"><span>Storage and <wbr/>State</span></a><ul><li><a href="#system-overview"><span>System <wbr/>Overview</span></a></li><li><a href="#storage-system-architecture"><span>Storage <wbr/>System <wbr/>Architecture</span></a></li><li><ul><li><a href="#core-storage-implementation"><span>Core <wbr/>Storage <wbr/>Implementation</span></a></li><li><a href="#connection-services-and-scoping"><span>Connection <wbr/>Services and <wbr/>Scoping</span></a></li></ul></li><li><a href="#state-system-architecture"><span>State <wbr/>System <wbr/>Architecture</span></a></li><li><ul><li><a href="#core-state-implementation"><span>Core <wbr/>State <wbr/>Implementation</span></a></li><li><a href="#state-connection-services"><span>State <wbr/>Connection <wbr/>Services</span></a></li></ul></li><li><a href="#client-vs-shared-storage-and-state"><span>Client vs <wbr/>Shared <wbr/>Storage and <wbr/>State</span></a></li><li><ul><li><a href="#client-specific-mode"><span>Client-<wbr/>Specific <wbr/>Mode</span></a></li><li><a href="#shared-mode"><span>Shared <wbr/>Mode</span></a></li><li><a href="#mode-selection"><span>Mode <wbr/>Selection</span></a></li></ul></li><li><a href="#session-memory-system"><span>Session <wbr/>Memory <wbr/>System</span></a></li><li><a href="#integration-with-agent-execution"><span>Integration with <wbr/>Agent <wbr/>Execution</span></a></li><li><ul><li><a href="#agent-storage-access"><span>Agent <wbr/>Storage <wbr/>Access</span></a></li><li><a href="#state-access-patterns"><span>State <wbr/>Access <wbr/>Patterns</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

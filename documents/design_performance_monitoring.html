@@ -1,0 +1,179 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/performance_monitoring | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_performance_monitoring.html">design/performance_monitoring</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="performance-monitoring" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Performance Monitoring<a href="#performance-monitoring" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>The Performance Monitoring system provides comprehensive tracking and reporting of execution metrics, response times, and resource usage across the agent swarm framework. This system captures detailed performance data at both the system-wide and client-specific levels, enabling monitoring of AI completion requests, agent executions, and overall system efficiency.</p>
+<p>For information about AI completion adapters themselves, see <a href="#4.1">Completion Adapters</a>. For details on overall service architecture, see <a href="#3">Service Architecture</a>.</p>
+<a id="core-performance-service" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core Performance Service<a href="#core-performance-service" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>PerfService</code> class serves as the central performance tracking component, implemented as an injectable service that monitors execution metrics across client sessions.</p>
+<p><img src="../media/21_Performance_Monitoring_0.svg" alt="Mermaid Diagram"></p>
+<a id="performance-data-collection" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Performance Data Collection<a href="#performance-data-collection" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The service tracks multiple execution maps to capture comprehensive performance metrics:</p>
+<table>
+<thead>
+<tr>
+<th>Map</th>
+<th>Purpose</th>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>executionScheduleMap</code></td>
+<td>Track start times per execution</td>
+<td><code>clientId</code> → <code>executionId</code></td>
+<td><code>number[]</code> (timestamps)</td>
+</tr>
+<tr>
+<td><code>executionCountMap</code></td>
+<td>Count total executions per client</td>
+<td><code>clientId</code></td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>executionInputLenMap</code></td>
+<td>Total input bytes per client</td>
+<td><code>clientId</code></td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>executionOutputLenMap</code></td>
+<td>Total output bytes per client</td>
+<td><code>clientId</code></td>
+<td><code>number</code></td>
+</tr>
+<tr>
+<td><code>executionTimeMap</code></td>
+<td>Total execution time per client</td>
+<td><code>clientId</code></td>
+<td><code>number</code> (milliseconds)</td>
+</tr>
+</tbody>
+</table>
+<a id="execution-lifecycle-tracking" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Execution Lifecycle Tracking<a href="#execution-lifecycle-tracking" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The performance monitoring integrates with agent execution workflows through <code>startExecution</code> and <code>endExecution</code> methods:</p>
+<p><img src="../media/21_Performance_Monitoring_1.svg" alt="Mermaid Diagram"></p>
+<a id="performance-data-models" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Data Models<a href="#performance-data-models" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system defines two primary interfaces for performance data serialization:</p>
+<a id="iperformancerecord" class="tsd-anchor"></a><h3 class="tsd-anchor-link">IPerformanceRecord<a href="#iperformancerecord" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>System-wide performance aggregation containing all client metrics and global statistics:</p>
+<pre><code class="typescript"><span class="hl-4">interface</span><span class="hl-1"> </span><span class="hl-7">IPerformanceRecord</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">processId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;                    </span><span class="hl-9">// GLOBAL_CONFIG.CC_PROCESS_UUID</span><br/><span class="hl-1">  </span><span class="hl-2">clients</span><span class="hl-1">: </span><span class="hl-7">IClientPerfomanceRecord</span><span class="hl-1">[];   </span><span class="hl-9">// Per-client performance data</span><br/><span class="hl-1">  </span><span class="hl-2">totalExecutionCount</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;          </span><span class="hl-9">// Sum across all clients</span><br/><span class="hl-1">  </span><span class="hl-2">totalResponseTime</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;            </span><span class="hl-9">// Formatted duration</span><br/><span class="hl-1">  </span><span class="hl-2">averageResponseTime</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;          </span><span class="hl-9">// Calculated average</span><br/><span class="hl-1">  </span><span class="hl-2">momentStamp</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;                  </span><span class="hl-9">// Unix epoch days</span><br/><span class="hl-1">  </span><span class="hl-2">timeStamp</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;                    </span><span class="hl-9">// Seconds since midnight UTC</span><br/><span class="hl-1">  </span><span class="hl-2">date</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;                         </span><span class="hl-9">// UTC string format</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="iclientperfomancerecord" class="tsd-anchor"></a><h3 class="tsd-anchor-link">IClientPerfomanceRecord<a href="#iclientperfomancerecord" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Client-specific performance metrics with session context:</p>
+<pre><code class="typescript"><span class="hl-4">interface</span><span class="hl-1"> </span><span class="hl-7">IClientPerfomanceRecord</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-2">sessionMemory</span><span class="hl-1">: </span><span class="hl-7">Record</span><span class="hl-1">&lt;</span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-7">unknown</span><span class="hl-1">&gt;;     </span><span class="hl-9">// From MemorySchemaService</span><br/><span class="hl-1">  </span><span class="hl-2">sessionState</span><span class="hl-1">: </span><span class="hl-7">Record</span><span class="hl-1">&lt;</span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-7">unknown</span><span class="hl-1">&gt;;      </span><span class="hl-9">// Computed client state</span><br/><span class="hl-1">  </span><span class="hl-2">executionCount</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-2">executionInputTotal</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-2">executionOutputTotal</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-2">executionInputAverage</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-2">executionOutputAverage</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-2">executionTimeTotal</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;                 </span><span class="hl-9">// Formatted with msToTime</span><br/><span class="hl-1">  </span><span class="hl-2">executionTimeAverage</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">;               </span><span class="hl-9">// Formatted with msToTime</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="ai-adapter-performance-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">AI Adapter Performance Integration<a href="#ai-adapter-performance-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The performance monitoring system integrates with AI completion adapters through execution pooling and retry mechanisms:</p>
+<p><img src="../media/21_Performance_Monitoring_2.svg" alt="Mermaid Diagram"></p>
+<a id="retry-and-pooling-mechanics" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Retry and Pooling Mechanics<a href="#retry-and-pooling-mechanics" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Each adapter method (<code>fromOpenAI</code>, <code>fromOllama</code>, <code>fromCohereClientV2</code>, <code>fromLMStudio</code>, <code>fromGrok</code>) implements consistent performance characteristics:</p>
+<ul>
+<li><strong>Execution Pool</strong>: Limits concurrent completions to <code>EXECPOOL_SIZE</code> (5) with <code>EXECPOOL_WAIT</code> (0ms) delay</li>
+<li><strong>Retry Logic</strong>: Up to <code>RETRY_COUNT</code> (5) attempts with <code>RETRY_DELAY</code> (5000ms) between failures</li>
+<li><strong>Logging Integration</strong>: Each completion logs via <code>Logger.logClient()</code> for traceability</li>
+</ul>
+<p>All adapters use the same <code>execpool</code> and <code>retry</code> wrapper pattern, ensuring consistent performance behavior across different AI providers.</p>
+<a id="performance-metrics-computation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Metrics Computation<a href="#performance-metrics-computation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>PerfService</code> provides multiple methods for retrieving calculated performance metrics:</p>
+<a id="client-specific-metrics" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Client-Specific Metrics<a href="#client-specific-metrics" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Return Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getActiveSessionExecutionCount()</code></td>
+<td><code>number</code></td>
+<td>Total executions for client</td>
+</tr>
+<tr>
+<td><code>getActiveSessionExecutionTotalTime()</code></td>
+<td><code>number</code></td>
+<td>Total execution time (ms)</td>
+</tr>
+<tr>
+<td><code>getActiveSessionExecutionAverageTime()</code></td>
+<td><code>number</code></td>
+<td>Average execution time (ms)</td>
+</tr>
+<tr>
+<td><code>getActiveSessionAverageInputLength()</code></td>
+<td><code>number</code></td>
+<td>Average input size per execution</td>
+</tr>
+<tr>
+<td><code>getActiveSessionAverageOutputLength()</code></td>
+<td><code>number</code></td>
+<td>Average output size per execution</td>
+</tr>
+<tr>
+<td><code>getActiveSessionTotalInputLength()</code></td>
+<td><code>number</code></td>
+<td>Total input bytes processed</td>
+</tr>
+<tr>
+<td><code>getActiveSessionTotalOutputLength()</code></td>
+<td><code>number</code></td>
+<td>Total output bytes generated</td>
+</tr>
+</tbody>
+</table>
+<a id="system-wide-metrics" class="tsd-anchor"></a><h3 class="tsd-anchor-link">System-Wide Metrics<a href="#system-wide-metrics" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Return Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getActiveSessions()</code></td>
+<td><code>string[]</code></td>
+<td>List of active client IDs</td>
+</tr>
+<tr>
+<td><code>getAverageResponseTime()</code></td>
+<td><code>number</code></td>
+<td>Global average response time (ms)</td>
+</tr>
+<tr>
+<td><code>getTotalExecutionCount()</code></td>
+<td><code>number</code></td>
+<td>Total executions across all clients</td>
+</tr>
+<tr>
+<td><code>getTotalResponseTime()</code></td>
+<td><code>number</code></td>
+<td>Total response time across all clients (ms)</td>
+</tr>
+</tbody>
+</table>
+<a id="state-and-memory-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">State and Memory Integration<a href="#state-and-memory-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The performance system computes comprehensive client state by aggregating data from multiple services:</p>
+<p><img src="../media/21_Performance_Monitoring_3.svg" alt="Mermaid Diagram"></p>
+<a id="performance-record-serialization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Record Serialization<a href="#performance-record-serialization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>toRecord()</code> method creates comprehensive performance snapshots using timestamp utilities and global configuration:</p>
+<p><img src="../media/21_Performance_Monitoring_4.svg" alt="Mermaid Diagram"></p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#performance-monitoring"><span>Performance <wbr/>Monitoring</span></a><ul><li><a href="#core-performance-service"><span>Core <wbr/>Performance <wbr/>Service</span></a></li><li><ul><li><a href="#performance-data-collection"><span>Performance <wbr/>Data <wbr/>Collection</span></a></li><li><a href="#execution-lifecycle-tracking"><span>Execution <wbr/>Lifecycle <wbr/>Tracking</span></a></li></ul></li><li><a href="#performance-data-models"><span>Performance <wbr/>Data <wbr/>Models</span></a></li><li><ul><li><a href="#iperformancerecord"><span>IPerformance<wbr/>Record</span></a></li><li><a href="#iclientperfomancerecord"><span>IClient<wbr/>Perfomance<wbr/>Record</span></a></li></ul></li><li><a href="#ai-adapter-performance-integration"><span>AI <wbr/>Adapter <wbr/>Performance <wbr/>Integration</span></a></li><li><ul><li><a href="#retry-and-pooling-mechanics"><span>Retry and <wbr/>Pooling <wbr/>Mechanics</span></a></li></ul></li><li><a href="#performance-metrics-computation"><span>Performance <wbr/>Metrics <wbr/>Computation</span></a></li><li><ul><li><a href="#client-specific-metrics"><span>Client-<wbr/>Specific <wbr/>Metrics</span></a></li><li><a href="#system-wide-metrics"><span>System-<wbr/>Wide <wbr/>Metrics</span></a></li></ul></li><li><a href="#state-and-memory-integration"><span>State and <wbr/>Memory <wbr/>Integration</span></a></li><li><a href="#performance-record-serialization"><span>Performance <wbr/>Record <wbr/>Serialization</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>
