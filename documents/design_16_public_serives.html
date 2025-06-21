@@ -1,0 +1,217 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/16_public_serives | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_16_public_serives.html">design/16_public_serives</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="public-services" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Public Services<a href="#public-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Public Services form the outermost API layer of the swarm system, providing a controlled interface to core functionality while managing execution context and excluding internal implementation details. These services wrap Connection Services with method-level context management, logging, and validation to create a clean separation between public APIs and internal operations.</p>
+<p>For information about the underlying Connection Services that Public Services wrap, see <a href="design_15_connection_services.html">Connection Services</a>. For details about the Schema Services that define configurations, see <a href="design_14_schema_services.html">Schema Services</a>.</p>
+<a id="architecture-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Architecture Overview<a href="#architecture-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Public Services implement a consistent pattern that filters internal methods from Connection Services and adds contextual wrapping to all public operations. This creates a controlled API surface while maintaining access to core functionality.</p>
+<p><img src="../media/16_Public_Services_0.svg" alt="Mermaid Diagram"></p>
+<p><strong>Public Service Type Filtering Pattern</strong></p>
+<a id="core-public-services" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core Public Services<a href="#core-public-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="agentpublicservice" class="tsd-anchor"></a><h3 class="tsd-anchor-link">AgentPublicService<a href="#agentpublicservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>AgentPublicService</code> provides the public interface for agent operations, excluding internal methods like <code>getAgent</code> while exposing execution, disposal, and messaging capabilities.</p>
+<p><img src="../media/16_Public_Services_1.svg" alt="Mermaid Diagram"></p>
+<p><strong>AgentPublicService Method Filtering</strong></p>
+<p>The service implements <code>TAgentConnectionService</code> which excludes <code>getAgent</code> from the public interface:</p>
+<table>
+<thead>
+<tr>
+<th>Public Method</th>
+<th>Purpose</th>
+<th>Context Management</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>createAgentRef</code></td>
+<td>Creates agent references</td>
+<td>MethodContextService scoping</td>
+</tr>
+<tr>
+<td><code>execute</code></td>
+<td>Executes agent messages</td>
+<td>Performance tracking via PerfService</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>Runs stateless completions</td>
+<td>Execution validation</td>
+</tr>
+<tr>
+<td><code>dispose</code></td>
+<td>Cleans up agent resources</td>
+<td>Resource tracking</td>
+</tr>
+</tbody>
+</table>
+<a id="sessionpublicservice" class="tsd-anchor"></a><h3 class="tsd-anchor-link">SessionPublicService<a href="#sessionpublicservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>SessionPublicService</code> manages session-level operations with execution validation and navigation control, wrapping <code>SessionConnectionService</code> while excluding internal session management.</p>
+<p><img src="../media/16_Public_Services_2.svg" alt="Mermaid Diagram"></p>
+<p><strong>SessionPublicService Validation Integration</strong></p>
+<p>Key validation integrations include:</p>
+<ul>
+<li><strong>ExecutionValidationService</strong>: Prevents recursive tool calls and manages execution limits</li>
+<li><strong>NavigationValidationService</strong>: Controls agent navigation to prevent infinite loops</li>
+<li><strong>PerfService</strong>: Tracks execution metrics and performance data</li>
+</ul>
+<a id="context-management-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Context Management Integration<a href="#context-management-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Public Services integrate multiple context services to provide comprehensive execution tracking and method scoping.</p>
+<p><img src="../media/16_Public_Services_3.svg" alt="Mermaid Diagram"></p>
+<p><strong>Context Management Flow</strong></p>
+<table>
+<thead>
+<tr>
+<th>Context Service</th>
+<th>Purpose</th>
+<th>Data Tracked</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MethodContextService</code></td>
+<td>Method-level scoping</td>
+<td>clientId, agentName, methodName</td>
+</tr>
+<tr>
+<td><code>ExecutionContextService</code></td>
+<td>Execution tracking</td>
+<td>clientId, executionId, processId</td>
+</tr>
+<tr>
+<td><code>PayloadContextService</code></td>
+<td>Payload access</td>
+<td>Request/response data</td>
+</tr>
+<tr>
+<td><code>SchemaContextService</code></td>
+<td>Schema overrides</td>
+<td>Temporary schema modifications</td>
+</tr>
+</tbody>
+</table>
+<a id="performance-and-logging-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance and Logging Integration<a href="#performance-and-logging-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Public Services integrate performance monitoring and logging services to provide comprehensive observability across the API layer.</p>
+<p><img src="../media/16_Public_Services_4.svg" alt="Mermaid Diagram"></p>
+<p><strong>Performance Tracking Example</strong></p>
+<a id="public-service-catalog" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Public Service Catalog<a href="#public-service-catalog" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="core-entity-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Core Entity Services<a href="#core-entity-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Purpose</th>
+<th>Connection Service</th>
+<th>Key Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AgentPublicService</code></td>
+<td>Agent operations</td>
+<td><code>AgentConnectionService</code></td>
+<td><code>execute</code>, <code>run</code>, <code>dispose</code></td>
+</tr>
+<tr>
+<td><code>SessionPublicService</code></td>
+<td>Session management</td>
+<td><code>SessionConnectionService</code></td>
+<td><code>connect</code>, <code>emit</code>, <code>execute</code></td>
+</tr>
+<tr>
+<td><code>SwarmPublicService</code></td>
+<td>Swarm operations</td>
+<td><code>SwarmConnectionService</code></td>
+<td><code>getAgent</code>, <code>navigate</code>, <code>emit</code></td>
+</tr>
+</tbody>
+</table>
+<a id="data-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Data Services<a href="#data-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Purpose</th>
+<th>Connection Service</th>
+<th>Key Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>StoragePublicService</code></td>
+<td>Storage operations</td>
+<td><code>StorageConnectionService</code></td>
+<td><code>take</code>, <code>upsert</code>, <code>remove</code></td>
+</tr>
+<tr>
+<td><code>StatePublicService</code></td>
+<td>State management</td>
+<td><code>StateConnectionService</code></td>
+<td><code>get</code>, <code>set</code>, <code>clear</code></td>
+</tr>
+<tr>
+<td><code>ComputePublicService</code></td>
+<td>Compute operations</td>
+<td><code>ComputeConnectionService</code></td>
+<td><code>calculate</code>, <code>update</code></td>
+</tr>
+</tbody>
+</table>
+<a id="specialized-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Specialized Services<a href="#specialized-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Purpose</th>
+<th>Connection Service</th>
+<th>Key Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PolicyPublicService</code></td>
+<td>Policy enforcement</td>
+<td><code>PolicyConnectionService</code></td>
+<td><code>validate</code>, <code>ban</code>, <code>unban</code></td>
+</tr>
+<tr>
+<td><code>MCPPublicService</code></td>
+<td>External tool integration</td>
+<td><code>MCPConnectionService</code></td>
+<td><code>callTool</code>, <code>listTools</code></td>
+</tr>
+<tr>
+<td><code>HistoryPublicService</code></td>
+<td>Message history</td>
+<td><code>HistoryConnectionService</code></td>
+<td><code>push</code>, <code>pop</code>, <code>flush</code></td>
+</tr>
+</tbody>
+</table>
+<a id="method-wrapping-pattern" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Method Wrapping Pattern<a href="#method-wrapping-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Public Services implement a consistent method wrapping pattern that adds context management, validation, and logging to all operations.</p>
+<p><img src="../media/16_Public_Services_5.svg" alt="Mermaid Diagram"></p>
+<p><strong>Method Wrapping Sequence</strong></p>
+<p>The pattern ensures:</p>
+<ul>
+<li><strong>Context Isolation</strong>: Each method call has isolated context</li>
+<li><strong>Validation</strong>: Operations are validated before execution</li>
+<li><strong>Logging</strong>: All operations are logged with context</li>
+<li><strong>Error Handling</strong>: Consistent error handling and cleanup</li>
+<li><strong>Performance Tracking</strong>: Execution metrics are captured</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#public-services"><span>Public <wbr/>Services</span></a><ul><li><a href="#architecture-overview"><span>Architecture <wbr/>Overview</span></a></li><li><a href="#core-public-services"><span>Core <wbr/>Public <wbr/>Services</span></a></li><li><ul><li><a href="#agentpublicservice"><span>Agent<wbr/>Public<wbr/>Service</span></a></li><li><a href="#sessionpublicservice"><span>Session<wbr/>Public<wbr/>Service</span></a></li></ul></li><li><a href="#context-management-integration"><span>Context <wbr/>Management <wbr/>Integration</span></a></li><li><a href="#performance-and-logging-integration"><span>Performance and <wbr/>Logging <wbr/>Integration</span></a></li><li><a href="#public-service-catalog"><span>Public <wbr/>Service <wbr/>Catalog</span></a></li><li><ul><li><a href="#core-entity-services"><span>Core <wbr/>Entity <wbr/>Services</span></a></li><li><a href="#data-services"><span>Data <wbr/>Services</span></a></li><li><a href="#specialized-services"><span>Specialized <wbr/>Services</span></a></li></ul></li><li><a href="#method-wrapping-pattern"><span>Method <wbr/>Wrapping <wbr/>Pattern</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

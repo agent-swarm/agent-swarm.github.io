@@ -1,0 +1,132 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/17_validation_serives | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_17_validation_serives.html">design/17_validation_serives</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="validation-services" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Validation Services<a href="#validation-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><a id="purpose-and-scope" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Purpose and Scope<a href="#purpose-and-scope" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Validation Services provide runtime validation for agents, sessions, swarms, tools, and their dependencies within the agent-swarm-kit framework. These services ensure data integrity, enforce access control, track resource usage, and validate configurations during system operation. Unlike schema services that define structures, validation services actively enforce rules and maintain system state consistency.</p>
+<p>The validation layer consists of 15 specialized services that validate different aspects of the system, from basic configuration validation to complex runtime dependency checking. These services are injected via the dependency injection container and work together to maintain system integrity during agent execution, session management, and resource access.</p>
+<p>This document covers the complete validation service architecture, core validation services, runtime enforcement patterns, and integration with other service layers. For schema definition, see <a href="design_14_schema_services.html">Schema Services</a>. For service lifecycle management, see <a href="design_15_connection_services.html">Connection Services</a>.</p>
+<a id="validation-service-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Validation Service Architecture<a href="#validation-service-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The validation services operate as a coordinated layer within the dependency injection container, providing runtime validation and state tracking for all system components. Each validation service maintains internal state maps and provides memoized validation methods for performance optimization.</p>
+<a id="complete-validation-service-hierarchy" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Complete Validation Service Hierarchy<a href="#complete-validation-service-hierarchy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/17_Validation_Services_0.svg" alt="Mermaid Diagram"></p>
+<a id="validation-service-categories" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Validation Service Categories<a href="#validation-service-categories" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The 15 validation services are organized into functional categories based on their validation responsibilities:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Services</th>
+<th>Primary Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core Components</strong></td>
+<td><code>AgentValidationService</code>, <code>SessionValidationService</code>, <code>SwarmValidationService</code>, <code>ToolValidationService</code></td>
+<td>Validate fundamental system entities and their configurations</td>
+</tr>
+<tr>
+<td><strong>Resources</strong></td>
+<td><code>StorageValidationService</code>, <code>StateValidationService</code>, <code>ComputeValidationService</code>, <code>CompletionValidationService</code></td>
+<td>Validate resource configurations and access permissions</td>
+</tr>
+<tr>
+<td><strong>Protocols</strong></td>
+<td><code>MCPValidationService</code>, <code>WikiValidationService</code>, <code>PolicyValidationService</code>, <code>EmbeddingValidationService</code></td>
+<td>Validate protocol compliance and integration configurations</td>
+</tr>
+<tr>
+<td><strong>Runtime Flow</strong></td>
+<td><code>NavigationValidationService</code>, <code>ExecutionValidationService</code>, <code>PipelineValidationService</code></td>
+<td>Prevent recursive calls, validate execution flow, and pipeline integrity</td>
+</tr>
+</tbody>
+</table>
+<a id="core-validation-services" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core Validation Services<a href="#core-validation-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The three primary validation services manage the fundamental entities in the swarm system: agents, sessions, and swarms. These services maintain internal state maps and coordinate with each other to ensure system integrity.</p>
+<a id="agentvalidationservice" class="tsd-anchor"></a><h3 class="tsd-anchor-link">AgentValidationService<a href="#agentvalidationservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>AgentValidationService</code> serves as the central coordinator for agent validation, managing agent registrations and their complex interdependencies with tools, completions, storages, wikis, and MCP connections.</p>
+<a id="agent-validation-internal-state" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Agent Validation Internal State<a href="#agent-validation-internal-state" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_1.svg" alt="Mermaid Diagram"></p>
+<a id="sessionvalidationservice" class="tsd-anchor"></a><h3 class="tsd-anchor-link">SessionValidationService<a href="#sessionvalidationservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>SessionValidationService</code> manages session lifecycle, tracks resource usage per session, and maintains session-to-swarm mappings. It provides comprehensive session state tracking for agents, storages, states, and compute resources.</p>
+<a id="session-validation-state-management" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Session Validation State Management<a href="#session-validation-state-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_2.svg" alt="Mermaid Diagram"></p>
+<a id="swarmvalidationservice" class="tsd-anchor"></a><h3 class="tsd-anchor-link">SwarmValidationService<a href="#swarmvalidationservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>SwarmValidationService</code> validates swarm configurations, manages agent lists within swarms, and coordinates with <code>AgentValidationService</code> and <code>PolicyValidationService</code> to ensure swarm integrity.</p>
+<a id="swarm-validation-dependencies" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Swarm Validation Dependencies<a href="#swarm-validation-dependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_3.svg" alt="Mermaid Diagram"></p>
+<a id="runtime-validation-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Runtime Validation Patterns<a href="#runtime-validation-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Validation services provide active runtime enforcement rather than passive schema checking. They validate resource access, prevent recursive operations, and maintain session integrity during agent execution.</p>
+<a id="resource-access-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Resource Access Validation<a href="#resource-access-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The validation services enforce agent permissions for resource access during runtime operations. When an agent attempts to access storage, state, or other resources, the validation service checks if the agent has declared those resources in its schema.</p>
+<a id="resource-permission-enforcement" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Resource Permission Enforcement<a href="#resource-permission-enforcement" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_4.svg" alt="Mermaid Diagram"></p>
+<a id="state-access-validation" class="tsd-anchor"></a><h4 class="tsd-anchor-link">State Access Validation<a href="#state-access-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_5.svg" alt="Mermaid Diagram"></p>
+<a id="recursive-operation-prevention" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Recursive Operation Prevention<a href="#recursive-operation-prevention" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Runtime validation services like <code>NavigationValidationService</code> and <code>ExecutionValidationService</code> prevent recursive operations that could cause infinite loops or stack overflow during agent execution.</p>
+<a id="navigation-recursion-prevention" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Navigation Recursion Prevention<a href="#navigation-recursion-prevention" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_6.svg" alt="Mermaid Diagram"></p>
+<a id="validation-error-patterns-and-performance-optimization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Validation Error Patterns and Performance Optimization<a href="#validation-error-patterns-and-performance-optimization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Validation services implement consistent error handling patterns and use memoization extensively for performance optimization during runtime validation checks.</p>
+<a id="error-message-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Error Message Structure<a href="#error-message-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Validation errors follow a standardized format that provides detailed context for debugging:</p>
+<ul>
+<li>Component identification: <code>agent-swarm [component] [entityName] not found</code></li>
+<li>Source context: <code>source=[operation-context]</code></li>
+<li>Specific validation failure details</li>
+<li>Entity relationships and dependencies</li>
+</ul>
+<a id="common-validation-error-patterns" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Common Validation Error Patterns<a href="#common-validation-error-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><table>
+<thead>
+<tr>
+<th>Error Type</th>
+<th>Pattern</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Existence</strong></td>
+<td><code>agent-swarm [type] [name] not found source=[source]</code></td>
+<td><code>agent-swarm agent chatAgent not found source=swarm-init</code></td>
+</tr>
+<tr>
+<td><strong>Permission</strong></td>
+<td><code>agent-swarm [type] [name] not exist ([operation])</code></td>
+<td><code>agent-swarm agent myAgent not exist (hasStorage)</code></td>
+</tr>
+<tr>
+<td><strong>Duplicate</strong></td>
+<td><code>agent-swarm [type] [name] already exist</code></td>
+<td><code>agent-swarm session clientId=abc123 already exist</code></td>
+</tr>
+<tr>
+<td><strong>Dependency</strong></td>
+<td><code>agent-swarm [type] [name] [dependency] not in [list]</code></td>
+<td><code>agent-swarm swarm mySwarm default agent not in agent list</code></td>
+</tr>
+</tbody>
+</table>
+<a id="performance-optimization-with-memoization" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Performance Optimization with Memoization<a href="#performance-optimization-with-memoization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Validation services use <code>memoize</code> from <code>functools-kit</code> to optimize frequently called validation methods. This is crucial for runtime performance since validation checks occur during every resource access.</p>
+<a id="memoized-validation-methods" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Memoized Validation Methods<a href="#memoized-validation-methods" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><img src="../media/17_Validation_Services_7.svg" alt="Mermaid Diagram"></p>
+<a id="runtime-validation-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Runtime Validation Integration<a href="#runtime-validation-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Validation services are actively used during runtime operations to ensure system integrity. The framework validates agent permissions before allowing access to resources.</p>
+<a id="runtime-validation-examples" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Runtime Validation Examples<a href="#runtime-validation-examples" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Test cases demonstrate the validation enforcement in action:</p>
+<p><img src="../media/17_Validation_Services_8.svg" alt="Mermaid Diagram"></p>
+<a id="performance-optimization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Optimization<a href="#performance-optimization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Validation services use memoization extensively to optimize repeated validation checks, particularly important for resource association queries that may be called frequently during agent execution.</p>
+<p>The <code>memoize</code> decorator from <code>functools-kit</code> is applied to methods like:</p>
+<ul>
+<li><code>hasStorage()</code> - memoized by <code>${agentName}-${storageName}</code></li>
+<li><code>hasState()</code> - memoized by <code>${agentName}-${stateName}</code></li>
+<li><code>hasDependency()</code> - memoized by <code>${targetAgentName}-${depAgentName}</code></li>
+<li><code>validate()</code> - memoized by <code>agentName</code></li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#validation-services"><span>Validation <wbr/>Services</span></a><ul><li><a href="#purpose-and-scope"><span>Purpose and <wbr/>Scope</span></a></li><li><a href="#validation-service-architecture"><span>Validation <wbr/>Service <wbr/>Architecture</span></a></li><li><ul><li><a href="#complete-validation-service-hierarchy"><span>Complete <wbr/>Validation <wbr/>Service <wbr/>Hierarchy</span></a></li><li><a href="#validation-service-categories"><span>Validation <wbr/>Service <wbr/>Categories</span></a></li></ul></li><li><a href="#core-validation-services"><span>Core <wbr/>Validation <wbr/>Services</span></a></li><li><ul><li><a href="#agentvalidationservice"><span>Agent<wbr/>Validation<wbr/>Service</span></a></li><li><ul><li><a href="#agent-validation-internal-state"><span>Agent <wbr/>Validation <wbr/>Internal <wbr/>State</span></a></li></ul></li><li><a href="#sessionvalidationservice"><span>Session<wbr/>Validation<wbr/>Service</span></a></li><li><ul><li><a href="#session-validation-state-management"><span>Session <wbr/>Validation <wbr/>State <wbr/>Management</span></a></li></ul></li><li><a href="#swarmvalidationservice"><span>Swarm<wbr/>Validation<wbr/>Service</span></a></li><li><ul><li><a href="#swarm-validation-dependencies"><span>Swarm <wbr/>Validation <wbr/>Dependencies</span></a></li></ul></li></ul></li><li><a href="#runtime-validation-patterns"><span>Runtime <wbr/>Validation <wbr/>Patterns</span></a></li><li><ul><li><a href="#resource-access-validation"><span>Resource <wbr/>Access <wbr/>Validation</span></a></li><li><ul><li><a href="#resource-permission-enforcement"><span>Resource <wbr/>Permission <wbr/>Enforcement</span></a></li><li><a href="#state-access-validation"><span>State <wbr/>Access <wbr/>Validation</span></a></li></ul></li><li><a href="#recursive-operation-prevention"><span>Recursive <wbr/>Operation <wbr/>Prevention</span></a></li><li><ul><li><a href="#navigation-recursion-prevention"><span>Navigation <wbr/>Recursion <wbr/>Prevention</span></a></li></ul></li></ul></li><li><a href="#validation-error-patterns-and-performance-optimization"><span>Validation <wbr/>Error <wbr/>Patterns and <wbr/>Performance <wbr/>Optimization</span></a></li><li><ul><li><a href="#error-message-structure"><span>Error <wbr/>Message <wbr/>Structure</span></a></li><li><ul><li><a href="#common-validation-error-patterns"><span>Common <wbr/>Validation <wbr/>Error <wbr/>Patterns</span></a></li></ul></li><li><a href="#performance-optimization-with-memoization"><span>Performance <wbr/>Optimization with <wbr/>Memoization</span></a></li><li><ul><li><a href="#memoized-validation-methods"><span>Memoized <wbr/>Validation <wbr/>Methods</span></a></li></ul></li></ul></li><li><a href="#runtime-validation-integration"><span>Runtime <wbr/>Validation <wbr/>Integration</span></a></li><li><ul><li><a href="#runtime-validation-examples"><span>Runtime <wbr/>Validation <wbr/>Examples</span></a></li></ul></li><li><a href="#performance-optimization"><span>Performance <wbr/>Optimization</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

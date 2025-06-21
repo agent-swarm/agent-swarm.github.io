@@ -1,0 +1,98 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/03_core_components | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_03_core_components.html">design/03_core_components</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="core-components" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Core Components<a href="#core-components" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This page covers the primary architectural components that implement the agent execution model, session management, and service infrastructure in the agent-swarm-kit system. For information about the public API functions like <code>addAgent</code>, <code>session</code>, and <code>complete</code>, see <a href="design_32_core_api_functions.html">Core API Functions</a>. For details about the dependency injection container and service layering, see <a href="design_12_service_architecture.html">Service Architecture</a>.</p>
+<a id="agent-execution-engine" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Execution Engine<a href="#agent-execution-engine" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The agent execution engine consists of two primary components: <code>ClientAgent</code> for message processing and AI completion, and <code>ClientHistory</code> for conversation management.</p>
+<a id="clientagent" class="tsd-anchor"></a><h3 class="tsd-anchor-link">ClientAgent<a href="#clientagent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>ClientAgent</code> is the core execution engine that processes incoming messages, executes tool calls, and generates AI completions. It implements the <code>IAgent</code> interface and serves as the primary orchestrator for agent behavior.</p>
+<p><img src="../media/3_Core_Components_0.svg" alt="Mermaid Diagram"></p>
+<p><strong>Key responsibilities:</strong></p>
+<ul>
+<li><strong>Message Execution</strong>: Processes user and tool messages through <code>execute()</code> method</li>
+<li><strong>Stateless Completion</strong>: Provides quick completions via <code>run()</code> method without history updates</li>
+<li><strong>Tool Orchestration</strong>: Validates, executes, and manages tool calls with abort signal support</li>
+<li><strong>AI Integration</strong>: Coordinates with completion services for model responses</li>
+<li><strong>Event Emission</strong>: Broadcasts execution events through the bus system</li>
+</ul>
+<p>The <code>ClientAgent</code> uses a queued execution model to prevent overlapping operations and maintains internal subjects for managing tool execution flow, agent changes, and output cancellation.</p>
+<a id="clienthistory" class="tsd-anchor"></a><h3 class="tsd-anchor-link">ClientHistory<a href="#clienthistory" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>ClientHistory</code> manages conversation history for agents, providing filtered message arrays optimized for AI completion contexts and maintaining message persistence.</p>
+<p><img src="../media/3_Core_Components_1.svg" alt="Mermaid Diagram"></p>
+<p><strong>Key features:</strong></p>
+<ul>
+<li><strong>Message Filtering</strong>: Applies agent-specific filters to scope relevant messages</li>
+<li><strong>Tool Call Consistency</strong>: Links tool outputs to their corresponding tool calls</li>
+<li><strong>History Limits</strong>: Enforces message count limits via <code>keepMessages</code> parameter</li>
+<li><strong>Persistence Integration</strong>: Handles message storage and retrieval through history adapters</li>
+<li><strong>Event Broadcasting</strong>: Emits history events for system monitoring</li>
+</ul>
+<p>The history system supports both raw message access and agent-optimized arrays that include system prompts and maintain tool call relationships for proper AI completion context.</p>
+<a id="session-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Session Management<a href="#session-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="clientsession" class="tsd-anchor"></a><h3 class="tsd-anchor-link">ClientSession<a href="#clientsession" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>ClientSession</code> orchestrates communication between clients, agents, and swarms while enforcing policies and managing message flows. It implements the <code>ISession</code> interface and serves as the primary coordination layer.</p>
+<p><img src="../media/3_Core_Components_2.svg" alt="Mermaid Diagram"></p>
+<p><strong>Core capabilities:</strong></p>
+<ul>
+<li><strong>Message Execution</strong>: Coordinates agent execution with policy validation</li>
+<li><strong>Policy Enforcement</strong>: Validates input/output messages against configured policies</li>
+<li><strong>Communication Hub</strong>: Manages message emission to swarms and notification channels</li>
+<li><strong>Agent Coordination</strong>: Interfaces with swarm components to access and control agents</li>
+<li><strong>Event Integration</strong>: Broadcasts session events for monitoring and logging</li>
+</ul>
+<p>The session maintains separation between stateful execution (with history updates) and stateless completion, while ensuring all communications pass through policy validation layers.</p>
+<a id="service-infrastructure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Service Infrastructure<a href="#service-infrastructure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The service infrastructure provides the foundation for component lifecycle management, dependency injection, and API exposure through a layered architecture.</p>
+<a id="connection-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Connection Services<a href="#connection-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Connection services manage the instantiation and lifecycle of core components using memoization for efficient reuse.</p>
+<p><img src="../media/3_Core_Components_3.svg" alt="Mermaid Diagram"></p>
+<p><strong>Service responsibilities:</strong></p>
+<ul>
+<li><strong>AgentConnectionService</strong>: Creates and manages <code>ClientAgent</code> instances with tool and completion dependencies</li>
+<li><strong>SessionConnectionService</strong>: Instantiates <code>ClientSession</code> with swarm and policy configurations</li>
+<li><strong>HistoryConnectionService</strong>: Provides <code>ClientHistory</code> instances with storage adapters</li>
+<li><strong>SwarmConnectionService</strong>: Manages <code>ClientSwarm</code> instances for agent navigation and coordination</li>
+</ul>
+<p>Each connection service uses <code>memoize</code> from functools-kit to cache instances by composite keys, ensuring efficient resource usage and consistent state management.</p>
+<a id="public-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Public Services<a href="#public-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Public services provide the external API layer with context management and method scoping around connection services.</p>
+<p><img src="../media/3_Core_Components_4.svg" alt="Mermaid Diagram"></p>
+<p><strong>Public service features:</strong></p>
+<ul>
+<li><strong>Context Scoping</strong>: Wraps all operations with <code>MethodContextService.runInContext()</code> for proper context management</li>
+<li><strong>Method Delegation</strong>: Delegates core functionality to connection services while adding context and logging</li>
+<li><strong>Performance Tracking</strong>: Integrates with <code>PerfService</code> for execution monitoring</li>
+<li><strong>Validation Integration</strong>: Coordinates with validation services for operation safety</li>
+<li><strong>Event Broadcasting</strong>: Ensures proper event emission through the bus system</li>
+</ul>
+<p>The public services layer provides a clean separation between external API and internal component management while ensuring consistent context propagation throughout the system.</p>
+<a id="component-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Component Integration<a href="#component-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The core components work together through a well-defined integration pattern that ensures proper message flow, state management, and error handling.</p>
+<p><img src="../media/3_Core_Components_5.svg" alt="Mermaid Diagram"></p>
+<p><strong>Integration patterns:</strong></p>
+<ul>
+<li><strong>Layered Delegation</strong>: Public services delegate to connection services which manage component instances</li>
+<li><strong>Context Propagation</strong>: Method context flows through all layers ensuring proper scoping</li>
+<li><strong>Event Broadcasting</strong>: Components emit events at each layer for monitoring and coordination</li>
+<li><strong>Resource Sharing</strong>: Memoization ensures efficient reuse of expensive component instances</li>
+<li><strong>Error Propagation</strong>: Errors bubble up through layers with proper context preservation</li>
+</ul>
+<p>This architecture provides clear separation of concerns while maintaining efficient resource usage and proper state management across the entire system.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#core-components"><span>Core <wbr/>Components</span></a><ul><li><a href="#agent-execution-engine"><span>Agent <wbr/>Execution <wbr/>Engine</span></a></li><li><ul><li><a href="#clientagent"><span>Client<wbr/>Agent</span></a></li><li><a href="#clienthistory"><span>Client<wbr/>History</span></a></li></ul></li><li><a href="#session-management"><span>Session <wbr/>Management</span></a></li><li><ul><li><a href="#clientsession"><span>Client<wbr/>Session</span></a></li></ul></li><li><a href="#service-infrastructure"><span>Service <wbr/>Infrastructure</span></a></li><li><ul><li><a href="#connection-services"><span>Connection <wbr/>Services</span></a></li><li><a href="#public-services"><span>Public <wbr/>Services</span></a></li></ul></li><li><a href="#component-integration"><span>Component <wbr/>Integration</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

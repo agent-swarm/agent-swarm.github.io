@@ -1,0 +1,133 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/21_documentation_generation | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_21_documentation_generation.html">design/21_documentation_generation</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="documentation-generation" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Documentation Generation<a href="#documentation-generation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>The Documentation Generation system provides automated creation of comprehensive documentation for agents, swarms, and system performance metrics. This system generates markdown files with embedded UML diagrams, organizing them in a structured directory layout for developer consumption.</p>
+<p>For information about agent schema management, see <a href="design_14_schema_services.html">Schema Services</a>. For details on performance monitoring data collection, see <a href="design_20_perfomance_monitoring.html">Performance Monitoring</a>.</p>
+<a id="docservice-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">DocService Architecture<a href="#docservice-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>DocService</code> class serves as the central orchestrator for all documentation generation activities, utilizing dependency injection to access various schema and validation services.</p>
+<p><img src="../media/21_Documentation_Generation_0.svg" alt="Mermaid Diagram"></p>
+<p>The <code>DocService</code> maintains a thread pool with configurable concurrency (<code>THREAD_POOL_SIZE = 5</code>) to manage parallel documentation generation tasks while balancing performance and resource usage.</p>
+<a id="documentation-generation-workflow" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Documentation Generation Workflow<a href="#documentation-generation-workflow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The documentation generation process follows a structured workflow that validates schemas, creates directories, and generates both swarm and agent documentation concurrently.</p>
+<p><img src="../media/21_Documentation_Generation_1.svg" alt="Mermaid Diagram"></p>
+<p>The <code>dumpDocs</code> method creates a structured directory layout with subdirectories defined in <code>SUBDIR_LIST = [&quot;agent&quot;, &quot;image&quot;]</code>, organizing agent markdown files and UML diagram images separately.</p>
+<a id="uml-diagram-generation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">UML Diagram Generation<a href="#uml-diagram-generation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system integrates with PlantUML through the <code>GLOBAL_CONFIG.CC_FN_PLANTUML</code> function to generate visual schema representations for both swarms and agents.</p>
+<p><img src="../media/21_Documentation_Generation_2.svg" alt="Mermaid Diagram"></p>
+<p>For swarm documentation, UML diagrams are generated with the filename pattern <code>swarm_schema_{swarmName}.svg</code>, while agent diagrams use <code>agent_schema_{agentName}.svg</code>. These images are referenced in the markdown files using relative paths.</p>
+<a id="agent-documentation-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Documentation Structure<a href="#agent-documentation-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Agent documentation files are generated with comprehensive sections covering all aspects of agent configuration and capabilities.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+<th>Schema Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main Prompt</td>
+<td>Agent's primary prompt text</td>
+<td><code>agentSchema.prompt</code></td>
+</tr>
+<tr>
+<td>System Prompt</td>
+<td>Static, dynamic, and regular system prompts</td>
+<td><code>agentSchema.system*</code></td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Other agents this agent depends on</td>
+<td><code>agentSchema.dependsOn</code></td>
+</tr>
+<tr>
+<td>MCP Integration</td>
+<td>Model Context Protocol configurations</td>
+<td><code>agentSchema.mcp</code></td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>Function definitions and parameters</td>
+<td><code>agentSchema.tools</code></td>
+</tr>
+<tr>
+<td>Storages</td>
+<td>Storage resources and configurations</td>
+<td><code>agentSchema.storages</code></td>
+</tr>
+<tr>
+<td>States</td>
+<td>State management resources</td>
+<td><code>agentSchema.states</code></td>
+</tr>
+<tr>
+<td>Wiki Lists</td>
+<td>Wiki resource integrations</td>
+<td><code>agentSchema.wikiList</code></td>
+</tr>
+<tr>
+<td>Callbacks</td>
+<td>Event callback configurations</td>
+<td><code>agentSchema.callbacks</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>writeAgentDoc</code> method resolves dynamic content by calling functions with <code>&quot;docs&quot;</code> as the <code>clientId</code> parameter to generate documentation-specific content without affecting runtime behavior.</p>
+<a id="performance-documentation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Documentation<a href="#performance-documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system provides dual-mode performance documentation covering both system-wide and client-specific metrics.</p>
+<p><img src="../media/21_Documentation_Generation_3.svg" alt="Mermaid Diagram"></p>
+<p>The <code>dumpPerfomance</code> method creates system-wide performance snapshots, while <code>dumpClientPerfomance</code> generates client-specific performance data with timestamped filenames for historical tracking.</p>
+<a id="cli-integration-and-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">CLI Integration and Configuration<a href="#cli-integration-and-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The documentation system integrates with the CLI through the <code>dumpDocs</code> command, providing configurable options for output customization.</p>
+<p><img src="../media/21_Documentation_Generation_4.svg" alt="Mermaid Diagram"></p>
+<p>The CLI performs comprehensive validation before documentation generation, checking all registered agents and swarms, and verifying dependency relationships through <code>dependsOn</code> properties.</p>
+<a id="thread-pool-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Thread Pool Management<a href="#thread-pool-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Documentation generation utilizes a controlled concurrency model to balance performance with resource consumption.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>THREAD_POOL_SIZE</code></td>
+<td>5</td>
+<td>Maximum concurrent documentation tasks</td>
+</tr>
+<tr>
+<td><code>THREAD_POOL_DELAY</code></td>
+<td>0</td>
+<td>Delay between task executions</td>
+</tr>
+<tr>
+<td>Execution Method</td>
+<td><code>execpool</code></td>
+<td>Function wrapper for concurrency control</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>writeSwarmDoc</code> and <code>writeAgentDoc</code> methods are wrapped with <code>execpool</code> to ensure controlled parallel execution, preventing resource exhaustion during large-scale documentation generation.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#documentation-generation"><span>Documentation <wbr/>Generation</span></a><ul><li><a href="#docservice-architecture"><span>Doc<wbr/>Service <wbr/>Architecture</span></a></li><li><a href="#documentation-generation-workflow"><span>Documentation <wbr/>Generation <wbr/>Workflow</span></a></li><li><a href="#uml-diagram-generation"><span>UML <wbr/>Diagram <wbr/>Generation</span></a></li><li><a href="#agent-documentation-structure"><span>Agent <wbr/>Documentation <wbr/>Structure</span></a></li><li><a href="#performance-documentation"><span>Performance <wbr/>Documentation</span></a></li><li><a href="#cli-integration-and-configuration"><span>CLI <wbr/>Integration and <wbr/>Configuration</span></a></li><li><a href="#thread-pool-management"><span>Thread <wbr/>Pool <wbr/>Management</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

@@ -1,0 +1,152 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/11_pipeline_system | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_11_pipeline_system.html">design/11_pipeline_system</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="pipeline-system" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Pipeline System<a href="#pipeline-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>The Pipeline System provides automated workflow execution capabilities within the agent swarm framework. It enables developers to define, register, and execute background processes that can operate independently of regular agent interactions while maintaining integration with the session management, agent navigation, and validation systems.</p>
+<p>For information about agent navigation and routing, see <a href="design_10_navigation_system.html">Navigation System</a>. For session and client management patterns, see <a href="design_06_session_and_chat.html">Session and Chat Management</a>.</p>
+<a id="pipeline-schema-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Pipeline Schema Structure<a href="#pipeline-schema-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Pipelines are defined using the <code>IPipelineSchema</code> interface, which specifies the execution logic and optional lifecycle callbacks.</p>
+<p><img src="../media/11_Pipeline_System_0.svg" alt="Mermaid Diagram"></p>
+<p>The core pipeline schema includes:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pipelineName</code></td>
+<td><code>PipelineName</code></td>
+<td>Unique string identifier for the pipeline</td>
+</tr>
+<tr>
+<td><code>execute</code></td>
+<td><code>Function</code></td>
+<td>Main execution logic accepting clientId, agentName, and payload</td>
+</tr>
+<tr>
+<td><code>callbacks</code></td>
+<td><code>IPipelineCallbacks</code></td>
+<td>Optional lifecycle event handlers</td>
+</tr>
+</tbody>
+</table>
+<a id="pipeline-registration-and-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Pipeline Registration and Management<a href="#pipeline-registration-and-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Pipelines are registered using the <code>addPipeline</code> function and managed through the schema and validation services.</p>
+<p><img src="../media/11_Pipeline_System_1.svg" alt="Mermaid Diagram"></p>
+<a id="pipeline-schema-service" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Pipeline Schema Service<a href="#pipeline-schema-service" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>PipelineSchemaService</code> manages pipeline schema storage and retrieval using a <code>ToolRegistry</code>:</p>
+<ul>
+<li><strong>Registration</strong>: <a href="">src/lib/services/schema/PipelineSchemaService.ts:102-107</a> validates and stores pipeline schemas</li>
+<li><strong>Override</strong>: <a href="">src/lib/services/schema/PipelineSchemaService.ts:116-121</a> allows partial schema updates for testing</li>
+<li><strong>Context Integration</strong>: <a href="">src/lib/services/schema/PipelineSchemaService.ts:50-70</a> supports schema context overrides</li>
+</ul>
+<a id="pipeline-validation-service" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Pipeline Validation Service<a href="#pipeline-validation-service" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>PipelineValidationService</code> ensures pipeline uniqueness and existence:</p>
+<ul>
+<li><strong>Duplicate Prevention</strong>: <a href="">src/lib/services/validation/PipelineValidationService.ts:39-49</a> prevents duplicate pipeline names</li>
+<li><strong>Memoized Validation</strong>: <a href="">src/lib/services/validation/PipelineValidationService.ts:58-72</a> provides efficient pipeline existence checks</li>
+</ul>
+<a id="pipeline-execution-flow" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Pipeline Execution Flow<a href="#pipeline-execution-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Pipeline execution is handled by the <code>startPipeline</code> function, which manages session validation, agent navigation, and lifecycle callbacks.</p>
+<p><img src="../media/11_Pipeline_System_2.svg" alt="Mermaid Diagram"></p>
+<a id="key-execution-features" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Key Execution Features<a href="#key-execution-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ol>
+<li><strong>Session Validation</strong>: <a href="">src/functions/target/startPipeline.ts:36-38</a> ensures valid session, pipeline, and agent</li>
+<li><strong>Agent Navigation</strong>: <a href="">src/functions/target/startPipeline.ts:40-48</a> switches to required agent if needed</li>
+<li><strong>Error Handling</strong>: <a href="">src/functions/target/startPipeline.ts:53-73</a> provides comprehensive error handling with callbacks</li>
+<li><strong>Cleanup</strong>: <a href="">src/functions/target/startPipeline.ts:67-69</a> restores original agent regardless of execution outcome</li>
+</ol>
+<a id="schema-context-and-scoped-execution" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Schema Context and Scoped Execution<a href="#schema-context-and-scoped-execution" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>scope</code> function enables temporary schema overrides for pipeline execution, allowing isolated testing and customization.</p>
+<p><img src="../media/11_Pipeline_System_3.svg" alt="Mermaid Diagram"></p>
+<p>The <code>scope</code> function allows temporary overrides of:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pipelineSchemaService</code></td>
+<td>Override pipeline definitions</td>
+</tr>
+<tr>
+<td><code>agentSchemaService</code></td>
+<td>Override agent configurations</td>
+</tr>
+<tr>
+<td><code>toolSchemaService</code></td>
+<td>Override tool definitions</td>
+</tr>
+<tr>
+<td><code>completionSchemaService</code></td>
+<td>Override AI model configurations</td>
+</tr>
+</tbody>
+</table>
+<a id="integration-with-core-systems" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Integration with Core Systems<a href="#integration-with-core-systems" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Pipelines integrate with several core systems within the agent swarm framework:</p>
+<p><img src="../media/11_Pipeline_System_4.svg" alt="Mermaid Diagram"></p>
+<a id="background-processing-integration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Background Processing Integration<a href="#background-processing-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Pipelines operate as background processes that can:</p>
+<ol>
+<li><strong>Execute Independently</strong>: Run without blocking main agent interactions</li>
+<li><strong>Maintain Context</strong>: Preserve client and agent context throughout execution</li>
+<li><strong>Handle Failures</strong>: Provide comprehensive error handling and recovery</li>
+<li><strong>Integrate Navigation</strong>: Seamlessly switch between agents as needed</li>
+</ol>
+<a id="pipeline-lifecycle-callbacks" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Pipeline Lifecycle Callbacks<a href="#pipeline-lifecycle-callbacks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The callback system provides hooks for monitoring and controlling pipeline execution:</p>
+<table>
+<thead>
+<tr>
+<th>Callback</th>
+<th>Trigger</th>
+<th>Parameters</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onStart</code></td>
+<td>Pipeline begins execution</td>
+<td><code>clientId</code>, <code>pipelineName</code>, <code>payload</code></td>
+<td>Initialize resources, logging</td>
+</tr>
+<tr>
+<td><code>onError</code></td>
+<td>Exception during execution</td>
+<td><code>clientId</code>, <code>pipelineName</code>, <code>payload</code>, <code>error</code></td>
+<td>Error handling, cleanup</td>
+</tr>
+<tr>
+<td><code>onEnd</code></td>
+<td>Pipeline completes</td>
+<td><code>clientId</code>, <code>pipelineName</code>, <code>payload</code>, <code>isError</code></td>
+<td>Final cleanup, reporting</td>
+</tr>
+</tbody>
+</table>
+<p>The callback system enables comprehensive pipeline monitoring and provides hooks for custom error handling, resource cleanup, and execution reporting.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#pipeline-system"><span>Pipeline <wbr/>System</span></a><ul><li><a href="#pipeline-schema-structure"><span>Pipeline <wbr/>Schema <wbr/>Structure</span></a></li><li><a href="#pipeline-registration-and-management"><span>Pipeline <wbr/>Registration and <wbr/>Management</span></a></li><li><ul><li><a href="#pipeline-schema-service"><span>Pipeline <wbr/>Schema <wbr/>Service</span></a></li><li><a href="#pipeline-validation-service"><span>Pipeline <wbr/>Validation <wbr/>Service</span></a></li></ul></li><li><a href="#pipeline-execution-flow"><span>Pipeline <wbr/>Execution <wbr/>Flow</span></a></li><li><ul><li><a href="#key-execution-features"><span>Key <wbr/>Execution <wbr/>Features</span></a></li></ul></li><li><a href="#schema-context-and-scoped-execution"><span>Schema <wbr/>Context and <wbr/>Scoped <wbr/>Execution</span></a></li><li><a href="#integration-with-core-systems"><span>Integration with <wbr/>Core <wbr/>Systems</span></a></li><li><ul><li><a href="#background-processing-integration"><span>Background <wbr/>Processing <wbr/>Integration</span></a></li></ul></li><li><a href="#pipeline-lifecycle-callbacks"><span>Pipeline <wbr/>Lifecycle <wbr/>Callbacks</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>
