@@ -1,0 +1,344 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/23_usage_patterns | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_23_usage_patterns.html">design/23_usage_patterns</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="usage-patterns" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Usage Patterns<a href="#usage-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document provides practical guidance on building applications with the agent-swarm-kit framework. It covers common architectural patterns, integration strategies, and best practices for creating multi-agent systems.</p>
+<p>For detailed information about individual components, see <a href="design_02_core_components.html">Core Components</a>. For advanced system design concepts, see <a href="design_05_session_management.html">Building Multi-Agent Systems</a> and <a href="design_05_session_management.html">Tool Integration</a>.</p>
+<a id="client-connection-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Client Connection Patterns<a href="#client-connection-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework provides three primary patterns for client interaction, each suited for different use cases and communication requirements.</p>
+<a id="direct-completion-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Direct Completion Pattern<a href="#direct-completion-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The simplest pattern for single-request interactions without persistent state:</p>
+<p><img src="../media/23_Usage_Patterns_0.svg" alt="Mermaid Diagram"></p>
+<p>This pattern automatically manages session lifecycle and is ideal for stateless interactions:</p>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Benefits</th>
+<th>Limitations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API endpoints</td>
+<td>Simple, no state management</td>
+<td>No conversation history</td>
+</tr>
+<tr>
+<td>Quick queries</td>
+<td>Automatic cleanup</td>
+<td>Limited tool persistence</td>
+</tr>
+<tr>
+<td>Batch processing</td>
+<td>Minimal resource usage</td>
+<td>No real-time updates</td>
+</tr>
+</tbody>
+</table>
+<a id="session-based-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session-Based Pattern<a href="#session-based-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>For persistent conversations with managed state and history:</p>
+<p><img src="../media/23_Usage_Patterns_1.svg" alt="Mermaid Diagram"></p>
+<p>This pattern maintains conversation context and enables complex multi-turn interactions:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Implementation</th>
+<th>Benefits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Message History</td>
+<td>Persistent conversation log</td>
+<td>Context awareness</td>
+</tr>
+<tr>
+<td>Agent Navigation</td>
+<td>Seamless agent switching</td>
+<td>Specialized workflows</td>
+</tr>
+<tr>
+<td>State Management</td>
+<td>Client-specific data</td>
+<td>Personalization</td>
+</tr>
+<tr>
+<td>Resource Tracking</td>
+<td>Session validation</td>
+<td>Memory management</td>
+</tr>
+</tbody>
+</table>
+<a id="real-time-connection-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Real-Time Connection Pattern<a href="#real-time-connection-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>For WebSocket-like real-time communication with server-side events:</p>
+<p><img src="../media/23_Usage_Patterns_2.svg" alt="Mermaid Diagram"></p>
+<p>This pattern enables real-time bidirectional communication:</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Function</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client-to-Server</td>
+<td><code>send(message)</code></td>
+<td>User input</td>
+</tr>
+<tr>
+<td>Server-to-Client</td>
+<td><code>onMessage(data)</code></td>
+<td>AI responses</td>
+</tr>
+<tr>
+<td>Server Events</td>
+<td><code>event(clientId, type, data)</code></td>
+<td>Notifications</td>
+</tr>
+<tr>
+<td>External Execution</td>
+<td><code>execute(message, clientId, agent)</code></td>
+<td>Background tasks</td>
+</tr>
+</tbody>
+</table>
+<a id="agent-navigation-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Navigation Patterns<a href="#agent-navigation-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Multi-agent systems require sophisticated navigation patterns to route users between specialized agents based on context and requirements.</p>
+<a id="tool-based-navigation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Tool-Based Navigation<a href="#tool-based-navigation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The most common pattern uses tools to handle agent transitions:</p>
+<p><img src="../media/23_Usage_Patterns_3.svg" alt="Mermaid Diagram"></p>
+<p>Navigation tools provide structured agent transitions:</p>
+<pre><code class="javascript"><span class="hl-9">// Pattern from test files</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">NAVIGATION_TOOL</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-2">toolName:</span><span class="hl-1"> </span><span class="hl-3">&quot;navigate-tool&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">call</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">async</span><span class="hl-1"> ({ </span><span class="hl-2">clientId</span><span class="hl-1">, </span><span class="hl-2">params</span><span class="hl-1">: { </span><span class="hl-2">to</span><span class="hl-1"> } }) </span><span class="hl-4">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-0">changeToAgent</span><span class="hl-1">(</span><span class="hl-2">to</span><span class="hl-1">, </span><span class="hl-2">clientId</span><span class="hl-1">);</span><br/><span class="hl-1">    </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-0">execute</span><span class="hl-1">(</span><span class="hl-3">&quot;Navigation complete&quot;</span><span class="hl-1">, </span><span class="hl-2">clientId</span><span class="hl-1">, </span><span class="hl-2">to</span><span class="hl-1">);</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-2">function:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">name:</span><span class="hl-1"> </span><span class="hl-3">&quot;navigate-tool&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">description:</span><span class="hl-1"> </span><span class="hl-3">&quot;Navigate to specialized agent&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">parameters:</span><span class="hl-1"> {</span><br/><span class="hl-1">      </span><span class="hl-2">type:</span><span class="hl-1"> </span><span class="hl-3">&quot;object&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-2">properties:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-2">to:</span><span class="hl-1"> { </span><span class="hl-2">type:</span><span class="hl-1"> </span><span class="hl-3">&quot;string&quot;</span><span class="hl-1">, </span><span class="hl-2">description:</span><span class="hl-1"> </span><span class="hl-3">&quot;Target agent name&quot;</span><span class="hl-1"> }</span><br/><span class="hl-1">      }</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="direct-navigation-api" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Direct Navigation API<a href="#direct-navigation-api" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>For programmatic navigation without tool overhead:</p>
+<p><img src="../media/23_Usage_Patterns_4.svg" alt="Mermaid Diagram"></p>
+<p>Direct navigation functions provide immediate agent switching:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>changeToAgent()</code></td>
+<td>Switch to specific agent</td>
+<td>Directed workflow</td>
+</tr>
+<tr>
+<td><code>changeToDefaultAgent()</code></td>
+<td>Return to starting agent</td>
+<td>Reset conversation</td>
+</tr>
+<tr>
+<td><code>changeToPrevAgent()</code></td>
+<td>Return to previous agent</td>
+<td>Undo navigation</td>
+</tr>
+</tbody>
+</table>
+<a id="concurrency-and-message-queuing" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Concurrency and Message Queuing<a href="#concurrency-and-message-queuing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework implements sophisticated concurrency patterns to handle multiple simultaneous operations while maintaining message ordering and client isolation.</p>
+<a id="session-isolation-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session Isolation Pattern<a href="#session-isolation-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Each client session maintains independent execution context:</p>
+<p><img src="../media/23_Usage_Patterns_5.svg" alt="Mermaid Diagram"></p>
+<p>This pattern ensures that concurrent clients don't interfere with each other:</p>
+<table>
+<thead>
+<tr>
+<th>Isolation Level</th>
+<th>Component</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client-Specific</td>
+<td>Message Queue</td>
+<td>Sequential processing per client</td>
+</tr>
+<tr>
+<td>Client-Specific</td>
+<td>Agent State</td>
+<td>Independent navigation history</td>
+</tr>
+<tr>
+<td>Client-Specific</td>
+<td>Conversation History</td>
+<td>Separate message logs</td>
+</tr>
+<tr>
+<td>Shared</td>
+<td>Swarm Configuration</td>
+<td>Common agent definitions</td>
+</tr>
+<tr>
+<td>Shared</td>
+<td>Completion Engine</td>
+<td>Shared AI provider access</td>
+</tr>
+</tbody>
+</table>
+<a id="message-ordering-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Message Ordering Pattern<a href="#message-ordering-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The framework guarantees message ordering within each client session:</p>
+<p><img src="../media/23_Usage_Patterns_6.svg" alt="Mermaid Diagram"></p>
+<a id="tool-integration-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Tool Integration Patterns<a href="#tool-integration-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Tools extend agent capabilities by providing access to external functions, APIs, and system resources.</p>
+<a id="function-tool-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Function Tool Pattern<a href="#function-tool-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Standard tools that execute external functions:</p>
+<p><img src="../media/23_Usage_Patterns_7.svg" alt="Mermaid Diagram"></p>
+<p>Tool integration requires proper validation and error handling:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Function</th>
+<th>Error Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registration</td>
+<td><code>addTool()</code></td>
+<td>Schema validation</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td><code>validate()</code></td>
+<td>Custom business logic</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td><code>call()</code></td>
+<td>Exception handling</td>
+</tr>
+<tr>
+<td>Output</td>
+<td><code>commitToolOutput()</code></td>
+<td>Response formatting</td>
+</tr>
+</tbody>
+</table>
+<a id="navigation-tool-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Tool Pattern<a href="#navigation-tool-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Specialized tools for agent navigation with context preservation:</p>
+<p><img src="../media/23_Usage_Patterns_8.svg" alt="Mermaid Diagram"></p>
+<p>Navigation tools provide seamless handoffs between specialized agents while maintaining conversation context.</p>
+<a id="error-handling-and-rescue-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Handling and Rescue Patterns<a href="#error-handling-and-rescue-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework provides robust error handling through rescue strategies and validation patterns.</p>
+<a id="rescue-strategy-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Rescue Strategy Pattern<a href="#rescue-strategy-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>When tools fail or produce empty responses, the rescue system provides fallback behavior:</p>
+<p><img src="../media/23_Usage_Patterns_9.svg" alt="Mermaid Diagram"></p>
+<p>Rescue strategies are configured through global settings:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Configuration</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flush</td>
+<td><code>CC_RESQUE_STRATEGY: &quot;flush&quot;</code></td>
+<td>Return placeholder</td>
+</tr>
+<tr>
+<td>Retry</td>
+<td><code>CC_RESQUE_STRATEGY: &quot;retry&quot;</code></td>
+<td>Attempt new completion</td>
+</tr>
+<tr>
+<td>Placeholder</td>
+<td><code>CC_EMPTY_OUTPUT_PLACEHOLDERS</code></td>
+<td>Custom error messages</td>
+</tr>
+</tbody>
+</table>
+<a id="deadlock-prevention-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Deadlock Prevention Pattern<a href="#deadlock-prevention-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The framework prevents deadlocks during agent navigation and tool execution:</p>
+<p><img src="../media/23_Usage_Patterns_10.svg" alt="Mermaid Diagram"></p>
+<p>The framework automatically detects and resolves potential deadlock conditions when tools perform navigation without properly committing their output.</p>
+<a id="event-driven-communication-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Event-Driven Communication Patterns<a href="#event-driven-communication-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework supports event-driven architecture for real-time communication between agents and external systems.</p>
+<a id="event-broadcasting-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Event Broadcasting Pattern<a href="#event-broadcasting-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Events can be broadcast to specific clients without affecting message history:</p>
+<p><img src="../media/23_Usage_Patterns_11.svg" alt="Mermaid Diagram"></p>
+<p>Events provide a mechanism for real-time notifications:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>History Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event()</code></td>
+<td>Send event to client</td>
+<td>Not stored in history</td>
+</tr>
+<tr>
+<td><code>listenEvent()</code></td>
+<td>Register event handler</td>
+<td>Client-side processing</td>
+</tr>
+<tr>
+<td><code>execute()</code></td>
+<td>Send message to agent</td>
+<td>Stored in history</td>
+</tr>
+</tbody>
+</table>
+<a id="resource-management-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Resource Management Patterns<a href="#resource-management-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Proper resource management ensures system stability and prevents memory leaks in long-running applications.</p>
+<a id="connection-lifecycle-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Connection Lifecycle Pattern<a href="#connection-lifecycle-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>All connection types support proper cleanup through disposal:</p>
+<p><img src="../media/23_Usage_Patterns_12.svg" alt="Mermaid Diagram"></p>
+<p>Resource disposal ensures clean shutdown:</p>
+<table>
+<thead>
+<tr>
+<th>Resource Type</th>
+<th>Cleanup Action</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent Instances</td>
+<td>Remove from session</td>
+<td>Stop processing</td>
+</tr>
+<tr>
+<td>Message History</td>
+<td>Clear history list</td>
+<td>Free memory</td>
+</tr>
+<tr>
+<td>Client State</td>
+<td>Release state data</td>
+<td>Prevent leaks</td>
+</tr>
+<tr>
+<td>Event Listeners</td>
+<td>Unregister handlers</td>
+<td>Stop notifications</td>
+</tr>
+</tbody>
+</table>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#usage-patterns"><span>Usage <wbr/>Patterns</span></a><ul><li><a href="#client-connection-patterns"><span>Client <wbr/>Connection <wbr/>Patterns</span></a></li><li><ul><li><a href="#direct-completion-pattern"><span>Direct <wbr/>Completion <wbr/>Pattern</span></a></li><li><a href="#session-based-pattern"><span>Session-<wbr/>Based <wbr/>Pattern</span></a></li><li><a href="#real-time-connection-pattern"><span>Real-<wbr/>Time <wbr/>Connection <wbr/>Pattern</span></a></li></ul></li><li><a href="#agent-navigation-patterns"><span>Agent <wbr/>Navigation <wbr/>Patterns</span></a></li><li><ul><li><a href="#tool-based-navigation"><span>Tool-<wbr/>Based <wbr/>Navigation</span></a></li><li><a href="#direct-navigation-api"><span>Direct <wbr/>Navigation API</span></a></li></ul></li><li><a href="#concurrency-and-message-queuing"><span>Concurrency and <wbr/>Message <wbr/>Queuing</span></a></li><li><ul><li><a href="#session-isolation-pattern"><span>Session <wbr/>Isolation <wbr/>Pattern</span></a></li><li><a href="#message-ordering-pattern"><span>Message <wbr/>Ordering <wbr/>Pattern</span></a></li></ul></li><li><a href="#tool-integration-patterns"><span>Tool <wbr/>Integration <wbr/>Patterns</span></a></li><li><ul><li><a href="#function-tool-pattern"><span>Function <wbr/>Tool <wbr/>Pattern</span></a></li><li><a href="#navigation-tool-pattern"><span>Navigation <wbr/>Tool <wbr/>Pattern</span></a></li></ul></li><li><a href="#error-handling-and-rescue-patterns"><span>Error <wbr/>Handling and <wbr/>Rescue <wbr/>Patterns</span></a></li><li><ul><li><a href="#rescue-strategy-pattern"><span>Rescue <wbr/>Strategy <wbr/>Pattern</span></a></li><li><a href="#deadlock-prevention-pattern"><span>Deadlock <wbr/>Prevention <wbr/>Pattern</span></a></li></ul></li><li><a href="#event-driven-communication-patterns"><span>Event-<wbr/>Driven <wbr/>Communication <wbr/>Patterns</span></a></li><li><ul><li><a href="#event-broadcasting-pattern"><span>Event <wbr/>Broadcasting <wbr/>Pattern</span></a></li></ul></li><li><a href="#resource-management-patterns"><span>Resource <wbr/>Management <wbr/>Patterns</span></a></li><li><ul><li><a href="#connection-lifecycle-pattern"><span>Connection <wbr/>Lifecycle <wbr/>Pattern</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>
