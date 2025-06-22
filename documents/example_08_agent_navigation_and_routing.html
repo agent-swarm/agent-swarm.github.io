@@ -1,0 +1,145 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/08_agent_navigation_and_routing | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_08_agent_navigation_and_routing.html">example/08_agent_navigation_and_routing</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="agent-navigation-and-routing" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Agent Navigation and Routing<a href="#agent-navigation-and-routing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document explains the navigation and routing system within the AI agent swarm, focusing on how users are directed between the triage agent and specialized cryptocurrency consultant agents. The system uses the agent-swarm-kit framework to provide seamless navigation between different conversation contexts based on user intent and cryptocurrency mentions.</p>
+<p>For information about the individual consultant agents themselves, see <a href="example_07_cryptocurrency_consultant_agent.html">Cryptocurrency Consultant Agents</a>. For the overall agent architecture setup, see <a href="example_06_agent_architecture_and_setup.html">Agent Architecture and Setup</a>.</p>
+<a id="triage-agent-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Triage Agent Overview<a href="#triage-agent-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The triage system is built around the <code>TriageAgent</code>, which serves as the primary entry point and router for user conversations. This agent analyzes user messages to determine which cryptocurrency the user is interested in and routes them to the appropriate specialist consultant.</p>
+<p><img src="../media/8_Agent_Navigation_and_Routing_0.svg" alt="Mermaid Diagram"></p>
+<a id="navigation-tools-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Navigation Tools Architecture<a href="#navigation-tools-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The navigation system uses a collection of specialized tools that handle routing between agents. Each navigation tool is responsible for detecting specific cryptocurrency mentions and initiating the appropriate agent transition.</p>
+<a id="navigation-tool-types" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Tool Types<a href="#navigation-tool-types" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Tool Name</th>
+<th>Target Agent</th>
+<th>Trigger Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NavigateToBtcConsultantTool</code></td>
+<td><code>BtcConsultantAgent</code></td>
+<td>Bitcoin (BTC) mentions</td>
+</tr>
+<tr>
+<td><code>NavigateToEthConsultantTool</code></td>
+<td><code>EthConsultantAgent</code></td>
+<td>Ethereum (ETH) mentions</td>
+</tr>
+<tr>
+<td><code>NavigateToBnbConsultantTool</code></td>
+<td><code>BnbConsultantAgent</code></td>
+<td>Binance Coin (BNB) mentions</td>
+</tr>
+<tr>
+<td><code>NavigateToXrpConsultantTool</code></td>
+<td><code>XrpConsultantAgent</code></td>
+<td>Ripple (XRP) mentions</td>
+</tr>
+<tr>
+<td><code>NavigateToSolConsultantTool</code></td>
+<td><code>SolConsultantAgent</code></td>
+<td>Solana (SOL) mentions</td>
+</tr>
+<tr>
+<td><code>NavigateToTriageTool</code></td>
+<td><code>TriageAgent</code></td>
+<td>Off-topic or return navigation</td>
+</tr>
+</tbody>
+</table>
+<a id="agent-routing-flow" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Routing Flow<a href="#agent-routing-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The routing process follows a structured pattern where the triage agent maintains conversation flow while evaluating each user message for navigation triggers.</p>
+<p><img src="../media/8_Agent_Navigation_and_Routing_1.svg" alt="Mermaid Diagram"></p>
+<a id="navigation-tool-implementation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Navigation Tool Implementation<a href="#navigation-tool-implementation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="agent-navigation-tools" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Navigation Tools<a href="#agent-navigation-tools" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Each cryptocurrency-specific navigation tool follows a consistent implementation pattern using the <code>addAgentNavigation</code> function from agent-swarm-kit:</p>
+<p><img src="../media/8_Agent_Navigation_and_Routing_2.svg" alt="Mermaid Diagram"></p>
+<p><strong>Key Implementation Details:</strong></p>
+<ul>
+<li><strong>Immediate Execution</strong>: All navigation tools include the instruction &quot;Вызывается немедленно&quot; (called immediately) when the target cryptocurrency is mentioned</li>
+<li><strong>Exclusive Execution</strong>: Tools include &quot;Если ты выбрал этот инструмент, не вызывай другие&quot; (if you choose this tool, don't call others)</li>
+<li><strong>AgentName Enum</strong>: Navigation targets are specified using the <code>AgentName</code> enum for type safety</li>
+</ul>
+<a id="triage-navigation-tool" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Triage Navigation Tool<a href="#triage-navigation-tool" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>NavigateToTriageTool</code> uses <code>addTriageNavigation</code> instead of <code>addAgentNavigation</code>, providing a special mechanism for returning to the main routing agent:</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li><strong>Force Flush</strong>: Calls <code>commitFlushForce(clientId)</code> before navigation to ensure clean state transition</li>
+<li><strong>Off-topic Handling</strong>: exampleed for questions not related to supported cryptocurrencies</li>
+<li><strong>No Response Requirement</strong>: Explicitly instructs not to answer the user's question when navigating</li>
+</ul>
+<a id="agent-symbol-mapping-system" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent-Symbol Mapping System<a href="#agent-symbol-mapping-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>SignalMetaService</code> provides mapping between agent names and their corresponding trading symbols and display names, supporting the navigation system with metadata:</p>
+<p><img src="../media/8_Agent_Navigation_and_Routing_3.svg" alt="Mermaid Diagram"></p>
+<p><strong>Mapping Tables:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>Trading Symbol</th>
+<th>Display Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BtcConsultantAgent</code></td>
+<td><code>BTCUSDT</code></td>
+<td><code>Bitcoin</code></td>
+</tr>
+<tr>
+<td><code>EthConsultantAgent</code></td>
+<td><code>ETHUSDT</code></td>
+<td><code>Ethereum</code></td>
+</tr>
+<tr>
+<td><code>BnbConsultantAgent</code></td>
+<td><code>BNBUSDT</code></td>
+<td><code>Binance Coin</code></td>
+</tr>
+<tr>
+<td><code>XrpConsultantAgent</code></td>
+<td><code>XRPUSDT</code></td>
+<td><code>Ripple</code></td>
+</tr>
+<tr>
+<td><code>SolConsultantAgent</code></td>
+<td><code>SOLUSDT</code></td>
+<td><code>Solana</code></td>
+</tr>
+</tbody>
+</table>
+<a id="error-handling-and-callbacks" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Handling and Callbacks<a href="#error-handling-and-callbacks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The triage agent implements several callback mechanisms for robust error handling and user experience management:</p>
+<p><strong>Callback Functions:</strong></p>
+<ul>
+<li><strong>onResurrect</strong>: Handles rate limiting by sending Telegram notifications when request limits are exceeded</li>
+<li><strong>onToolError</strong>: Logs navigation tool errors to <code>./tool_error.txt</code> for debugging</li>
+</ul>
+<p><strong>Error Logging Structure:</strong></p>
+<ul>
+<li>Client ID tracking</li>
+<li>Agent name identification</li>
+<li>Tool name specification</li>
+<li>Complete error payload with stack traces</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#agent-navigation-and-routing"><span>Agent <wbr/>Navigation and <wbr/>Routing</span></a><ul><li><a href="#triage-agent-overview"><span>Triage <wbr/>Agent <wbr/>Overview</span></a></li><li><a href="#navigation-tools-architecture"><span>Navigation <wbr/>Tools <wbr/>Architecture</span></a></li><li><ul><li><a href="#navigation-tool-types"><span>Navigation <wbr/>Tool <wbr/>Types</span></a></li></ul></li><li><a href="#agent-routing-flow"><span>Agent <wbr/>Routing <wbr/>Flow</span></a></li><li><a href="#navigation-tool-implementation"><span>Navigation <wbr/>Tool <wbr/>Implementation</span></a></li><li><ul><li><a href="#agent-navigation-tools"><span>Agent <wbr/>Navigation <wbr/>Tools</span></a></li><li><a href="#triage-navigation-tool"><span>Triage <wbr/>Navigation <wbr/>Tool</span></a></li></ul></li><li><a href="#agent-symbol-mapping-system"><span>Agent-<wbr/>Symbol <wbr/>Mapping <wbr/>System</span></a></li><li><a href="#error-handling-and-callbacks"><span>Error <wbr/>Handling and <wbr/>Callbacks</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

@@ -1,0 +1,140 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/25_testing_setup | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_25_testing_setup.html">example/25_testing_setup</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="testing-setup" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Testing Setup<a href="#testing-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document covers the test environment configuration and mocking infrastructure used in the signals repository. The testing setup provides mechanisms to override production services, disable persistence layers, and configure in-memory adapters for the agent-swarm-kit framework.</p>
+<p>For information about the overall build process, see <a href="example_23_build_process.html">Build Process</a>. For Docker-based testing environments, see <a href="example_24_docker_configuration.html">Docker Configuration</a>.</p>
+<a id="overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Overview<a href="#overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The testing infrastructure is designed around two key configuration files that establish a controlled testing environment by:</p>
+<ul>
+<li>Disabling persistent storage mechanisms</li>
+<li>Mocking external service dependencies</li>
+<li>Overriding license validation services</li>
+<li>Configuring in-memory adapters for agent communication</li>
+</ul>
+<a id="test-configuration-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Test Configuration Architecture<a href="#test-configuration-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The test setup follows a two-stage initialization process where overrides are applied before the main system initializes, ensuring that test-specific configurations take precedence over production settings.</p>
+<a id="test-setup-flow" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Test Setup Flow<a href="#test-setup-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/25_Testing_Setup_0.svg" alt="Mermaid Diagram"></p>
+<a id="configuration-stages" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Configuration Stages<a href="#configuration-stages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Purpose</th>
+<th>File</th>
+<th>Key Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Override</td>
+<td>Service Mocking</td>
+<td><code>override.ts</code></td>
+<td>License service override</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>Environment Config</td>
+<td><code>setup.ts</code></td>
+<td>Agent framework configuration</td>
+</tr>
+<tr>
+<td>Import</td>
+<td>Module Loading</td>
+<td><code>setup.ts</code></td>
+<td>Main signals module import</td>
+</tr>
+<tr>
+<td>Adaptation</td>
+<td>Storage Mocking</td>
+<td><code>setup.ts</code></td>
+<td>Persistence adapter setup</td>
+</tr>
+</tbody>
+</table>
+<a id="service-overrides-and-dependency-injection" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Service Overrides and Dependency Injection<a href="#service-overrides-and-dependency-injection" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The testing framework uses the <code>di-kit</code> library's <code>beforeInit</code> mechanism to override specific services before the dependency injection container initializes them.</p>
+<a id="override-mechanism" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Override Mechanism<a href="#override-mechanism" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/25_Testing_Setup_1.svg" alt="Mermaid Diagram"></p>
+<p>The <code>licenseService</code> is overridden to always return <code>true</code> from its <code>validate()</code> method, bypassing any license validation requirements during testing:</p>
+<pre><code class="typescript"><span class="hl-0">override</span><span class="hl-1">(</span><span class="hl-2">Symbol</span><span class="hl-1">.</span><span class="hl-0">for</span><span class="hl-1">(</span><span class="hl-3">&quot;licenseService&quot;</span><span class="hl-1">), {</span><br/><span class="hl-1">  </span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">validate</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">})</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="agent-swarm-kit-test-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent-Swarm-Kit Test Configuration<a href="#agent-swarm-kit-test-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>setup.ts</code> file configures the agent-swarm-kit framework for testing by disabling various persistence and storage mechanisms that would interfere with test execution.</p>
+<a id="configuration-settings" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Configuration Settings<a href="#configuration-settings" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Production Value</th>
+<th>Test Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CC_PERSIST_ENABLED_BY_DEFAULT</code></td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+<td>Disable automatic persistence</td>
+</tr>
+<tr>
+<td><code>CC_PERSIST_MEMORY_STORAGE</code></td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+<td>Disable memory storage persistence</td>
+</tr>
+<tr>
+<td><code>CC_PERSIST_EMBEDDING_CACHE</code></td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+<td>Disable embedding cache persistence</td>
+</tr>
+<tr>
+<td><code>CC_STORAGE_DISABLE_GET_DATA</code></td>
+<td><code>false</code></td>
+<td><code>true</code></td>
+<td>Disable data retrieval operations</td>
+</tr>
+</tbody>
+</table>
+<a id="agent-framework-configuration-flow" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Framework Configuration Flow<a href="#agent-framework-configuration-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/25_Testing_Setup_2.svg" alt="Mermaid Diagram"></p>
+<a id="persistence-layer-mocking" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Persistence Layer Mocking<a href="#persistence-layer-mocking" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The test configuration provides mock implementations for the persistence layer to prevent actual data storage during test execution.</p>
+<a id="embedding-persistence-mock" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Embedding Persistence Mock<a href="#embedding-persistence-mock" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>PersistEmbedding</code> adapter is replaced with a mock that:</p>
+<ul>
+<li>Always returns <code>false</code> for <code>hasValue()</code> checks</li>
+<li>Throws an error when <code>readValue()</code> is called</li>
+<li>Performs no operation for <code>writeValue()</code> calls</li>
+</ul>
+<pre><code class="typescript"><span class="hl-2">PersistEmbedding</span><span class="hl-1">.</span><span class="hl-0">usePersistEmbeddingAdapter</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-4">class</span><span class="hl-1"> </span><span class="hl-4">extends</span><span class="hl-1"> </span><span class="hl-7">PersistBase</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">waitForInit</span><span class="hl-1">() {}</span><br/><span class="hl-1">    </span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">readValue</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-7">any</span><span class="hl-1">&gt; {</span><br/><span class="hl-1">      </span><span class="hl-5">throw</span><span class="hl-1"> </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">Error</span><span class="hl-1">(</span><span class="hl-3">&quot;Unimplemented method&quot;</span><span class="hl-1">);</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">    </span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">hasValue</span><span class="hl-1">() {</span><br/><span class="hl-1">      </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-4">false</span><span class="hl-1">;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">    </span><span class="hl-4">async</span><span class="hl-1"> </span><span class="hl-0">writeValue</span><span class="hl-1">() {}</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">);</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="history-adapter-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">History Adapter Configuration<a href="#history-adapter-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>History</code> service uses the <code>HistoryMemoryInstance</code> adapter, which provides in-memory storage for conversation history without persistence to external storage systems.</p>
+<a id="test-environment-isolation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Test Environment Isolation<a href="#test-environment-isolation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The testing setup ensures complete isolation from production systems by:</p>
+<ol>
+<li><strong>Storage Isolation</strong>: All persistence operations are disabled or mocked</li>
+<li><strong>Service Isolation</strong>: Critical services like license validation are overridden</li>
+<li><strong>Memory Management</strong>: In-memory adapters prevent external data leakage</li>
+<li><strong>Configuration Isolation</strong>: Test-specific configuration values override production defaults</li>
+</ol>
+<p>This isolation guarantees that tests run in a controlled environment without affecting production data or requiring external service dependencies.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#testing-setup"><span>Testing <wbr/>Setup</span></a><ul><li><a href="#overview"><span>Overview</span></a></li><li><a href="#test-configuration-architecture"><span>Test <wbr/>Configuration <wbr/>Architecture</span></a></li><li><ul><li><a href="#test-setup-flow"><span>Test <wbr/>Setup <wbr/>Flow</span></a></li><li><a href="#configuration-stages"><span>Configuration <wbr/>Stages</span></a></li></ul></li><li><a href="#service-overrides-and-dependency-injection"><span>Service <wbr/>Overrides and <wbr/>Dependency <wbr/>Injection</span></a></li><li><ul><li><a href="#override-mechanism"><span>Override <wbr/>Mechanism</span></a></li></ul></li><li><a href="#agent-swarm-kit-test-configuration"><span>Agent-<wbr/>Swarm-<wbr/>Kit <wbr/>Test <wbr/>Configuration</span></a></li><li><ul><li><a href="#configuration-settings"><span>Configuration <wbr/>Settings</span></a></li><li><a href="#agent-framework-configuration-flow"><span>Agent <wbr/>Framework <wbr/>Configuration <wbr/>Flow</span></a></li></ul></li><li><a href="#persistence-layer-mocking"><span>Persistence <wbr/>Layer <wbr/>Mocking</span></a></li><li><ul><li><a href="#embedding-persistence-mock"><span>Embedding <wbr/>Persistence <wbr/>Mock</span></a></li><li><a href="#history-adapter-configuration"><span>History <wbr/>Adapter <wbr/>Configuration</span></a></li></ul></li><li><a href="#test-environment-isolation"><span>Test <wbr/>Environment <wbr/>Isolation</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

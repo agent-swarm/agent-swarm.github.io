@@ -1,0 +1,181 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/16_external_service_integrations | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_16_external_service_integrations.html">example/16_external_service_integrations</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="external-service-integrations" class="tsd-anchor"></a><h1 class="tsd-anchor-link">External Service Integrations<a href="#external-service-integrations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This page documents the various external service integrations that enable the signals platform to operate effectively. The system integrates with multiple third-party APIs and services for market data, notifications, AI processing, and social media monitoring.</p>
+<p>For information about the web server and API endpoints that facilitate these integrations, see <a href="example_14_web_services_and_external_integrations.html">5.1</a>. For details about the AI agent system that utilizes some of these integrations, see <a href="example_05_ai_agent_swarm_system.html">3</a>.</p>
+<a id="integration-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Integration Overview<a href="#integration-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform integrates with several categories of external services to provide comprehensive trading signal functionality:</p>
+<p><img src="../media/16_External_Service_Integrations_0.svg" alt="Mermaid Diagram"></p>
+<a id="telegram-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Telegram Integration<a href="#telegram-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>TelegramWebService</code> handles publishing trading signals to Telegram channels and provides bot interaction capabilities.</p>
+<a id="signal-publishing" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Signal Publishing<a href="#signal-publishing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The service formats and publishes three types of signals:</p>
+<table>
+<thead>
+<tr>
+<th>Signal Type</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buy Signal</td>
+<td><code>publishBuySignal</code></td>
+<td>Publishes buy recommendations with stop-loss and possibility data</td>
+</tr>
+<tr>
+<td>Wait Signal</td>
+<td><code>publishWaitSignal</code></td>
+<td>Publishes wait recommendations with TTL caching</td>
+</tr>
+<tr>
+<td>Sell Signal</td>
+<td><code>publishSellNotify</code></td>
+<td>Publishes sell notifications with profit/loss calculations</td>
+</tr>
+</tbody>
+</table>
+<a id="signal-formatting" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Signal Formatting<a href="#signal-formatting" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Each signal type generates structured markdown content that gets converted to Telegram HTML:</p>
+<p><img src="../media/16_External_Service_Integrations_1.svg" alt="Mermaid Diagram"></p>
+<a id="configuration-parameters" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Configuration Parameters<a href="#configuration-parameters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The Telegram integration uses these environment variables:</p>
+<ul>
+<li><code>CC_TELEGRAM_TOKEN</code> - Bot authentication token</li>
+<li><code>CC_TELEGRAM_CHANNEL</code> - Target channel for publishing</li>
+<li><code>CC_TELEGRAM_BOT</code> - Bot username for deep linking</li>
+</ul>
+<a id="ttl-caching" class="tsd-anchor"></a><h3 class="tsd-anchor-link">TTL Caching<a href="#ttl-caching" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Wait signals implement TTL caching to prevent spam:</p>
+<ul>
+<li>Cache duration: 6 hours (<code>WAIT_SIGNAL_TTL = 6 * 60 * 60 * 1000</code>)</li>
+<li>Cache key: Symbol name</li>
+<li>Automatic cache clearing on buy/sell signals</li>
+</ul>
+<a id="binance-api-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Binance API Integration<a href="#binance-api-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>BinanceService</code> provides market data and price formatting capabilities used throughout the system.</p>
+<a id="market-data-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Market Data Functions<a href="#market-data-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The service integrates with Binance API to provide:</p>
+<ul>
+<li>Real-time price data via <code>getClosePrice(symbol)</code></li>
+<li>Price formatting via <code>formatPrice(symbol, price)</code></li>
+<li>Quantity formatting via <code>formatQuantity(symbol, quantity)</code></li>
+</ul>
+<a id="integration-points" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Integration Points<a href="#integration-points" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Binance service is used by multiple components:</p>
+<p><img src="../media/16_External_Service_Integrations_2.svg" alt="Mermaid Diagram"></p>
+<a id="webhook-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Webhook Integration<a href="#webhook-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <code>WebhookService</code> sends HTTP notifications to external systems for signal events.</p>
+<a id="webhook-endpoints" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Webhook Endpoints<a href="#webhook-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The service provides three webhook types:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/api/v1/buy</code></td>
+<td>POST</td>
+<td>Buy signal notifications</td>
+</tr>
+<tr>
+<td><code>/api/v1/wait</code></td>
+<td>POST</td>
+<td>Wait signal notifications</td>
+</tr>
+<tr>
+<td><code>/api/v1/sell</code></td>
+<td>POST</td>
+<td>Sell signal notifications</td>
+</tr>
+</tbody>
+</table>
+<a id="authentication" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Authentication<a href="#authentication" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Webhooks use JWT authentication:</p>
+<ul>
+<li><code>JwtService.generateAccessToken()</code> for token generation</li>
+<li><code>Authorization: Bearer &lt;token&gt;</code> header format</li>
+</ul>
+<a id="payload-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Payload Structure<a href="#payload-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Buy Signal Payload:</strong></p>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;symbol&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;stopLoss&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><span class="hl-1">, </span><br/><span class="hl-1">  </span><span class="hl-12">&quot;comment&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;signalId&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Wait Signal Payload:</strong></p>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;symbol&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;comment&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Sell Signal Payload:</strong></p>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;signalId&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;symbol&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;string&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="error-handling" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Error Handling<a href="#error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The service implements comprehensive error handling with logging for failed webhook deliveries, including error data serialization and message extraction.</p>
+<a id="ai-service-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">AI Service Integration<a href="#ai-service-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system integrates with Grok AI for LLM-powered signal analysis and agent conversations.</p>
+<a id="signal-processing-integration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Signal Processing Integration<a href="#signal-processing-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>AI integration occurs within the agent-swarm-kit framework:</p>
+<p><img src="../media/16_External_Service_Integrations_3.svg" alt="Mermaid Diagram"></p>
+<a id="tool-integration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Tool Integration<a href="#tool-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system overrides agent-swarm-kit tools for signal recommendations:</p>
+<ul>
+<li><code>ToolName.SignalRecommendBuy</code> - Processes buy recommendations with stop-loss and possibility parameters</li>
+<li><code>ToolName.SignalRecommendWait</code> - Processes wait recommendations with reasoning</li>
+</ul>
+<a id="error-handling-1" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Error Handling<a href="#error-handling-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>AI tool errors are captured and logged to <code>signal_tool_error.txt</code> with comprehensive error data including client ID, agent name, and tool name.</p>
+<a id="social-media-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Social Media Integration<a href="#social-media-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform integrates with Mastodon API for social sentiment analysis, though the specific implementation details are handled by the <code>MastodonWebService</code>.</p>
+<a id="integration-purpose" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Integration Purpose<a href="#integration-purpose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Social media integration provides:</p>
+<ul>
+<li>Market sentiment data</li>
+<li>News aggregation from social sources</li>
+<li>Additional signal validation data</li>
+</ul>
+<a id="service-architecture" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Service Architecture<a href="#service-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/16_External_Service_Integrations_4.svg" alt="Mermaid Diagram"></p>
+<a id="integration-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Integration Configuration<a href="#integration-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="environment-variables" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Environment Variables<a href="#environment-variables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>External service integrations are configured through environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Variables</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telegram</td>
+<td><code>CC_TELEGRAM_TOKEN</code>, <code>CC_TELEGRAM_CHANNEL</code>, <code>CC_TELEGRAM_BOT</code></td>
+<td>Bot authentication and channel configuration</td>
+</tr>
+<tr>
+<td>Webhook</td>
+<td><code>CC_WEBHOOK_URL</code></td>
+<td>Target webhook endpoint URL</td>
+</tr>
+<tr>
+<td>Signal Processing</td>
+<td><code>CC_SIGNAL_CHECK_TTL</code></td>
+<td>Signal processing timeout configuration</td>
+</tr>
+</tbody>
+</table>
+<a id="service-registration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Service Registration<a href="#service-registration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>External services are registered in the IoC container with specific type identifiers:</p>
+<ul>
+<li><code>TYPES.telegramApiService</code> - Telegram API client</li>
+<li><code>TYPES.binanceService</code> - Binance API client</li>
+<li><code>TYPES.jwtService</code> - JWT token service for webhook authentication</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#external-service-integrations"><span>External <wbr/>Service <wbr/>Integrations</span></a><ul><li><a href="#integration-overview"><span>Integration <wbr/>Overview</span></a></li><li><a href="#telegram-integration"><span>Telegram <wbr/>Integration</span></a></li><li><ul><li><a href="#signal-publishing"><span>Signal <wbr/>Publishing</span></a></li><li><a href="#signal-formatting"><span>Signal <wbr/>Formatting</span></a></li><li><a href="#configuration-parameters"><span>Configuration <wbr/>Parameters</span></a></li><li><a href="#ttl-caching"><span>TTL <wbr/>Caching</span></a></li></ul></li><li><a href="#binance-api-integration"><span>Binance API <wbr/>Integration</span></a></li><li><ul><li><a href="#market-data-functions"><span>Market <wbr/>Data <wbr/>Functions</span></a></li><li><a href="#integration-points"><span>Integration <wbr/>Points</span></a></li></ul></li><li><a href="#webhook-integration"><span>Webhook <wbr/>Integration</span></a></li><li><ul><li><a href="#webhook-endpoints"><span>Webhook <wbr/>Endpoints</span></a></li><li><a href="#authentication"><span>Authentication</span></a></li><li><a href="#payload-structure"><span>Payload <wbr/>Structure</span></a></li><li><a href="#error-handling"><span>Error <wbr/>Handling</span></a></li></ul></li><li><a href="#ai-service-integration"><span>AI <wbr/>Service <wbr/>Integration</span></a></li><li><ul><li><a href="#signal-processing-integration"><span>Signal <wbr/>Processing <wbr/>Integration</span></a></li><li><a href="#tool-integration"><span>Tool <wbr/>Integration</span></a></li><li><a href="#error-handling-1"><span>Error <wbr/>Handling</span></a></li></ul></li><li><a href="#social-media-integration"><span>Social <wbr/>Media <wbr/>Integration</span></a></li><li><ul><li><a href="#integration-purpose"><span>Integration <wbr/>Purpose</span></a></li><li><a href="#service-architecture"><span>Service <wbr/>Architecture</span></a></li></ul></li><li><a href="#integration-configuration"><span>Integration <wbr/>Configuration</span></a></li><li><ul><li><a href="#environment-variables"><span>Environment <wbr/>Variables</span></a></li><li><a href="#service-registration"><span>Service <wbr/>Registration</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

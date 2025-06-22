@@ -1,0 +1,140 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/23_build_process | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_23_build_process.html">example/23_build_process</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="build-process" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Build Process<a href="#build-process" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document explains the multi-application build system used in the signals platform. The build process handles compilation and artifact consolidation for multiple React frontend applications and the backend server. For information about Docker containerization and deployment, see <a href="example_24_docker_configuration.html">Docker Configuration</a>.</p>
+<a id="build-architecture-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Build Architecture Overview<a href="#build-architecture-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The signals platform uses a multi-application build architecture where each frontend application is built independently using Vite, and then all build artifacts are consolidated into a single deployment-ready structure.</p>
+<p><strong>Build Architecture Diagram</strong>
+<img src="../media/23_Build_Process_0.svg" alt="Mermaid Diagram"></p>
+<a id="multi-application-build-process" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Multi-Application Build Process<a href="#multi-application-build-process" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The build process consists of three main phases: root project build, individual app builds, and artifact consolidation.</p>
+<a id="phase-1-root-project-build" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Phase 1: Root Project Build<a href="#phase-1-root-project-build" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The platform-specific build scripts (<a href="">scripts/win/build.bat:1-4</a>, <a href="">scripts/linux/build.sh:1-4</a>) first execute:</p>
+<ul>
+<li><code>npm install</code> - Install root project dependencies</li>
+<li><code>npm run build</code> - Build the backend server and shared components</li>
+</ul>
+<a id="phase-2-individual-app-builds" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Phase 2: Individual App Builds<a href="#phase-2-individual-app-builds" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Both build scripts iterate through all directories in the <code>apps/</code> folder and execute the same commands for each application:</p>
+<p><strong>Windows Build Loop</strong></p>
+<pre><code class="bash"><span class="hl-5">for</span><span class="hl-1"> /d %%D in (*) </span><span class="hl-5">do</span><span class="hl-1"> (</span><br/><span class="hl-1">    </span><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-3">&quot;%%D&quot;</span><br/><span class="hl-1">    </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-3">install</span><br/><span class="hl-1">    </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">build</span><br/><span class="hl-1">    </span><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-3">..</span><br/><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Linux Build Loop</strong></p>
+<pre><code class="bash"><span class="hl-5">for</span><span class="hl-1"> </span><span class="hl-2">D</span><span class="hl-1"> </span><span class="hl-5">in</span><span class="hl-1"> </span><span class="hl-3">`</span><span class="hl-0">find</span><span class="hl-3"> . </span><span class="hl-4">-maxdepth</span><span class="hl-3"> </span><span class="hl-8">1</span><span class="hl-3"> </span><span class="hl-4">-not</span><span class="hl-3"> </span><span class="hl-4">-path</span><span class="hl-3"> &quot;.&quot; </span><span class="hl-4">-not</span><span class="hl-3"> </span><span class="hl-4">-path</span><span class="hl-3"> &quot;./.*&quot; </span><span class="hl-4">-type</span><span class="hl-3"> d`</span><br/><span class="hl-5">do</span><br/><span class="hl-1">    </span><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-2">$D</span><br/><span class="hl-1">    </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-3">install</span><br/><span class="hl-1">    </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">build</span><br/><span class="hl-1">    </span><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-3">..</span><br/><span class="hl-5">done</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="phase-3-artifact-consolidation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Phase 3: Artifact Consolidation<a href="#phase-3-artifact-consolidation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>copy-build.ts</code> script consolidates all build artifacts into a unified deployment structure:</p>
+<p><strong>Artifact Consolidation Flow</strong>
+<img src="../media/23_Build_Process_1.svg" alt="Mermaid Diagram"></p>
+<p>The <code>createCopy</code> function (<a href="">scripts/copy-build.ts:16-33</a>) handles the consolidation logic:</p>
+<ul>
+<li>Creates target directories using <code>fs.mkdirSync</code> with recursive option</li>
+<li>Copies <code>build/</code> directories from each app using <code>fs.cpSync</code></li>
+<li>Copies <code>package.json</code> and <code>types.d.ts</code> files using <code>fs.copyFileSync</code></li>
+<li>Uses <code>globSync</code> to discover all app directories dynamically</li>
+</ul>
+<a id="vite-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Vite Configuration<a href="#vite-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Each frontend application uses Vite as the build tool with shared configuration patterns but application-specific customizations.</p>
+<a id="common-vite-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Common Vite Configuration<a href="#common-vite-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>All applications share these core configuration elements:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Purpose</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>React Plugin</td>
+<td>React/JSX compilation</td>
+<td><code>@vitejs/plugin-react-swc</code></td>
+</tr>
+<tr>
+<td>Node Polyfills</td>
+<td>Browser compatibility</td>
+<td><code>vite-plugin-node-polyfills</code></td>
+</tr>
+<tr>
+<td>Environment Variables</td>
+<td>Runtime configuration</td>
+<td><code>vite-plugin-environment</code> with <code>CC_</code> prefix</td>
+</tr>
+<tr>
+<td>Full Reload</td>
+<td>Development hot reload</td>
+<td><code>vite-plugin-full-reload</code></td>
+</tr>
+<tr>
+<td>Barrel Imports</td>
+<td>MUI optimization</td>
+<td><code>vite-plugin-barrel</code></td>
+</tr>
+<tr>
+<td>Million.js</td>
+<td>React performance</td>
+<td><code>million/compiler</code></td>
+</tr>
+</tbody>
+</table>
+<a id="build-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Build Configuration<a href="#build-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The build configuration (<a href="">apps/chat-app/vite.config.mts:46-51</a>) specifies:</p>
+<ul>
+<li><strong>Target</strong>: <code>chrome87</code> for modern browser support</li>
+<li><strong>Output Directory</strong>: <code>build</code> (consistent across all apps)</li>
+<li><strong>Minification</strong>: <code>terser</code> for production optimization</li>
+<li><strong>Asset Handling</strong>: <code>assetsInlineLimit: 0</code> prevents asset inlining</li>
+</ul>
+<a id="application-specific-proxies" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Application-Specific Proxies<a href="#application-specific-proxies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Each app configures development server proxies differently:</p>
+<p><strong>Chat App Proxy Configuration</strong></p>
+<pre><code class="javascript"><span class="hl-11">proxy</span><span class="hl-1">: {</span><br/><span class="hl-1">  </span><span class="hl-3">&quot;/session&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-2">target:</span><span class="hl-1"> </span><span class="hl-3">&quot;http://localhost:30050&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">changeOrigin:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">ws:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Signal App Proxy Configuration</strong></p>
+<pre><code class="javascript"><span class="hl-11">proxy</span><span class="hl-1">: {</span><br/><span class="hl-1">  </span><span class="hl-3">&quot;/status&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-2">target:</span><span class="hl-1"> </span><span class="hl-3">&quot;http://localhost:30050&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">changeOrigin:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The <code>base</code> configuration differs per application:</p>
+<ul>
+<li>Chat App: <code>base: &quot;chat&quot;</code> (<a href="">apps/chat-app/vite.config.mts:66</a>)</li>
+<li>Signal App: <code>base: &quot;signal&quot;</code> (<a href="">apps/signal-app/vite.config.mts:65</a>)</li>
+</ul>
+<a id="build-output-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Build Output Structure<a href="#build-output-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The consolidated build output follows this directory structure:</p>
+<pre><code><span class="hl-2">build</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-2">apps</span><span class="hl-1">/</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">chat</span><span class="hl-1">-</span><span class="hl-2">app</span><span class="hl-1">/</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">build</span><span class="hl-1">/          # </span><span class="hl-2">Vite</span><span class="hl-1"> </span><span class="hl-2">build</span><span class="hl-1"> </span><span class="hl-2">output</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">package</span><span class="hl-1">.</span><span class="hl-2">json</span><span class="hl-1">    # </span><span class="hl-2">App</span><span class="hl-1"> </span><span class="hl-2">dependencies</span><br/><span class="hl-1">│   │   └── </span><span class="hl-2">types</span><span class="hl-1">.</span><span class="hl-2">d</span><span class="hl-1">.</span><span class="hl-2">ts</span><span class="hl-1">      # </span><span class="hl-2">TypeScript</span><span class="hl-1"> </span><span class="hl-2">definitions</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">signal</span><span class="hl-1">-</span><span class="hl-2">app</span><span class="hl-1">/</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">wallet</span><span class="hl-1">-</span><span class="hl-2">app</span><span class="hl-1">/</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">news</span><span class="hl-1">-</span><span class="hl-2">app</span><span class="hl-1">/</span><br/><span class="hl-1">│   └── </span><span class="hl-2">strategy</span><span class="hl-1">-</span><span class="hl-2">app</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-2">public</span><span class="hl-1">/                 # </span><span class="hl-2">Static</span><span class="hl-1"> </span><span class="hl-2">assets</span><br/><span class="hl-1">├── </span><span class="hl-2">package</span><span class="hl-1">.</span><span class="hl-2">json</span><span class="hl-1">           # </span><span class="hl-2">Root</span><span class="hl-1"> </span><span class="hl-2">dependencies</span><br/><span class="hl-1">├── </span><span class="hl-2">ecosystem</span><span class="hl-1">.</span><span class="hl-2">config</span><span class="hl-1">.</span><span class="hl-2">js</span><span class="hl-1">    # </span><span class="hl-6">PM2</span><span class="hl-1"> </span><span class="hl-2">configuration</span><br/><span class="hl-1">└── </span><span class="hl-2">index</span><span class="hl-1">.</span><span class="hl-2">mjs</span><span class="hl-1">             # </span><span class="hl-2">Backend</span><span class="hl-1"> </span><span class="hl-2">server</span><span class="hl-1"> </span><span class="hl-2">entry</span><span class="hl-1"> </span><span class="hl-2">point</span>
+</code><button>Copy</button></pre>
+
+<a id="deployment-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Deployment Configuration<a href="#deployment-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The build process includes PM2 configuration for production deployment via <code>ecosystem.config.js</code>:</p>
+<p><strong>PM2 Application Configuration</strong>
+<img src="../media/23_Build_Process_2.svg" alt="Mermaid Diagram"></p>
+<p>The <code>readConfig</code> function (<a href="">config/ecosystem.config.js:6-11</a>) uses <code>dotenv.parse</code> to load environment variables from <code>.env</code> file if it exists, falling back to <code>process.env</code>.</p>
+<a id="build-process-summary" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Build Process Summary<a href="#build-process-summary" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The complete build process follows this sequence:</p>
+<ol>
+<li><strong>Platform Detection</strong>: Choose appropriate build script (Windows/Linux)</li>
+<li><strong>Root Build</strong>: Install dependencies and build backend server</li>
+<li><strong>App Iteration</strong>: Build each frontend application in <code>apps/</code> directory</li>
+<li><strong>Artifact Consolidation</strong>: Run <code>copy-build.ts</code> to create unified deployment structure</li>
+<li><strong>Deployment Ready</strong>: <code>build/</code> directory contains all necessary files for PM2 deployment</li>
+</ol>
+<p>The build system is designed to be platform-agnostic and supports both development and production builds through the same unified process.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#build-process"><span>Build <wbr/>Process</span></a><ul><li><a href="#build-architecture-overview"><span>Build <wbr/>Architecture <wbr/>Overview</span></a></li><li><a href="#multi-application-build-process"><span>Multi-<wbr/>Application <wbr/>Build <wbr/>Process</span></a></li><li><ul><li><a href="#phase-1-root-project-build"><span>Phase 1: <wbr/>Root <wbr/>Project <wbr/>Build</span></a></li><li><a href="#phase-2-individual-app-builds"><span>Phase 2: <wbr/>Individual <wbr/>App <wbr/>Builds</span></a></li><li><a href="#phase-3-artifact-consolidation"><span>Phase 3: <wbr/>Artifact <wbr/>Consolidation</span></a></li></ul></li><li><a href="#vite-configuration"><span>Vite <wbr/>Configuration</span></a></li><li><ul><li><a href="#common-vite-configuration"><span>Common <wbr/>Vite <wbr/>Configuration</span></a></li><li><a href="#build-configuration"><span>Build <wbr/>Configuration</span></a></li><li><a href="#application-specific-proxies"><span>Application-<wbr/>Specific <wbr/>Proxies</span></a></li></ul></li><li><a href="#build-output-structure"><span>Build <wbr/>Output <wbr/>Structure</span></a></li><li><a href="#deployment-configuration"><span>Deployment <wbr/>Configuration</span></a></li><li><a href="#build-process-summary"><span>Build <wbr/>Process <wbr/>Summary</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

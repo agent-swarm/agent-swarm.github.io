@@ -1,0 +1,112 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/15_web_server_and_error_handling | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_15_web_server_and_error_handling.html">example/15_web_server_and_error_handling</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="web-server-and-error-handling" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Web Server and Error Handling<a href="#web-server-and-error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document covers the HTTP web server implementation using the Hono framework and the comprehensive error handling mechanisms that ensure system reliability. The web server serves as the primary backend API endpoint and handles all HTTP requests from the frontend applications.</p>
+<p>For information about specific API endpoints and routes, see <a href="example_17_api_endpoints.html">API Endpoints</a>. For details about external service integrations that the web server facilitates, see <a href="example_16_external_service_integrations.html">External Service Integrations</a>.</p>
+<a id="web-server-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Web Server Architecture<a href="#web-server-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system uses the Hono web framework to provide a lightweight, fast HTTP server that handles all backend API requests. The server runs on port 30050 and integrates with the IoC container for dependency injection.</p>
+<a id="hono-server-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Hono Server Configuration<a href="#hono-server-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/15_Web_Server_and_Error_Handling_0.svg" alt="Mermaid Diagram"></p>
+<p>The main server entry point is configured in <code>src/main/hono.ts</code>, where the <code>serve()</code> function from <code>@hono/node-server</code> creates an HTTP server instance. The server only starts if the system is not running in REPL mode, as determined by <code>ioc.bootstrapService.isRepl</code>.</p>
+<a id="request-processing-pipeline" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Request Processing Pipeline<a href="#request-processing-pipeline" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The Hono application processes incoming requests through a series of registered routes, each handling specific API endpoints for different system functions.</p>
+<a id="route-organization" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Route Organization<a href="#route-organization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Route Module</th>
+<th>Purpose</th>
+<th>Endpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>health</code></td>
+<td>System health checks</td>
+<td>Health monitoring</td>
+</tr>
+<tr>
+<td><code>session</code></td>
+<td>WebSocket session management</td>
+<td>Agent conversations</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>System status reporting</td>
+<td>Service status</td>
+</tr>
+<tr>
+<td><code>openai</code></td>
+<td>AI agent communication</td>
+<td>LLM interactions</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td>System information</td>
+<td>Configuration data</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>Market data</td>
+<td>Cryptocurrency prices</td>
+</tr>
+<tr>
+<td><code>wallet</code></td>
+<td>Trading operations</td>
+<td>Order management</td>
+</tr>
+<tr>
+<td><code>report</code></td>
+<td>Report generation</td>
+<td>Trading reports</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../media/15_Web_Server_and_Error_Handling_1.svg" alt="Mermaid Diagram"></p>
+<p>The server integrates with the IoC container through the imported <code>ioc</code> object from <code>../lib</code>, enabling dependency injection for all route handlers and business logic services.</p>
+<a id="error-handling-system" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Handling System<a href="#error-handling-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system implements comprehensive error handling through the <code>ErrorService</code> class, which provides global exception handling, error logging, and graceful shutdown capabilities.</p>
+<a id="global-error-handler-architecture" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Global Error Handler Architecture<a href="#global-error-handler-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/15_Web_Server_and_Error_Handling_2.svg" alt="Mermaid Diagram"></p>
+<p>The <code>ErrorService</code> uses a singleton pattern with global symbols to ensure error handlers are only installed once. It provides a <code>beforeExitSubject</code> that allows other services to register cleanup handlers before the process terminates.</p>
+<a id="error-handling-features" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Error Handling Features<a href="#error-handling-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The error handling system includes several key capabilities:</p>
+<ul>
+<li><strong>Global Exception Capture</strong>: Catches all uncaught exceptions and unhandled promise rejections</li>
+<li><strong>Structured Error Logging</strong>: Uses <code>errorData()</code> from <code>functools-kit</code> to serialize error information</li>
+<li><strong>File System Logging</strong>: Appends error details to <code>./error.txt</code> for persistence</li>
+<li><strong>Graceful Shutdown</strong>: Provides a notification system for cleanup before process termination</li>
+<li><strong>REPL Safety</strong>: Disables error handling in REPL mode to avoid interfering with development</li>
+</ul>
+<a id="frontend-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Frontend Integration<a href="#frontend-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The web server is designed to work seamlessly with multiple frontend applications through Vite's development proxy configuration.</p>
+<a id="development-proxy-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Development Proxy Configuration<a href="#development-proxy-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/15_Web_Server_and_Error_Handling_3.svg" alt="Mermaid Diagram"></p>
+<p>The frontend applications use Vite's proxy configuration to forward API requests to the Hono server. This is configured in each app's <code>vite.config.mts</code> with proxy rules targeting <code>http://localhost:30050</code>.</p>
+<a id="websocket-support" class="tsd-anchor"></a><h2 class="tsd-anchor-link">WebSocket Support<a href="#websocket-support" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The server includes WebSocket support for real-time communication, primarily used for agent conversation sessions and live data updates.</p>
+<a id="websocket-integration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">WebSocket Integration<a href="#websocket-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The WebSocket functionality is injected into the HTTP server instance after creation through the <code>injectWebSocket()</code> function imported from the app configuration. This enables bidirectional communication for:</p>
+<ul>
+<li>Agent conversation sessions</li>
+<li>Real-time trading signal updates</li>
+<li>Live market data streaming</li>
+<li>System status notifications</li>
+</ul>
+<p>The WebSocket connections are managed through the session routing system, allowing multiple concurrent agent conversations and data streams.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#web-server-and-error-handling"><span>Web <wbr/>Server and <wbr/>Error <wbr/>Handling</span></a><ul><li><a href="#web-server-architecture"><span>Web <wbr/>Server <wbr/>Architecture</span></a></li><li><ul><li><a href="#hono-server-configuration"><span>Hono <wbr/>Server <wbr/>Configuration</span></a></li></ul></li><li><a href="#request-processing-pipeline"><span>Request <wbr/>Processing <wbr/>Pipeline</span></a></li><li><ul><li><a href="#route-organization"><span>Route <wbr/>Organization</span></a></li></ul></li><li><a href="#error-handling-system"><span>Error <wbr/>Handling <wbr/>System</span></a></li><li><ul><li><a href="#global-error-handler-architecture"><span>Global <wbr/>Error <wbr/>Handler <wbr/>Architecture</span></a></li><li><a href="#error-handling-features"><span>Error <wbr/>Handling <wbr/>Features</span></a></li></ul></li><li><a href="#frontend-integration"><span>Frontend <wbr/>Integration</span></a></li><li><ul><li><a href="#development-proxy-configuration"><span>Development <wbr/>Proxy <wbr/>Configuration</span></a></li></ul></li><li><a href="#websocket-support"><span>Web<wbr/>Socket <wbr/>Support</span></a></li><li><ul><li><a href="#websocket-integration"><span>Web<wbr/>Socket <wbr/>Integration</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

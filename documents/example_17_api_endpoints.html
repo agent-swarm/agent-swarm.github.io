@@ -1,0 +1,240 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/17_api_endpoints | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_17_api_endpoints.html">example/17_api_endpoints</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="api-endpoints" class="tsd-anchor"></a><h1 class="tsd-anchor-link">API Endpoints<a href="#api-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document describes the REST API endpoints provided by the web server for cryptocurrency wallet operations, trading activities, and market data retrieval. The API serves the frontend applications and enables management of trading orders, technical analysis, and financial reporting.</p>
+<p>For information about the underlying web server infrastructure and middleware, see <a href="example_15_web_server_and_error_handling.html">Web Server and Error Handling</a>. For details about external service integrations that provide market data, see <a href="example_16_external_service_integrations.html">External Service Integrations</a>.</p>
+<a id="api-architecture-and-request-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">API Architecture and Request Structure<a href="#api-architecture-and-request-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>All API endpoints in the system follow a consistent POST-based architecture with standardized request and response formats. The endpoints are defined in the Hono web server and use dependency injection to access underlying services.</p>
+<p><img src="../media/17_API_Endpoints_0.svg" alt="Mermaid Diagram"></p>
+<a id="request-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Request Structure<a href="#request-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>All endpoints accept POST requests with a standardized JSON payload containing:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requestId</code></td>
+<td>string</td>
+<td>Unique identifier for request tracking</td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td>string</td>
+<td>Name of the calling service</td>
+</tr>
+<tr>
+<td><code>pagination</code></td>
+<td>object</td>
+<td>Pagination parameters (for list endpoints)</td>
+</tr>
+<tr>
+<td><code>filterData</code></td>
+<td>object</td>
+<td>Filter criteria (for list endpoints)</td>
+</tr>
+<tr>
+<td>Additional fields</td>
+<td>varies</td>
+<td>Endpoint-specific data</td>
+</tr>
+</tbody>
+</table>
+<a id="response-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Response Structure<a href="#response-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>All endpoints return a consistent JSON response format:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td>object/array</td>
+<td>The actual response data</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td>&quot;ok&quot; or &quot;error&quot;</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>string</td>
+<td>Error message (empty if status is &quot;ok&quot;)</td>
+</tr>
+<tr>
+<td><code>requestId</code></td>
+<td>string</td>
+<td>Echo of the request ID</td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td>string</td>
+<td>Echo of the service name</td>
+</tr>
+</tbody>
+</table>
+<a id="order-management-endpoints" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Order Management Endpoints<a href="#order-management-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>These endpoints handle the creation, modification, and lifecycle management of trading orders.</p>
+<p><img src="../media/17_API_Endpoints_1.svg" alt="Mermaid Diagram"></p>
+<a id="order-creation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Order Creation<a href="#order-creation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Endpoint:</strong> <code>POST /crypto-wallet/order/create</code></p>
+<p>Creates a new trading order with validation for price, quantity, and timestamp fields.</p>
+<p><strong>Request Interface:</strong></p>
+<ul>
+<li>Extends <code>CreateRequest</code> with symbol and data fields</li>
+<li>Validates numeric inputs to prevent NaN values</li>
+<li>Formats price and quantity using <code>BinanceService</code></li>
+</ul>
+<p><strong>Key Operations:</strong></p>
+<ul>
+<li>Input validation for <code>price</code>, <code>quantity</code>, <code>timestamp</code></li>
+<li>Price formatting via <code>binanceService.formatPrice()</code></li>
+<li>Quantity formatting via <code>binanceService.formatQuantity()</code></li>
+<li>Database persistence via <code>orderOpenDbService.create()</code></li>
+</ul>
+<a id="order-modification" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Order Modification<a href="#order-modification" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Endpoint:</strong> <code>POST /crypto-wallet/order/edit/:id</code></p>
+<p>Updates an existing order with new price, quantity, or comment information.</p>
+<p><strong>Process Flow:</strong></p>
+<ol>
+<li>Retrieve existing order via <code>orderOpenDbService.findById()</code></li>
+<li>Validate new input parameters</li>
+<li>Format price and quantity values</li>
+<li>Update record via <code>orderOpenDbService.update()</code></li>
+</ol>
+<a id="order-closing" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Order Closing<a href="#order-closing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Endpoint:</strong> <code>POST /crypto-wallet/action/commit_close</code></p>
+<p>Closes an open order by creating a close record and marking the original order as ignored.</p>
+<p><strong>Close Process:</strong></p>
+<ol>
+<li>Validate close price is not NaN</li>
+<li>Calculate estimated revenue: <code>(closePrice - originalPrice) * quantity</code></li>
+<li>Create <code>OrderClose</code> record via <code>orderCloseDbService.create()</code></li>
+<li>Update original order with <code>ignore: true</code> and <code>orderCloseId</code></li>
+</ol>
+<p>The <code>commitClose</code> function demonstrates the two-phase close operation:</p>
+<a id="market-data-and-analysis-endpoints" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Market Data and Analysis Endpoints<a href="#market-data-and-analysis-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>These endpoints provide access to market data, technical indicators, and trading analysis information.</p>
+<a id="trading-information" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Trading Information<a href="#trading-information" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Endpoint:</strong> <code>POST /crypto-wallet/trade_info</code></p>
+<p>Returns comprehensive trading information including technical indicators, order statistics, and financial metrics.</p>
+<p><strong>Data Sources:</strong></p>
+<ul>
+<li>Short Range: EMA indicators via <code>shortRangeMathService.getEMA()</code></li>
+<li>Swing Range: MACD indicators via <code>swingRangeMathService.getMACD()</code></li>
+<li>Long Range: RSI indicators via <code>longRangeMathService.getRSI()</code></li>
+<li>Volume Data: SMA indicators via <code>volumeDataMathService.getSMA()</code></li>
+<li>Order Statistics: Open orders, average cost, total coins, revenue data</li>
+</ul>
+<p>The <code>getTradeInfo</code> function aggregates multiple data sources:</p>
+<a id="technical-analysis-status-endpoints" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Technical Analysis Status Endpoints<a href="#technical-analysis-status-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Four separate endpoints provide detailed technical analysis reports:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Service</th>
+<th>Indicator Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/crypto-wallet/status/short</code></td>
+<td><code>shortRangeMathService</code></td>
+<td>EMA (Exponential Moving Average)</td>
+</tr>
+<tr>
+<td><code>/crypto-wallet/status/swing</code></td>
+<td><code>swingRangeMathService</code></td>
+<td>MACD (Moving Average Convergence Divergence)</td>
+</tr>
+<tr>
+<td><code>/crypto-wallet/status/long</code></td>
+<td><code>longRangeMathService</code></td>
+<td>RSI (Relative Strength Index)</td>
+</tr>
+<tr>
+<td><code>/crypto-wallet/status/volume</code></td>
+<td><code>volumeDataMathService</code></td>
+<td>SMA (Simple Moving Average)</td>
+</tr>
+</tbody>
+</table>
+<p>Each endpoint follows the same pattern:</p>
+<ol>
+<li>Accept <code>StatusRequest</code> with symbol parameter</li>
+<li>Call corresponding service's report generation method</li>
+<li>Return formatted technical analysis data</li>
+</ol>
+<a id="market-data-retrieval" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Market Data Retrieval<a href="#market-data-retrieval" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Endpoint:</strong> <code>POST /crypto-wallet/candles/range</code></p>
+<p>Retrieves candlestick chart data for a specified time range and interval.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>startDate</code> / <code>endDate</code>: Date range for data retrieval</li>
+<li><code>interval</code>: Binance API interval type</li>
+<li><code>symbol</code>: Trading pair symbol</li>
+</ul>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>Uses <code>dayjs</code> for date parsing and conversion</li>
+<li>Calls <code>binanceService.getChartCandles()</code> with date range and interval</li>
+<li>Returns raw candlestick data from Binance API</li>
+</ul>
+<a id="order-history-and-reporting-endpoints" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Order History and Reporting Endpoints<a href="#order-history-and-reporting-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>These endpoints provide access to closed orders, hidden orders, and generate various types of reports.</p>
+<p><img src="../media/17_API_Endpoints_2.svg" alt="Mermaid Diagram"></p>
+<a id="order-close-management" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Order Close Management<a href="#order-close-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Revert Closed Order:</strong> <code>POST /crypto-wallet/order_close/revert/:id</code></p>
+<p>Reopens a previously closed order by:</p>
+<ol>
+<li>Validating the close record is not already ignored</li>
+<li>Verifying the original order is currently ignored</li>
+<li>Setting original order <code>ignore: false</code> and clearing <code>orderCloseId</code></li>
+<li>Setting close record <code>ignore: true</code></li>
+</ol>
+<p>This implements a two-phase reversal operation ensuring data consistency.</p>
+<a id="report-generation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Report Generation<a href="#report-generation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Order Report:</strong> <code>POST /crypto-wallet/report/order/one/:id</code></p>
+<p>Generates a markdown-formatted report for a single order using <code>OrderOpenDbService.generateOrderReport()</code>.</p>
+<p><strong>Order History Report:</strong> <code>POST /crypto-wallet/report/history</code></p>
+<p>Generates a comprehensive markdown table of order history for a symbol using <code>OrderOpenDbService.generateOrderHistoryReport()</code>.</p>
+<p>The report generation methods in <code>OrderOpenDbService</code> demonstrate markdown formatting:</p>
+<a id="error-handling-and-logging" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Handling and Logging<a href="#error-handling-and-logging" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>All endpoints implement consistent error handling with:</p>
+<ul>
+<li>Try-catch blocks around business logic</li>
+<li>Structured logging via <code>pinolog</code> logger</li>
+<li>Performance timing with <code>console.time()</code>/<code>console.timeEnd()</code></li>
+<li>Standardized error response format</li>
+</ul>
+<p><strong>Error Response Pattern:</strong></p>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;status&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;error&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;error&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;Error message string&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;requestId&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;original-request-id&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;serviceName&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;original-service-name&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The error handling uses <code>functools-kit</code> utilities for error processing:</p>
+<ul>
+<li><code>errorData()</code>: Extracts structured error information</li>
+<li><code>getErrorMessage()</code>: Formats user-friendly error messages</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#api-endpoints"><span>API <wbr/>Endpoints</span></a><ul><li><a href="#api-architecture-and-request-structure"><span>API <wbr/>Architecture and <wbr/>Request <wbr/>Structure</span></a></li><li><ul><li><a href="#request-structure"><span>Request <wbr/>Structure</span></a></li><li><a href="#response-structure"><span>Response <wbr/>Structure</span></a></li></ul></li><li><a href="#order-management-endpoints"><span>Order <wbr/>Management <wbr/>Endpoints</span></a></li><li><ul><li><a href="#order-creation"><span>Order <wbr/>Creation</span></a></li><li><a href="#order-modification"><span>Order <wbr/>Modification</span></a></li><li><a href="#order-closing"><span>Order <wbr/>Closing</span></a></li></ul></li><li><a href="#market-data-and-analysis-endpoints"><span>Market <wbr/>Data and <wbr/>Analysis <wbr/>Endpoints</span></a></li><li><ul><li><a href="#trading-information"><span>Trading <wbr/>Information</span></a></li><li><a href="#technical-analysis-status-endpoints"><span>Technical <wbr/>Analysis <wbr/>Status <wbr/>Endpoints</span></a></li><li><a href="#market-data-retrieval"><span>Market <wbr/>Data <wbr/>Retrieval</span></a></li></ul></li><li><a href="#order-history-and-reporting-endpoints"><span>Order <wbr/>History and <wbr/>Reporting <wbr/>Endpoints</span></a></li><li><ul><li><a href="#order-close-management"><span>Order <wbr/>Close <wbr/>Management</span></a></li><li><a href="#report-generation"><span>Report <wbr/>Generation</span></a></li></ul></li><li><a href="#error-handling-and-logging"><span>Error <wbr/>Handling and <wbr/>Logging</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

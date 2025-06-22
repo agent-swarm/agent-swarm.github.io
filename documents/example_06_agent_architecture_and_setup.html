@@ -1,0 +1,141 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/06_agent_architecture_and_setup | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_06_agent_architecture_and_setup.html">example/06_agent_architecture_and_setup</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="agent-architecture-and-setup" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Agent Architecture and Setup<a href="#agent-architecture-and-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document explains the configuration and architecture of the AI agent system built on the <code>agent-swarm-kit</code> framework. It covers the Redis-based persistence layer, agent registration patterns, and session management infrastructure that enables the cryptocurrency consultation agents to operate.</p>
+<p>For information about specific agent implementations and their capabilities, see <a href="example_07_cryptocurrency_consultant_agent.html">Cryptocurrency Consultant Agents</a>. For details about agent routing and navigation between different specialists, see <a href="example_08_agent_navigation_and_routing.html">Agent Navigation and Routing</a>.</p>
+<a id="framework-configuration-and-setup" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Framework Configuration and Setup<a href="#framework-configuration-and-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The agent system is built on the <code>agent-swarm-kit</code> framework, configured through the main setup file with Redis persistence and logging infrastructure.</p>
+<a id="core-framework-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Core Framework Configuration<a href="#core-framework-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system initializes with specific configuration parameters and custom adapters:</p>
+<p><img src="../media/6_Agent_Architecture_and_Setup_0.svg" alt="Mermaid Diagram"></p>
+<a id="chat-session-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Chat Session Configuration<a href="#chat-session-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>ChatInstance</code> is extended with single-run protection to prevent concurrent message processing:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Configuration</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Chat.useChatAdapter</code></td>
+<td><code>singlerun(sendMessage)</code></td>
+<td>Prevents concurrent message processing</td>
+</tr>
+<tr>
+<td><code>swarm.loggerService</code></td>
+<td><code>pinolog</code> logger</td>
+<td>Centralized logging for agent operations</td>
+</tr>
+<tr>
+<td><code>Logger.useClientAdapter</code></td>
+<td>Per-client file logging</td>
+<td>Individual chat session logs</td>
+</tr>
+</tbody>
+</table>
+<a id="persistence-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Persistence Architecture<a href="#persistence-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system uses Redis as the primary persistence layer with multiple specialized adapters for different data types.</p>
+<a id="redis-persistence-adapters" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Redis Persistence Adapters<a href="#redis-persistence-adapters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/6_Agent_Architecture_and_Setup_1.svg" alt="Mermaid Diagram"></p>
+<a id="ttl-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">TTL Configuration<a href="#ttl-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Different persistence layers have specific time-to-live configurations:</p>
+<table>
+<thead>
+<tr>
+<th>Adapter</th>
+<th>TTL</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PersistEmbedding</code></td>
+<td>604800s (1 week)</td>
+<td>Cache AI embeddings</td>
+</tr>
+<tr>
+<td><code>History</code></td>
+<td>900s (15 minutes)</td>
+<td>Chat message history</td>
+</tr>
+<tr>
+<td><code>PersistAlive</code></td>
+<td>600s (10 minutes)</td>
+<td>Client online status</td>
+</tr>
+</tbody>
+</table>
+<a id="agent-registration-and-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Registration and Configuration<a href="#agent-registration-and-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Agents are registered using the <code>addAgent</code> function with specific configuration objects that define their behavior, tools, and dependencies.</p>
+<a id="agent-configuration-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Configuration Structure<a href="#agent-configuration-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/6_Agent_Architecture_and_Setup_2.svg" alt="Mermaid Diagram"></p>
+<a id="agent-callback-system" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Callback System<a href="#agent-callback-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Agents can define callback functions for error handling and lifecycle events:</p>
+<table>
+<thead>
+<tr>
+<th>Callback</th>
+<th>Purpose</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onToolError</code></td>
+<td>Handle tool execution errors</td>
+<td>Logs errors to file with client context</td>
+</tr>
+<tr>
+<td><code>onResurrect</code></td>
+<td>Handle agent resurrection</td>
+<td>Sends notification to Telegram users</td>
+</tr>
+</tbody>
+</table>
+<a id="chat-session-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Chat Session Management<a href="#chat-session-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system manages chat sessions through the <code>Chat</code> API with support for multiple client types and swarm configurations.</p>
+<a id="session-lifecycle" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session Lifecycle<a href="#session-lifecycle" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><img src="../media/6_Agent_Architecture_and_Setup_3.svg" alt="Mermaid Diagram"></p>
+<a id="integration-points" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Integration Points<a href="#integration-points" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The agent system integrates with multiple interfaces:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Client ID Pattern</th>
+<th>Event Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WebSocket</td>
+<td><code>web-{chatId}</code></td>
+<td>Token streaming, completion events</td>
+</tr>
+<tr>
+<td>Telegram</td>
+<td><code>telegram-{chatId}</code></td>
+<td>Message formatting, HTML conversion</td>
+</tr>
+</tbody>
+</table>
+<a id="error-handling-and-logging" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Error Handling and Logging<a href="#error-handling-and-logging" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system includes comprehensive error handling and logging:</p>
+<p><img src="../media/6_Agent_Architecture_and_Setup_4.svg" alt="Mermaid Diagram"></p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#agent-architecture-and-setup"><span>Agent <wbr/>Architecture and <wbr/>Setup</span></a><ul><li><a href="#framework-configuration-and-setup"><span>Framework <wbr/>Configuration and <wbr/>Setup</span></a></li><li><ul><li><a href="#core-framework-configuration"><span>Core <wbr/>Framework <wbr/>Configuration</span></a></li><li><a href="#chat-session-configuration"><span>Chat <wbr/>Session <wbr/>Configuration</span></a></li></ul></li><li><a href="#persistence-architecture"><span>Persistence <wbr/>Architecture</span></a></li><li><ul><li><a href="#redis-persistence-adapters"><span>Redis <wbr/>Persistence <wbr/>Adapters</span></a></li><li><a href="#ttl-configuration"><span>TTL <wbr/>Configuration</span></a></li></ul></li><li><a href="#agent-registration-and-configuration"><span>Agent <wbr/>Registration and <wbr/>Configuration</span></a></li><li><ul><li><a href="#agent-configuration-structure"><span>Agent <wbr/>Configuration <wbr/>Structure</span></a></li><li><a href="#agent-callback-system"><span>Agent <wbr/>Callback <wbr/>System</span></a></li></ul></li><li><a href="#chat-session-management"><span>Chat <wbr/>Session <wbr/>Management</span></a></li><li><ul><li><a href="#session-lifecycle"><span>Session <wbr/>Lifecycle</span></a></li><li><a href="#integration-points"><span>Integration <wbr/>Points</span></a></li><li><a href="#error-handling-and-logging"><span>Error <wbr/>Handling and <wbr/>Logging</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

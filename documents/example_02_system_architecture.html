@@ -1,0 +1,137 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/02_system_architecture | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_02_system_architecture.html">example/02_system_architecture</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="system-architecture" class="tsd-anchor"></a><h1 class="tsd-anchor-link">System Architecture<a href="#system-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document provides a high-level overview of the cryptocurrency trading signals platform's core architectural components, dependency injection system, and how the major subsystems interact to deliver AI-powered trading insights and automated signal processing.</p>
+<p>For detailed information about the AI agent swarm system, see <a href="example_05_ai_agent_swarm_system.html">AI Agent Swarm System</a>. For specific web service implementations and external integrations, see <a href="example_14_web_services_and_external_integrations.html">Web Services and External Integrations</a>. For frontend application architecture, see <a href="example_18_frontend_applications.html">Frontend Applications</a>.</p>
+<a id="core-system-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core System Overview<a href="#core-system-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform follows a service-oriented architecture built around a custom IoC (Inversion of Control) container that manages dependency injection across all system components. The architecture separates concerns into distinct service layers, each responsible for specific business functions.</p>
+<p><img src="../media/2_System_Architecture_0.svg" alt="Mermaid Diagram"></p>
+<a id="dependency-injection-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Dependency Injection Architecture<a href="#dependency-injection-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system uses a custom dependency injection framework centered around the <code>TYPES</code> symbol registry and service provider pattern. All services are registered during application bootstrap and resolved through the IoC container.</p>
+<p><img src="../media/2_System_Architecture_1.svg" alt="Mermaid Diagram"></p>
+<a id="service-layer-organization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Service Layer Organization<a href="#service-layer-organization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Services are organized into logical categories, each handling specific aspects of the trading platform's functionality. This modular approach enables clear separation of concerns and testability.</p>
+<table>
+<thead>
+<tr>
+<th>Service Category</th>
+<th>Purpose</th>
+<th>Key Services</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Base Services</strong></td>
+<td>Core infrastructure and utilities</td>
+<td><code>BootstrapService</code>, <code>ErrorService</code>, <code>MongooseService</code>, <code>RedisService</code></td>
+</tr>
+<tr>
+<td><strong>API Services</strong></td>
+<td>External API communication</td>
+<td><code>MastodonApiService</code>, <code>TelegramApiService</code></td>
+</tr>
+<tr>
+<td><strong>Math Services</strong></td>
+<td>Technical analysis calculations</td>
+<td><code>LongRangeMathService</code>, <code>SwingRangeMathService</code>, <code>ShortRangeMathService</code></td>
+</tr>
+<tr>
+<td><strong>Database Services</strong></td>
+<td>Data persistence and retrieval</td>
+<td><code>SignalDbService</code>, <code>OrderOpenDbService</code>, <code>OrderCloseDbService</code></td>
+</tr>
+<tr>
+<td><strong>Web Services</strong></td>
+<td>HTTP integrations and webhooks</td>
+<td><code>MastodonWebService</code>, <code>TelegramWebService</code></td>
+</tr>
+<tr>
+<td><strong>Logic Services</strong></td>
+<td>Business rule processing</td>
+<td><code>SignalLogicService</code>, <code>SignalValidationService</code></td>
+</tr>
+<tr>
+<td><strong>Job Services</strong></td>
+<td>Automated background processing</td>
+<td><code>SignalJobService</code></td>
+</tr>
+<tr>
+<td><strong>Report Services</strong></td>
+<td>Data analysis and reporting</td>
+<td><code>SignalReportService</code>, <code>BalanceReportService</code>, <code>HumanReportService</code></td>
+</tr>
+</tbody>
+</table>
+<a id="configuration-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Configuration Management<a href="#configuration-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system uses environment-based configuration with fallback defaults, centralized in the params module. Configuration covers database connections, external API credentials, trading parameters, and application feature flags.</p>
+<p><img src="../media/2_System_Architecture_2.svg" alt="Mermaid Diagram"></p>
+<a id="service-integration-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Service Integration Patterns<a href="#service-integration-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The architecture implements several key patterns for service integration and data flow. Services communicate through well-defined interfaces and dependency injection, enabling loose coupling and testability.</p>
+<p><img src="../media/2_System_Architecture_3.svg" alt="Mermaid Diagram"></p>
+<a id="automated-processing-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Automated Processing Architecture<a href="#automated-processing-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system includes automated job processing capabilities that run signal analysis and execution logic on configurable intervals. The <code>SignalJobService</code> orchestrates the automated trading workflow.</p>
+<p><img src="../media/2_System_Architecture_4.svg" alt="Mermaid Diagram"></p>
+<a id="data-model-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Data Model Integration<a href="#data-model-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system defines clear data transfer objects (DTOs) and database models for all major entities. The architecture supports both transactional data (orders, signals) and analytical data (reports, metrics).</p>
+<table>
+<thead>
+<tr>
+<th>Entity Type</th>
+<th>DTO Interface</th>
+<th>Database Service</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trading Signals</strong></td>
+<td><code>ISignalDto</code></td>
+<td><code>SignalDbService</code></td>
+<td>Buy/sell signal management</td>
+</tr>
+<tr>
+<td><strong>Open Orders</strong></td>
+<td><code>IOrderOpenDto</code></td>
+<td><code>OrderOpenDbService</code></td>
+<td>Active trade positions</td>
+</tr>
+<tr>
+<td><strong>Closed Orders</strong></td>
+<td><code>IOrderCloseDto</code></td>
+<td><code>OrderCloseDbService</code></td>
+<td>Completed trades</td>
+</tr>
+<tr>
+<td><strong>Information</strong></td>
+<td><code>IInfoDto</code></td>
+<td><code>InfoDbService</code></td>
+<td>System events and logs</td>
+</tr>
+<tr>
+<td><strong>Reports</strong></td>
+<td><code>IReportDto</code></td>
+<td><code>ReportDbService</code></td>
+<td>Analysis and insights</td>
+</tr>
+</tbody>
+</table>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#system-architecture"><span>System <wbr/>Architecture</span></a><ul><li><a href="#core-system-overview"><span>Core <wbr/>System <wbr/>Overview</span></a></li><li><a href="#dependency-injection-architecture"><span>Dependency <wbr/>Injection <wbr/>Architecture</span></a></li><li><a href="#service-layer-organization"><span>Service <wbr/>Layer <wbr/>Organization</span></a></li><li><a href="#configuration-management"><span>Configuration <wbr/>Management</span></a></li><li><a href="#service-integration-patterns"><span>Service <wbr/>Integration <wbr/>Patterns</span></a></li><li><a href="#automated-processing-architecture"><span>Automated <wbr/>Processing <wbr/>Architecture</span></a></li><li><a href="#data-model-integration"><span>Data <wbr/>Model <wbr/>Integration</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

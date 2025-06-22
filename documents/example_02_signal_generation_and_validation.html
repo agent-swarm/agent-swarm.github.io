@@ -1,0 +1,160 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/02_signal_generation_and_validation | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_02_signal_generation_and_validation.html">example/02_signal_generation_and_validation</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="signal-generation-and-validation" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Signal Generation and Validation<a href="#signal-generation-and-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document covers the signal generation and validation system, which is responsible for determining when to create new trading signals and when to close existing ones. The system implements automated validation rules based on technical analysis indicators, price movements, and timing constraints to ensure safe and profitable trading decisions.</p>
+<p>For information about signal execution and management after validation, see <a href="example_11_signal_logic_and_management.html">Signal Logic and Management</a>. For details on the automated job processing that triggers signal validation, see <a href="example_12_automated_job_processing.html">Automated Job Processing</a>.</p>
+<a id="purpose-and-scope" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Purpose and Scope<a href="#purpose-and-scope" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The signal validation system acts as the decision-making engine that determines whether trading signals should be executed or resolved. It analyzes market conditions, existing positions, and technical indicators to make data-driven trading decisions while implementing risk management rules to prevent losses.</p>
+<a id="signal-data-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Signal Data Structure<a href="#signal-data-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system works with standardized signal data structures that define the properties and state of trading signals:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>symbol</code></td>
+<td>string</td>
+<td>Trading pair (e.g., &quot;BTCUSDT&quot;)</td>
+</tr>
+<tr>
+<td><code>quantity</code></td>
+<td>number</td>
+<td>Amount to trade</td>
+</tr>
+<tr>
+<td><code>buyPrice</code></td>
+<td>number</td>
+<td>Entry price for the position</td>
+</tr>
+<tr>
+<td><code>sellPrice</code></td>
+<td>number</td>
+<td>Target exit price</td>
+</tr>
+<tr>
+<td><code>stopLossPrice</code></td>
+<td>number</td>
+<td>Stop loss price (optional)</td>
+</tr>
+<tr>
+<td><code>possibilityPercent</code></td>
+<td>number</td>
+<td>Confidence percentage (optional)</td>
+</tr>
+<tr>
+<td><code>resolved</code></td>
+<td>boolean</td>
+<td>Whether signal is closed</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>boolean</td>
+<td>Whether to ignore this signal</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Date</td>
+<td>Signal creation timestamp</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td>string</td>
+<td>Additional information</td>
+</tr>
+</tbody>
+</table>
+<a id="signal-validation-logic" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Signal Validation Logic<a href="#signal-validation-logic" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="execute-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Execute Validation<a href="#execute-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>validateExecute</code> method determines whether a new trading signal should be created. It implements multiple validation layers:</p>
+<p><img src="../media/10_Signal_Generation_and_Validation_1.svg" alt="Mermaid Diagram"></p>
+<p>The validation process includes:</p>
+<ol>
+<li><strong>Time-based constraints</strong>: Prevents rapid signal generation by enforcing waiting periods based on price movement direction</li>
+<li><strong>Technical analysis validation</strong>: Uses EMA signals to confirm market conditions favor buying</li>
+<li><strong>Price range conflicts</strong>: Ensures new signals don't interfere with existing active positions</li>
+</ol>
+<a id="ema-signal-analysis" class="tsd-anchor"></a><h3 class="tsd-anchor-link">EMA Signal Analysis<a href="#ema-signal-analysis" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system analyzes EMA (Exponential Moving Average) signals to determine market sentiment:</p>
+<p><img src="../media/10_Signal_Generation_and_Validation_2.svg" alt="Mermaid Diagram"></p>
+<p>The <code>validateShouldExecute</code> function implements these rules:</p>
+<ul>
+<li>Requires at least 1 strong BUY signal OR 1 medium BUY + 2 additional signals</li>
+<li>Calculates weighted strength scores for BUY vs SELL signals</li>
+<li>Only executes when BUY strength exceeds SELL strength</li>
+</ul>
+<a id="resolve-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Resolve Validation<a href="#resolve-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>validateResolve</code> method determines when to close existing positions:</p>
+<p><img src="../media/10_Signal_Generation_and_Validation_3.svg" alt="Mermaid Diagram"></p>
+<p>The resolution logic:</p>
+<ul>
+<li>Calculates current revenue based on market price vs entry price</li>
+<li>Compares against minimum required revenue (based on <code>CC_LADDER_TRADE_REVENUE</code>)</li>
+<li>Only resolves signals that have reached profitability targets</li>
+</ul>
+<a id="configuration-parameters" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Configuration Parameters<a href="#configuration-parameters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The validation system uses several configuration parameters to control trading behavior:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Purpose</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CC_LADDER_FAIL_HOURS</code></td>
+<td>Price fall timeout</td>
+<td>Prevents rapid reentry after price drops</td>
+</tr>
+<tr>
+<td><code>CC_LADDER_GROWTH_HOURS</code></td>
+<td>Price growth timeout</td>
+<td>Prevents rapid reentry after price rises</td>
+</tr>
+<tr>
+<td><code>CC_LADDER_STEP_PERCENT</code></td>
+<td>Price range buffer</td>
+<td>Prevents overlapping signal ranges</td>
+</tr>
+<tr>
+<td><code>CC_LADDER_TRADE_REVENUE</code></td>
+<td>Minimum profit threshold</td>
+<td>Defines when to close profitable positions</td>
+</tr>
+</tbody>
+</table>
+<p>These parameters implement a &quot;ladder&quot; trading strategy that spaces out entries and ensures minimum profit margins.</p>
+<a id="integration-points" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Integration Points<a href="#integration-points" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The validation system integrates with several other components:</p>
+<ul>
+<li><strong>Technical Analysis Services</strong>: Uses <code>ShortRangeMathService</code> for EMA signal analysis</li>
+<li><strong>Market Data</strong>: Integrates with <code>BinanceService</code> for real-time price and exchange information</li>
+<li><strong>Signal Database</strong>: Stores and retrieves signal data through <code>SignalDbService</code></li>
+<li><strong>Price Formatting</strong>: Uses <code>roundTicks</code> utility for proper price precision</li>
+</ul>
+<p>This system forms the core decision-making engine that determines when and how trading signals are executed and resolved within the broader trading platform.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#signal-generation-and-validation"><span>Signal <wbr/>Generation and <wbr/>Validation</span></a><ul><li><a href="#purpose-and-scope"><span>Purpose and <wbr/>Scope</span></a></li><li><a href="#signal-data-structure"><span>Signal <wbr/>Data <wbr/>Structure</span></a></li><li><a href="#signal-validation-logic"><span>Signal <wbr/>Validation <wbr/>Logic</span></a></li><li><ul><li><a href="#execute-validation"><span>Execute <wbr/>Validation</span></a></li><li><a href="#ema-signal-analysis"><span>EMA <wbr/>Signal <wbr/>Analysis</span></a></li><li><a href="#resolve-validation"><span>Resolve <wbr/>Validation</span></a></li></ul></li><li><a href="#configuration-parameters"><span>Configuration <wbr/>Parameters</span></a></li><li><a href="#integration-points"><span>Integration <wbr/>Points</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

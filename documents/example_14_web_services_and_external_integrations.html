@@ -1,0 +1,101 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/14_web_services_and_external_integrations | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_14_web_services_and_external_integrations.html">example/14_web_services_and_external_integrations</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="web-services-and-external-integrations" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Web Services and External Integrations<a href="#web-services-and-external-integrations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This document covers the web server infrastructure, external API integrations, and web service architecture of the cryptocurrency trading signals platform. It details how the system exposes HTTP endpoints, communicates with external services like Telegram and Binance, and handles webhook notifications.</p>
+<p>For information about the AI agent system that processes user requests through web interfaces, see <a href="example_05_ai_agent_swarm_system.html">AI Agent Swarm System</a>. For details about the signal processing pipeline that these web services support, see <a href="example_09_signal_processing_pipeline.html">Signal Processing Pipeline</a>.</p>
+<a id="web-server-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Web Server Architecture<a href="#web-server-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform uses a Hono-based web server as its primary HTTP service layer, running on port 30050. The server provides REST API endpoints for frontend applications and handles WebSocket connections for real-time communication.</p>
+<a id="external-service-integrations" class="tsd-anchor"></a><h2 class="tsd-anchor-link">External Service Integrations<a href="#external-service-integrations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform integrates with multiple external services for market data, notifications, and AI processing. Each integration is encapsulated in dedicated service classes that handle authentication, rate limiting, and error recovery.</p>
+<a id="api-endpoints-and-routes" class="tsd-anchor"></a><h2 class="tsd-anchor-link">API Endpoints and Routes<a href="#api-endpoints-and-routes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The web server exposes multiple API endpoints organized by functionality. Each route module handles specific aspects of the trading platform.</p>
+<a id="route-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Route Structure<a href="#route-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Purpose</th>
+<th>Key Endpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/health</code></td>
+<td>Health monitoring</td>
+<td>Health check endpoint</td>
+</tr>
+<tr>
+<td><code>/session</code></td>
+<td>WebSocket sessions</td>
+<td>Real-time communication</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td>System status</td>
+<td>Platform status information</td>
+</tr>
+<tr>
+<td><code>/openai</code></td>
+<td>AI integration</td>
+<td>Agent communication endpoints</td>
+</tr>
+<tr>
+<td><code>/info</code></td>
+<td>System information</td>
+<td>Platform metadata</td>
+</tr>
+<tr>
+<td><code>/price</code></td>
+<td>Market data</td>
+<td>Price and market information</td>
+</tr>
+<tr>
+<td><code>/wallet</code></td>
+<td>Trading operations</td>
+<td>Order management, balance</td>
+</tr>
+<tr>
+<td><code>/report</code></td>
+<td>Market reports</td>
+<td>Signal and analysis reports</td>
+</tr>
+</tbody>
+</table>
+<a id="error-handling-and-monitoring" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Handling and Monitoring<a href="#error-handling-and-monitoring" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform implements comprehensive error handling through the <code>ErrorService</code>, which captures global exceptions and provides error reporting mechanisms.</p>
+<a id="service-level-error-handling" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Service-Level Error Handling<a href="#service-level-error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Individual services implement specific error handling patterns:</p>
+<ul>
+<li><strong>Telegram Service</strong>: Logs errors with context data and continues operation</li>
+<li><strong>Webhook Service</strong>: Includes retry logic and detailed error logging</li>
+<li><strong>Signal Processing</strong>: Handles tool errors and provides fallback mechanisms</li>
+</ul>
+<a id="deployment-and-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Deployment and Configuration<a href="#deployment-and-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform uses Docker for deployment with health checks and environment-based configuration.</p>
+<a id="environment-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Environment Configuration<a href="#environment-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The platform uses environment variables for configuration, with prefix-based loading for frontend applications:</p>
+<ul>
+<li><code>CC_TELEGRAM_TOKEN</code> - Telegram bot authentication</li>
+<li><code>CC_TELEGRAM_CHANNEL</code> - Target Telegram channel</li>
+<li><code>CC_WEBHOOK_URL</code> - External webhook endpoint</li>
+<li><code>CC_SIGNAL_CHECK_TTL</code> - Signal processing timeout</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#web-services-and-external-integrations"><span>Web <wbr/>Services and <wbr/>External <wbr/>Integrations</span></a><ul><li><a href="#web-server-architecture"><span>Web <wbr/>Server <wbr/>Architecture</span></a></li><li><a href="#external-service-integrations"><span>External <wbr/>Service <wbr/>Integrations</span></a></li><li><a href="#api-endpoints-and-routes"><span>API <wbr/>Endpoints and <wbr/>Routes</span></a></li><li><ul><li><a href="#route-structure"><span>Route <wbr/>Structure</span></a></li></ul></li><li><a href="#error-handling-and-monitoring"><span>Error <wbr/>Handling and <wbr/>Monitoring</span></a></li><li><ul><li><a href="#service-level-error-handling"><span>Service-<wbr/>Level <wbr/>Error <wbr/>Handling</span></a></li></ul></li><li><a href="#deployment-and-configuration"><span>Deployment and <wbr/>Configuration</span></a></li><li><ul><li><a href="#environment-configuration"><span>Environment <wbr/>Configuration</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>
