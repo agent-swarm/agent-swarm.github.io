@@ -11,7 +11,7 @@
 </ul>
 <p>All core API functions are exported from the main entry point and can be imported directly from the <code>agent-swarm-kit</code> package.</p>
 <a id="core-api-function-categories" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core API Function Categories<a href="#core-api-function-categories" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="setup-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Setup Functions<a href="#setup-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The setup functions define the building blocks of the agent swarm system. These functions register schemas and configurations that are later resolved at runtime through the dependency injection system.</p>
-<p><img src="../media/32_Core_API_Functions_0.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_0.svg" alt="Mermaid Diagram"></p>
 <table>
 <thead>
 <tr>
@@ -55,7 +55,7 @@
 </tbody>
 </table>
 <a id="session-management-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session Management Functions<a href="#session-management-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Session management functions create and control client sessions within swarms. The <code>session()</code> function is the primary entry point for establishing a connection between a client and a swarm.</p>
-<p><img src="../media/32_Core_API_Functions_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_1.svg" alt="Mermaid Diagram"></p>
 <p>The <code>session()</code> function returns an object with four key methods:</p>
 <table>
 <thead>
@@ -94,7 +94,7 @@
 </tbody>
 </table>
 <a id="execution-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Execution Functions<a href="#execution-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Execution functions provide different ways to interact with agents and process messages. These functions offer varying levels of control over how messages are processed and whether they affect conversation history.</p>
-<p><img src="../media/32_Core_API_Functions_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_2.svg" alt="Mermaid Diagram"></p>
 <table>
 <thead>
 <tr>
@@ -138,9 +138,9 @@
 </tbody>
 </table>
 <a id="message-commit-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Message Commit Functions<a href="#message-commit-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Commit functions provide fine-grained control over conversation history by allowing manual insertion of specific message types. These functions bypass normal execution flow and directly manipulate the message history.</p>
-<p><img src="../media/32_Core_API_Functions_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_3.svg" alt="Mermaid Diagram"></p>
 <a id="navigation-functions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Functions<a href="#navigation-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Navigation functions control agent transitions within swarms. These functions change which agent is currently active for processing messages in a client session.</p>
-<p><img src="../media/32_Core_API_Functions_4.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_4.svg" alt="Mermaid Diagram"></p>
 <table>
 <thead>
 <tr>
@@ -172,7 +172,7 @@
 </tbody>
 </table>
 <a id="api-function-implementation-mapping" class="tsd-anchor"></a><h2 class="tsd-anchor-link">API Function Implementation Mapping<a href="#api-function-implementation-mapping" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>This diagram shows how the core API functions map to their underlying implementation classes and services:</p>
-<p><img src="../media/32_Core_API_Functions_5.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_5.svg" alt="Mermaid Diagram"></p>
 <a id="function-usage-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Function Usage Patterns<a href="#function-usage-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="basic-agent-and-swarm-setup" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Basic Agent and Swarm Setup<a href="#basic-agent-and-swarm-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="typescript"><span class="hl-9">// Define completion provider</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">completion</span><span class="hl-1"> = </span><span class="hl-0">addCompletion</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">completionName:</span><span class="hl-1"> </span><span class="hl-3">&quot;my-completion&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">getCompletion</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">async</span><span class="hl-1"> (</span><span class="hl-2">args</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> { </span><span class="hl-9">/* implementation */</span><span class="hl-1"> }</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-9">// Define tools</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">navigateTool</span><span class="hl-1"> = </span><span class="hl-0">addTool</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">toolName:</span><span class="hl-1"> </span><span class="hl-3">&quot;navigate-tool&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">call</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">async</span><span class="hl-1"> ({ </span><span class="hl-2">clientId</span><span class="hl-1">, </span><span class="hl-2">params</span><span class="hl-1"> }) </span><span class="hl-4">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-0">changeToAgent</span><span class="hl-1">(</span><span class="hl-2">params</span><span class="hl-1">.</span><span class="hl-2">targetAgent</span><span class="hl-1">, </span><span class="hl-2">clientId</span><span class="hl-1">);</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-2">function:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">name:</span><span class="hl-1"> </span><span class="hl-3">&quot;navigate-tool&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">description:</span><span class="hl-1"> </span><span class="hl-3">&quot;Navigate to another agent&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">parameters:</span><span class="hl-1"> { </span><span class="hl-9">/* schema */</span><span class="hl-1"> }</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-9">// Define agents</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">triageAgent</span><span class="hl-1"> = </span><span class="hl-0">addAgent</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">agentName:</span><span class="hl-1"> </span><span class="hl-3">&quot;triage-agent&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">completion</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">prompt:</span><span class="hl-1"> </span><span class="hl-3">&quot;You are a triage agent...&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">tools:</span><span class="hl-1"> [</span><span class="hl-2">navigateTool</span><span class="hl-1">]</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">salesAgent</span><span class="hl-1"> = </span><span class="hl-0">addAgent</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">agentName:</span><span class="hl-1"> </span><span class="hl-3">&quot;sales-agent&quot;</span><span class="hl-1">, </span><br/><span class="hl-1">  </span><span class="hl-2">completion</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">prompt:</span><span class="hl-1"> </span><span class="hl-3">&quot;You are a sales agent...&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">tools:</span><span class="hl-1"> [</span><span class="hl-2">navigateTool</span><span class="hl-1">]</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-9">// Define swarm</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">mySwarm</span><span class="hl-1"> = </span><span class="hl-0">addSwarm</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">swarmName:</span><span class="hl-1"> </span><span class="hl-3">&quot;customer-service&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">agentList:</span><span class="hl-1"> [</span><span class="hl-2">triageAgent</span><span class="hl-1">, </span><span class="hl-2">salesAgent</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-2">defaultAgent:</span><span class="hl-1"> </span><span class="hl-2">triageAgent</span><br/><span class="hl-1">});</span>
 </code><button type="button">Copy</button></pre>
 
@@ -183,7 +183,7 @@
 </code><button type="button">Copy</button></pre>
 
 <a id="error-handling-and-validation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Handling and Validation<a href="#error-handling-and-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The core API functions include built-in validation and error handling mechanisms:</p>
-<p><img src="../media/32_Core_API_Functions_6.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_6.svg" alt="Mermaid Diagram"></p>
 <p>Common validation patterns include:</p>
 <ul>
 <li>Session existence checking before operations</li>
@@ -193,7 +193,7 @@
 <li>Client ID format validation</li>
 </ul>
 <a id="context-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Context Management<a href="#context-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Core API functions operate within execution contexts managed by the dependency injection system:</p>
-<p><img src="../media/32_Core_API_Functions_7.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C32_Core_API_Functions_7.svg" alt="Mermaid Diagram"></p>
 <p>The context system ensures that:</p>
 <ul>
 <li>Function calls have access to the correct client and agent context</li>

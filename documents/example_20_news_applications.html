@@ -1,9 +1,9 @@
 <!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>example/20_news_applications | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="example_20_news_applications.html">example/20_news_applications</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="news-application" class="tsd-anchor"></a><h1 class="tsd-anchor-link">News Application<a href="#news-application" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><a id="purpose-and-scope" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Purpose and Scope<a href="#purpose-and-scope" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The News Application is a React-based frontend that displays market reports and trading signal information within the signals platform. It provides a comprehensive interface for viewing detailed signal analysis, market reports, and technical indicators through a tabbed modal system. The application presents signal recommendations, market analysis, and diagnostic information in markdown format with export capabilities.</p>
 <p>For information about the backend signal processing that generates this data, see <a href="example_09_signal_processing_pipeline.html">Signal Processing Pipeline</a>. For wallet and order management functionality, see <a href="example_19_wallet_applications.html">Wallet Application</a>.</p>
 <a id="application-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Application Architecture<a href="#application-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The News Application follows a modal-based architecture using the <code>react-declarative</code> framework. The main entry point is through the <code>useOrderInfoView</code> hook, which manages a multi-tabbed modal system for displaying signal information and related reports.</p>
-<p><img src="../media/20_News_Application_0.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C20_News_Application_0.svg" alt="Mermaid Diagram"></p>
 <a id="signal-information-display-system" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Signal Information Display System<a href="#signal-information-display-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The core of the News Application is the signal information display system, which presents trading signal data through a structured form interface defined in <code>info_fields.tsx</code>. The system displays signal properties, recommendations, and diagnostic information.</p>
-<p><img src="../media/20_News_Application_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C20_News_Application_1.svg" alt="Mermaid Diagram"></p>
 <p>The main signal information includes:</p>
 <table>
 <thead>
@@ -52,7 +52,7 @@
 </tbody>
 </table>
 <a id="report-types-and-tab-system" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Report Types and Tab System<a href="#report-types-and-tab-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The application supports multiple report types through a dynamic tab system. Each report type provides specialized market analysis focused on different trading strategies and technical indicators.</p>
-<p><img src="../media/20_News_Application_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C20_News_Application_2.svg" alt="Mermaid Diagram"></p>
 <p>Each tab is conditionally visible based on available data:</p>
 <pre><code class="typescript"><span class="hl-9">// Tab visibility is controlled by report availability</span><br/><span class="hl-11">isVisible</span><span class="hl-1">: ({ </span><span class="hl-2">strategy</span><span class="hl-1"> }) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">strategy</span><span class="hl-1">,</span><br/><span class="hl-11">isVisible</span><span class="hl-1">: ({ </span><span class="hl-2">volume</span><span class="hl-1"> }) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">volume</span><span class="hl-1">,</span><br/><span class="hl-9">// etc.</span>
 </code><button type="button">Copy</button></pre>
@@ -69,7 +69,7 @@
 <li><code>/order_info/price</code> → <code>PriceView</code> (price analysis)</li>
 </ul>
 <a id="data-fetching-and-api-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Data Fetching and API Integration<a href="#data-fetching-and-api-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The News Application integrates with backend services through REST API calls to fetch signal and report data. The data fetching system handles authentication and error management.</p>
-<p><img src="../media/20_News_Application_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C20_News_Application_3.svg" alt="Mermaid Diagram"></p>
 <p>The data fetching process:</p>
 <ol>
 <li><strong>Signal Data Fetch</strong>: Primary signal information via <code>getSignalInfo(id)</code></li>
@@ -87,7 +87,7 @@
 <li>Request body with <code>requestId</code> and <code>serviceName: &quot;info-app&quot;</code></li>
 </ul>
 <a id="export-and-download-functionality" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Export and Download Functionality<a href="#export-and-download-functionality" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The News Application provides comprehensive export capabilities for both individual reports and complete signal information. Users can download content in markdown format with proper formatting and linting.</p>
-<p><img src="../media/20_News_Application_4.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C20_News_Application_4.svg" alt="Mermaid Diagram"></p>
 <p>Export features include:</p>
 <table>
 <thead>
@@ -128,7 +128,7 @@
 <li><strong>Content Validation</strong>: Markdown linting and automatic fixes</li>
 </ol>
 <a id="user-interface-components" class="tsd-anchor"></a><h2 class="tsd-anchor-link">User Interface Components<a href="#user-interface-components" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The News Application uses a consistent component structure across all report views, providing a unified user experience with markdown rendering and diagnostic capabilities.</p>
-<p><img src="../media/20_News_Application_5.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C20_News_Application_5.svg" alt="Mermaid Diagram"></p>
 <p>All report view components follow the same template pattern:</p>
 <ul>
 <li><strong>Consistent Layout</strong>: Box container with 100% height/width and top padding</li>

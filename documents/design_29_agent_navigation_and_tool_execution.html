@@ -28,17 +28,17 @@
 </tr>
 </tbody>
 </table>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_0.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_0.svg" alt="Mermaid Diagram"></p>
 <a id="navigation-implementation-details" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Implementation Details<a href="#navigation-implementation-details" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Each navigation function uses a memoized, queued execution pattern to prevent race conditions and ensure sequential processing per client:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_1.svg" alt="Mermaid Diagram"></p>
 <a id="tool-execution-framework" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Tool Execution Framework<a href="#tool-execution-framework" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Tools can trigger agent navigation and execute complex workflows. The tool execution system integrates with the navigation system to enable sophisticated multi-agent interactions.</p>
 <a id="navigation-tools-pattern" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Tools Pattern<a href="#navigation-tools-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Navigation tools are a common pattern where tool execution triggers agent transitions:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_2.svg" alt="Mermaid Diagram"></p>
 <a id="tool-execution-lifecycle" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Tool Execution Lifecycle<a href="#tool-execution-lifecycle" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The tool execution lifecycle involves validation, execution, and result commitment, with navigation capabilities:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_3.svg" alt="Mermaid Diagram"></p>
 <a id="pipeline-based-workflows" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Pipeline-Based Workflows<a href="#pipeline-based-workflows" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The pipeline system enables complex workflows with agent navigation and automated execution patterns. Pipelines can switch agents during execution and restore the original agent afterward.</p>
 <a id="pipeline-execution-with-navigation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Pipeline Execution with Navigation<a href="#pipeline-execution-with-navigation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>startPipeline</code> function demonstrates advanced agent orchestration:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_4.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_4.svg" alt="Mermaid Diagram"></p>
 <a id="pipeline-schema-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Pipeline Schema Structure<a href="#pipeline-schema-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Pipeline schemas define execution logic and lifecycle callbacks:</p>
 <table>
 <thead>
@@ -78,12 +78,12 @@
 </table>
 <a id="complex-navigation-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Complex Navigation Patterns<a href="#complex-navigation-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Real-world scenarios involve intricate navigation patterns with multiple agents, tool chains, and error handling.</p>
 <a id="multi-agent-workflow-example" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Multi-Agent Workflow Example<a href="#multi-agent-workflow-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>This example shows a triage agent that routes users to specialized agents:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_5.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_5.svg" alt="Mermaid Diagram"></p>
 <a id="deadlock-prevention-mechanisms" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Deadlock Prevention Mechanisms<a href="#deadlock-prevention-mechanisms" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system includes several mechanisms to prevent deadlocks and race conditions:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_6.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_6.svg" alt="Mermaid Diagram"></p>
 <a id="testing-and-validation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Testing and Validation<a href="#testing-and-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system includes comprehensive testing patterns for navigation and tool execution scenarios.</p>
 <a id="connection-orchestration-tests" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Connection Orchestration Tests<a href="#connection-orchestration-tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The test suite validates that multiple concurrent connections maintain separate navigation states:</p>
-<p><img src="../media/29_Agent_Navigation_and_Tool_Execution_7.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C29_Agent_Navigation_and_Tool_Execution_7.svg" alt="Mermaid Diagram"></p>
 <a id="queue-management-tests" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Queue Management Tests<a href="#queue-management-tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Message queuing ensures proper execution order even with concurrent operations:</p>
 <table>
 <thead>

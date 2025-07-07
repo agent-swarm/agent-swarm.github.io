@@ -9,7 +9,7 @@
 <li><strong>Social Sentiment Analysis</strong>: Integrates Mastodon API for market sentiment data</li>
 </ul>
 <a id="core-system-architecture" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core System Architecture<a href="#core-system-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform follows a dependency injection pattern using an IoC container to manage service lifecycles and dependencies. The main entry point establishes the application bootstrap sequence and exports key system interfaces.</p>
-<p><img src="../media/1_Overview_0-1.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C1_Overview_0.svg" alt="Mermaid Diagram"></p>
 <a id="technology-stack-and-dependencies" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Technology Stack and Dependencies<a href="#technology-stack-and-dependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The platform is built on a modern TypeScript stack with carefully selected dependencies for each functional domain:</p>
 <table>
 <thead>
@@ -58,7 +58,7 @@
 </tbody>
 </table>
 <a id="component-interaction-flow" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Component Interaction Flow<a href="#component-interaction-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The following diagram illustrates how the major code entities interact during typical system operations:</p>
-<p><img src="../media/1_Overview_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="./diagrams%5C1_Overview_1.svg" alt="Mermaid Diagram"></p>
 <a id="system-entry-points-and-initialization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">System Entry Points and Initialization<a href="#system-entry-points-and-initialization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The application follows a structured initialization sequence managed through the main index file and bootstrap services:</p>
 <ol>
 <li><strong>Configuration Setup</strong>: <code>src/index.ts</code> imports <code>config/setup.ts</code> to establish environment variables and system parameters</li>
