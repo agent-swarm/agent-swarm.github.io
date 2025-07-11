@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>design/03_core_components | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="design_03_core_components.html">design/03_core_components</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="core-components" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Core Components<a href="#core-components" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>This page covers the primary architectural components that implement the agent execution model, session management, and service infrastructure in the agent-swarm-kit system. For information about the public API functions like <code>addAgent</code>, <code>session</code>, and <code>complete</code>, see <a href="design_32_core_api_functions.html">Core API Functions</a>. For details about the dependency injection container and service layering, see <a href="design_12_service_architecture.html">Service Architecture</a>.</p>
 <a id="agent-execution-engine" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Execution Engine<a href="#agent-execution-engine" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The agent execution engine consists of two primary components: <code>ClientAgent</code> for message processing and AI completion, and <code>ClientHistory</code> for conversation management.</p>
 <a id="clientagent" class="tsd-anchor"></a><h3 class="tsd-anchor-link">ClientAgent<a href="#clientagent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>ClientAgent</code> is the core execution engine that processes incoming messages, executes tool calls, and generates AI completions. It implements the <code>IAgent</code> interface and serves as the primary orchestrator for agent behavior.</p>
-<p><img src="./diagrams%5C3_Core_Components_0.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/3_Core_Components_0.svg" alt="Mermaid Diagram"></p>
 <p><strong>Key responsibilities:</strong></p>
 <ul>
 <li><strong>Message Execution</strong>: Processes user and tool messages through <code>execute()</code> method</li>
@@ -12,7 +12,7 @@
 </ul>
 <p>The <code>ClientAgent</code> uses a queued execution model to prevent overlapping operations and maintains internal subjects for managing tool execution flow, agent changes, and output cancellation.</p>
 <a id="clienthistory" class="tsd-anchor"></a><h3 class="tsd-anchor-link">ClientHistory<a href="#clienthistory" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>ClientHistory</code> manages conversation history for agents, providing filtered message arrays optimized for AI completion contexts and maintaining message persistence.</p>
-<p><img src="./diagrams%5C3_Core_Components_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/3_Core_Components_1.svg" alt="Mermaid Diagram"></p>
 <p><strong>Key features:</strong></p>
 <ul>
 <li><strong>Message Filtering</strong>: Applies agent-specific filters to scope relevant messages</li>
@@ -23,7 +23,7 @@
 </ul>
 <p>The history system supports both raw message access and agent-optimized arrays that include system prompts and maintain tool call relationships for proper AI completion context.</p>
 <a id="session-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Session Management<a href="#session-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="clientsession" class="tsd-anchor"></a><h3 class="tsd-anchor-link">ClientSession<a href="#clientsession" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p><code>ClientSession</code> orchestrates communication between clients, agents, and swarms while enforcing policies and managing message flows. It implements the <code>ISession</code> interface and serves as the primary coordination layer.</p>
-<p><img src="./diagrams%5C3_Core_Components_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/3_Core_Components_2.svg" alt="Mermaid Diagram"></p>
 <p><strong>Core capabilities:</strong></p>
 <ul>
 <li><strong>Message Execution</strong>: Coordinates agent execution with policy validation</li>
@@ -35,7 +35,7 @@
 <p>The session maintains separation between stateful execution (with history updates) and stateless completion, while ensuring all communications pass through policy validation layers.</p>
 <a id="service-infrastructure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Service Infrastructure<a href="#service-infrastructure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The service infrastructure provides the foundation for component lifecycle management, dependency injection, and API exposure through a layered architecture.</p>
 <a id="connection-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Connection Services<a href="#connection-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Connection services manage the instantiation and lifecycle of core components using memoization for efficient reuse.</p>
-<p><img src="./diagrams%5C3_Core_Components_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/3_Core_Components_3.svg" alt="Mermaid Diagram"></p>
 <p><strong>Service responsibilities:</strong></p>
 <ul>
 <li><strong>AgentConnectionService</strong>: Creates and manages <code>ClientAgent</code> instances with tool and completion dependencies</li>
@@ -45,7 +45,7 @@
 </ul>
 <p>Each connection service uses <code>memoize</code> from functools-kit to cache instances by composite keys, ensuring efficient resource usage and consistent state management.</p>
 <a id="public-services" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Public Services<a href="#public-services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Public services provide the external API layer with context management and method scoping around connection services.</p>
-<p><img src="./diagrams%5C3_Core_Components_4.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/3_Core_Components_4.svg" alt="Mermaid Diagram"></p>
 <p><strong>Public service features:</strong></p>
 <ul>
 <li><strong>Context Scoping</strong>: Wraps all operations with <code>MethodContextService.runInContext()</code> for proper context management</li>
@@ -56,7 +56,7 @@
 </ul>
 <p>The public services layer provides a clean separation between external API and internal component management while ensuring consistent context propagation throughout the system.</p>
 <a id="component-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Component Integration<a href="#component-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The core components work together through a well-defined integration pattern that ensures proper message flow, state management, and error handling.</p>
-<p><img src="./diagrams%5C3_Core_Components_5.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/3_Core_Components_5.svg" alt="Mermaid Diagram"></p>
 <p><strong>Integration patterns:</strong></p>
 <ul>
 <li><strong>Layered Delegation</strong>: Public services delegate to connection services which manage component instances</li>

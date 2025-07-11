@@ -2,13 +2,13 @@
 <p>For information about the underlying service architecture that powers these components, see <a href="design_12_service_architecture.html">Service Architecture</a>. For details about AI model integration and completion adapters, see <a href="design_18_ai_integration.html">AI Integration</a>. For tool integration patterns and MCP server connectivity, see <a href="design_24_tool_integration.html">Tool Integration</a>.</p>
 <a id="core-building-blocks" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core Building Blocks<a href="#core-building-blocks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Multi-agent systems in agent-swarm-kit are constructed from four fundamental components that must be defined in a specific order: tools, completions, agents, and swarms.</p>
 <a id="tool-definition" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Tool Definition<a href="#tool-definition" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Tools provide the functional capabilities that agents can execute. Each tool is defined using the <code>addTool</code> function with a schema that includes validation, execution logic, and model-facing function descriptions.</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_0.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_0.svg" alt="Mermaid Diagram"></p>
 <p><strong>Tool Registration Flow</strong></p>
 <a id="completion-definition" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Completion Definition<a href="#completion-definition" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Completions define AI model integrations that agents use for generating responses. The <code>addCompletion</code> function registers completion providers with their configuration.</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_1.svg" alt="Mermaid Diagram"></p>
 <p><strong>Completion Provider Integration</strong></p>
 <a id="agent-schema-structure" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Agent Schema Structure<a href="#agent-schema-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Agents are defined using <code>addAgent</code> with an <code>IAgentSchema</code> that specifies their behavior, capabilities, and dependencies. The schema is processed through <code>mapAgentSchema</code> to normalize system prompts into arrays.</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_2.svg" alt="Mermaid Diagram"></p>
 <p><strong>Agent Schema Transformation</strong></p>
 <a id="agent-configuration-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Agent Configuration Patterns<a href="#agent-configuration-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="basic-agent-definition" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Basic Agent Definition<a href="#basic-agent-definition" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The simplest agent configuration requires only a name, completion provider, and prompt:</p>
 <table>
@@ -38,7 +38,7 @@
 </tbody>
 </table>
 <a id="enhanced-agent-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Enhanced Agent Configuration<a href="#enhanced-agent-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>More sophisticated agents can include tools, storage, state management, and system prompts:</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_3.svg" alt="Mermaid Diagram"></p>
 <p><strong>Agent Configuration Components</strong></p>
 <a id="system-prompt-configuration" class="tsd-anchor"></a><h3 class="tsd-anchor-link">System Prompt Configuration<a href="#system-prompt-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Agents support multiple types of system prompts that are processed in a specific order:</p>
 <ol>
@@ -47,13 +47,13 @@
 <li><strong>Regular System Prompts</strong> (<code>system</code>) - Standard system-level instructions</li>
 </ol>
 <a id="swarm-orchestration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Swarm Orchestration<a href="#swarm-orchestration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="swarm-definition" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Swarm Definition<a href="#swarm-definition" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Swarms coordinate multiple agents and define navigation patterns between them. The <code>addSwarm</code> function creates swarm configurations with agent lists and default routing.</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_4.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_4.svg" alt="Mermaid Diagram"></p>
 <p><strong>Swarm Schema Structure</strong></p>
 <a id="navigation-between-agents" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Between Agents<a href="#navigation-between-agents" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Agent navigation within swarms is typically implemented through specialized navigation tools that call <code>changeAgent</code> to transfer control between agents:</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_5.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_5.svg" alt="Mermaid Diagram"></p>
 <p><strong>Agent Navigation Flow</strong></p>
 <a id="session-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Session Management<a href="#session-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="session-creation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session Creation<a href="#session-creation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Sessions are created using the <code>session</code> function, which establishes a connection between a client and a swarm, returning methods for message processing and resource cleanup.</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_6.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_6.svg" alt="Mermaid Diagram"></p>
 <p><strong>Session Lifecycle Management</strong></p>
 <a id="message-processing" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Message Processing<a href="#message-processing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>complete</code> function processes user messages through the active agent in the swarm, handling tool calls, model interactions, and response generation:</p>
 <table>
@@ -79,14 +79,14 @@
 </tbody>
 </table>
 <a id="advanced-orchestration-patterns" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Advanced Orchestration Patterns<a href="#advanced-orchestration-patterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="schema-override-with-overrideagent" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Schema Override with <code>overrideAgent</code><a href="#schema-override-with-overrideagent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>overrideAgent</code> function allows temporary modification of agent schemas during execution, useful for testing and dynamic behavior adjustment:</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_7.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_7.svg" alt="Mermaid Diagram"></p>
 <p><strong>Agent Schema Override Process</strong></p>
 <a id="background-processing-with-fork" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Background Processing with <code>fork</code><a href="#background-processing-with-fork" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>fork</code> function enables isolated agent execution similar to POSIX fork, allowing complex processing without interfering with main conversation flows:</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_8.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_8.svg" alt="Mermaid Diagram"></p>
 <p><strong>Fork-based Background Processing</strong></p>
 <a id="scoped-execution" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Scoped Execution<a href="#scoped-execution" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The framework provides scoped execution contexts that allow temporary configuration changes and isolated processing environments.</p>
 <a id="documentation-generation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Documentation Generation<a href="#documentation-generation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="automatic-schema-documentation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Automatic Schema Documentation<a href="#automatic-schema-documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>DocService</code> automatically generates Markdown documentation for all agents and swarms, including UML diagrams and comprehensive schema details:</p>
-<p><img src="./diagrams%5C23_Building_Multi-Agent_Systems_9.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/23_Building_Multi-Agent_Systems_9.svg" alt="Mermaid Diagram"></p>
 <p><strong>Documentation Generation Pipeline</strong></p>
 <p>The documentation includes tool parameters, system prompts, dependencies, and MCP integrations, providing comprehensive reference material for development teams.</p>
 <a id="validation-and-error-handling" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Validation and Error Handling<a href="#validation-and-error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The framework includes comprehensive validation services that ensure schema consistency and runtime safety:</p>

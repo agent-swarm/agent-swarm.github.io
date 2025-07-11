@@ -64,7 +64,7 @@
 </tbody>
 </table>
 <a id="signal-validation-logic" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Signal Validation Logic<a href="#signal-validation-logic" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="execute-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Execute Validation<a href="#execute-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>validateExecute</code> method determines whether a new trading signal should be created. It implements multiple validation layers:</p>
-<p><img src="./diagrams%5C10_Signal_Generation_and_Validation_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/10_Signal_Generation_and_Validation_1.svg" alt="Mermaid Diagram"></p>
 <p>The validation process includes:</p>
 <ol>
 <li><strong>Time-based constraints</strong>: Prevents rapid signal generation by enforcing waiting periods based on price movement direction</li>
@@ -72,7 +72,7 @@
 <li><strong>Price range conflicts</strong>: Ensures new signals don't interfere with existing active positions</li>
 </ol>
 <a id="ema-signal-analysis" class="tsd-anchor"></a><h3 class="tsd-anchor-link">EMA Signal Analysis<a href="#ema-signal-analysis" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system analyzes EMA (Exponential Moving Average) signals to determine market sentiment:</p>
-<p><img src="./diagrams%5C10_Signal_Generation_and_Validation_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/10_Signal_Generation_and_Validation_2.svg" alt="Mermaid Diagram"></p>
 <p>The <code>validateShouldExecute</code> function implements these rules:</p>
 <ul>
 <li>Requires at least 1 strong BUY signal OR 1 medium BUY + 2 additional signals</li>
@@ -80,7 +80,7 @@
 <li>Only executes when BUY strength exceeds SELL strength</li>
 </ul>
 <a id="resolve-validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Resolve Validation<a href="#resolve-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <code>validateResolve</code> method determines when to close existing positions:</p>
-<p><img src="./diagrams%5C10_Signal_Generation_and_Validation_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/10_Signal_Generation_and_Validation_3.svg" alt="Mermaid Diagram"></p>
 <p>The resolution logic:</p>
 <ul>
 <li>Calculates current revenue based on market price vs entry price</li>

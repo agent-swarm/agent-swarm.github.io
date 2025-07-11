@@ -2,7 +2,7 @@
 <p>For information about general system validation, see <a href="design_17_validation_serives.html">Validation Services</a>. For details about agent execution lifecycle, see <a href="design_04_client_agent.html">Client Agent</a>. For session management patterns, see <a href="design_06_session_and_chat.html">Session and Chat Management</a>.</p>
 <a id="error-categories-and-handling-strategies" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Categories and Handling Strategies<a href="#error-categories-and-handling-strategies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The agent-swarm-kit system implements comprehensive error handling across multiple layers, from individual tool calls to system-wide recovery mechanisms.</p>
 <a id="tool-call-error-handling" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Tool Call Error Handling<a href="#tool-call-error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Tool call errors represent one of the most common failure scenarios in the system. The <code>ClientAgent</code> class implements sophisticated error handling for tool execution failures.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_0.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_0.svg" alt="Mermaid Diagram"></p>
 <p><strong>Tool Call Error Flow in ClientAgent</strong></p>
 <p>The system uses specific symbols to coordinate error handling between tool execution and the main agent loop:</p>
 <table>
@@ -42,7 +42,7 @@
 </tbody>
 </table>
 <a id="model-rescue-strategies" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Model Rescue Strategies<a href="#model-rescue-strategies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>When the AI model produces invalid outputs or tool calls, the system employs configurable rescue strategies to recover gracefully.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_1.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_1.svg" alt="Mermaid Diagram"></p>
 <p><strong>Model Rescue Strategy Selection</strong></p>
 <p>The rescue strategies are configured through global settings:</p>
 <ul>
@@ -51,19 +51,19 @@
 <li><strong>Custom Strategy</strong>: Allows user-defined recovery functions for specific use cases</li>
 </ul>
 <a id="validation-error-handling" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Validation Error Handling<a href="#validation-error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system implements multi-layer validation to prevent invalid operations and gracefully handle validation failures.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_2.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_2.svg" alt="Mermaid Diagram"></p>
 <p><strong>Validation Error Recovery Mechanisms</strong></p>
 <a id="session-and-connection-error-handling" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Session and Connection Error Handling<a href="#session-and-connection-error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Session-level errors are handled through policy validation and graceful degradation mechanisms.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_3.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_3.svg" alt="Mermaid Diagram"></p>
 <p><strong>Session Error Handling Flow</strong></p>
 <a id="recovery-mechanisms" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Recovery Mechanisms<a href="#recovery-mechanisms" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="placeholder-response-system" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Placeholder Response System<a href="#placeholder-response-system" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>When the system cannot provide a meaningful response due to errors, it employs a placeholder response system to maintain user engagement.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_4.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_4.svg" alt="Mermaid Diagram"></p>
 <p><strong>Placeholder Response Selection</strong></p>
 <a id="history-and-state-recovery" class="tsd-anchor"></a><h3 class="tsd-anchor-link">History and State Recovery<a href="#history-and-state-recovery" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system maintains conversation context during error scenarios through intelligent history management.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_5.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_5.svg" alt="Mermaid Diagram"></p>
 <p><strong>History Recovery in ClientHistory</strong></p>
 <a id="navigation-error-prevention" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Navigation Error Prevention<a href="#navigation-error-prevention" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system prevents infinite recursion and deadlock conditions in agent navigation through validation services.</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_6.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_6.svg" alt="Mermaid Diagram"></p>
 <p><strong>Navigation Error Prevention Flow</strong></p>
 <a id="error-recovery-configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error Recovery Configuration<a href="#error-recovery-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="global-configuration-options" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Global Configuration Options<a href="#global-configuration-options" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The error handling behavior is highly configurable through global settings:</p>
 <table>
@@ -108,7 +108,7 @@
 </tbody>
 </table>
 <a id="custom-error-handlers" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Custom Error Handlers<a href="#custom-error-handlers" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The system supports custom error handling functions for specialized recovery scenarios:</p>
-<p><img src="./diagrams%5C26_Error_Handling_and_Recovery_7.svg" alt="Mermaid Diagram"></p>
+<p><img src="../media/26_Error_Handling_and_Recovery_7.svg" alt="Mermaid Diagram"></p>
 <p><strong>Error Recovery Class Relationships</strong></p>
 <a id="testing-error-scenarios" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Testing Error Scenarios<a href="#testing-error-scenarios" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The system includes comprehensive test coverage for error handling scenarios:</p>
 <a id="tool-call-error-tests" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Tool Call Error Tests<a href="#tool-call-error-tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Test scenarios include tool validation failures, missing tools, and execution errors.</p>
