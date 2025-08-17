@@ -1,0 +1,118 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>demo/repl-phone-seller/readme | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="demo_repl-phone-seller_readme.html">demo/repl-phone-seller/readme</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="repl-phone-seller" class="tsd-anchor"></a><h1 class="tsd-anchor-link">REPL Phone Seller<a href="#repl-phone-seller" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Interactive phone sales system with comprehensive product database and semantic search.</p>
+<a id="purpose" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Purpose<a href="#purpose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Demonstrates capabilities:</p>
+<ul>
+<li>E-commerce sales agent with product knowledge</li>
+<li>Semantic search by product characteristics</li>
+<li>Shopping basket management</li>
+<li>Interactive REPL interface for sales</li>
+</ul>
+<a id="key-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Key Features<a href="#key-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Rich Product Database</strong>: iPhone, Samsung, Google Pixel and others</li>
+<li><strong>Semantic Search</strong>: Search by any characteristics</li>
+<li><strong>Diagonal Search</strong>: Specialized screen size search</li>
+<li><strong>Basket Management</strong>: Full shopping cart</li>
+<li><strong>Sales Agent</strong>: Professional seller with product expertise</li>
+</ul>
+<a id="technology-stack" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Technology Stack<a href="#technology-stack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Runtime</strong>: Bun</li>
+<li><strong>Language</strong>: TypeScript</li>
+<li><strong>AI Framework</strong>: agent-swarm-kit</li>
+<li><strong>ML</strong>: TensorFlow.js for embeddings and search</li>
+<li><strong>Database</strong>: JSON product catalog</li>
+<li><strong>AI Providers</strong>: OpenAI, LMStudio, Ollama</li>
+</ul>
+<a id="project-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Project Structure<a href="#project-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code><span class="hl-1">├── </span><span class="hl-2">data</span><span class="hl-1">/</span><br/><span class="hl-1">│   └── </span><span class="hl-2">phones</span><span class="hl-1">.</span><span class="hl-2">json</span><span class="hl-1">        # </span><span class="hl-2">Product</span><span class="hl-1"> </span><span class="hl-2">database</span><br/><span class="hl-1">├── </span><span class="hl-2">src</span><span class="hl-1">/</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">config</span><span class="hl-1">/</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">openai</span><span class="hl-1">.</span><span class="hl-2">ts</span><span class="hl-1">     # </span><span class="hl-2">OpenAI</span><span class="hl-1"> </span><span class="hl-2">configuration</span><br/><span class="hl-1">│   │   └── </span><span class="hl-2">setup</span><span class="hl-1">.</span><span class="hl-2">ts</span><span class="hl-1">      # </span><span class="hl-2">System</span><span class="hl-1"> </span><span class="hl-2">setup</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">logic</span><span class="hl-1">/</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">agent</span><span class="hl-1">/        # </span><span class="hl-2">Sales</span><span class="hl-1"> </span><span class="hl-2">agent</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">completion</span><span class="hl-1">/   # </span><span class="hl-2">Multiple</span><span class="hl-1"> </span><span class="hl-6">AI</span><span class="hl-1"> </span><span class="hl-2">providers</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">embedding</span><span class="hl-1">/    # </span><span class="hl-2">Nomic</span><span class="hl-1"> </span><span class="hl-2">embeddings</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">storage</span><span class="hl-1">/      # </span><span class="hl-2">Phone</span><span class="hl-1"> </span><span class="hl-2">and</span><span class="hl-1"> </span><span class="hl-2">basket</span><span class="hl-1"> </span><span class="hl-2">storage</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-2">swarm</span><span class="hl-1">/        # </span><span class="hl-2">Root</span><span class="hl-1"> </span><span class="hl-2">swarm</span><br/><span class="hl-1">│   │   └── </span><span class="hl-2">tools</span><span class="hl-1">/        # </span><span class="hl-2">Search</span><span class="hl-1"> </span><span class="hl-2">and</span><span class="hl-1"> </span><span class="hl-2">basket</span><span class="hl-1"> </span><span class="hl-2">tools</span><br/><span class="hl-1">│   ├── </span><span class="hl-2">main</span><span class="hl-1">/</span><br/><span class="hl-1">│   │   └── </span><span class="hl-2">repl</span><span class="hl-1">.</span><span class="hl-2">ts</span><span class="hl-1">       # </span><span class="hl-6">REPL</span><span class="hl-1"> </span><span class="hl-4">interface</span><br/><span class="hl-1">│   └── </span><span class="hl-7">model</span><span class="hl-1">/            # </span><span class="hl-7">Data</span><span class="hl-1"> </span><span class="hl-7">models</span><br/><span class="hl-1">└── </span><span class="hl-7">logs</span><span class="hl-1">/                 # </span><span class="hl-7">Client</span><span class="hl-1"> </span><span class="hl-7">session</span><span class="hl-1"> </span><span class="hl-7">logs</span>
+</code><button>Copy</button></pre>
+
+<a id="installation-and-setup" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Installation and Setup<a href="#installation-and-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="bash"><span class="hl-9"># Install dependencies</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">install</span><br/><br/><span class="hl-9"># Start REPL</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">src/main/repl.ts</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Configuration<a href="#configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Create a <code>.env</code> file:</p>
+<pre><code class="env">OPENAI_API_KEY=your_openai_api_key
+LMSTUDIO_API_URL=http://localhost:1234
+OLLAMA_API_URL=http://localhost:11434
+</code><button type="button">Copy</button></pre>
+
+<a id="product-database" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Product Database<a href="#product-database" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The database contains detailed phone information:</p>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;brand&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;Apple&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;model&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;iPhone 15 Pro&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;price&quot;</span><span class="hl-1">: </span><span class="hl-8">999</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;diagonal&quot;</span><span class="hl-1">: </span><span class="hl-8">6.1</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;storage&quot;</span><span class="hl-1">: [</span><span class="hl-3">&quot;128GB&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;256GB&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;512GB&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;1TB&quot;</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;colors&quot;</span><span class="hl-1">: [</span><span class="hl-3">&quot;Natural Titanium&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;Blue&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;White&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;Black&quot;</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;features&quot;</span><span class="hl-1">: [</span><span class="hl-3">&quot;A17 Pro chip&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;Pro camera system&quot;</span><span class="hl-1">, </span><span class="hl-3">&quot;Action Button&quot;</span><span class="hl-1">]</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="usage-examples" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Usage Examples<a href="#usage-examples" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="product-search" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Product Search<a href="#product-search" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Show me iPhones with large screens&quot;</li>
+<li>&quot;What Samsung phones are under $500?&quot;</li>
+<li>&quot;Phone with good camera for photos&quot;</li>
+</ul>
+<a id="diagonal-search" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Diagonal Search<a href="#diagonal-search" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Find phones with 6.5 inch diagonal&quot;</li>
+<li>&quot;What models are bigger than 6 inches?&quot;</li>
+</ul>
+<a id="basket-operations" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Basket Operations<a href="#basket-operations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Add iPhone 15 Pro to cart&quot;</li>
+<li>&quot;What's in my cart?&quot;</li>
+<li>&quot;How much will the whole cart cost?&quot;</li>
+</ul>
+<a id="product-comparison" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Product Comparison<a href="#product-comparison" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Compare iPhone 15 and Samsung Galaxy S24&quot;</li>
+<li>&quot;What's the difference between Pixel 8 and Pixel 8 Pro?&quot;</li>
+</ul>
+<a id="ai-powered-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">AI-Powered Features<a href="#ai-powered-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="semantic-understanding" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Semantic Understanding<a href="#semantic-understanding" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Natural language understanding</li>
+<li>Contextual search by characteristics</li>
+<li>Intelligent recommendations</li>
+</ul>
+<a id="sales-expertise" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Sales Expertise<a href="#sales-expertise" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Product knowledge and specifications</li>
+<li>Price comparisons and recommendations</li>
+<li>Upselling and cross-selling</li>
+</ul>
+<a id="basket-intelligence" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Basket Intelligence<a href="#basket-intelligence" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Smart product suggestions</li>
+<li>Price optimization recommendations</li>
+<li>Inventory management</li>
+</ul>
+<a id="use-cases" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Use Cases<a href="#use-cases" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Ideal for:</p>
+<ul>
+<li>E-commerce platforms</li>
+<li>Retail sales assistants</li>
+<li>Product recommendation systems</li>
+<li>Customer service automation</li>
+<li>Inventory management</li>
+</ul>
+<a id="extension-capabilities" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Extension Capabilities<a href="#extension-capabilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Easy to add:</p>
+<ul>
+<li>More product categories</li>
+<li>Payment processing</li>
+<li>Shipping calculations</li>
+<li>User accounts and history</li>
+<li>Review and rating systems</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#repl-phone-seller"><span>REPL <wbr/>Phone <wbr/>Seller</span></a><ul><li><a href="#purpose"><span>Purpose</span></a></li><li><a href="#key-features"><span>Key <wbr/>Features</span></a></li><li><a href="#technology-stack"><span>Technology <wbr/>Stack</span></a></li><li><a href="#project-structure"><span>Project <wbr/>Structure</span></a></li><li><a href="#installation-and-setup"><span>Installation and <wbr/>Setup</span></a></li><li><a href="#configuration"><span>Configuration</span></a></li><li><a href="#product-database"><span>Product <wbr/>Database</span></a></li><li><a href="#usage-examples"><span>Usage <wbr/>Examples</span></a></li><li><ul><li><a href="#product-search"><span>Product <wbr/>Search</span></a></li><li><a href="#diagonal-search"><span>Diagonal <wbr/>Search</span></a></li><li><a href="#basket-operations"><span>Basket <wbr/>Operations</span></a></li><li><a href="#product-comparison"><span>Product <wbr/>Comparison</span></a></li></ul></li><li><a href="#ai-powered-features"><span>AI-<wbr/>Powered <wbr/>Features</span></a></li><li><ul><li><a href="#semantic-understanding"><span>Semantic <wbr/>Understanding</span></a></li><li><a href="#sales-expertise"><span>Sales <wbr/>Expertise</span></a></li><li><a href="#basket-intelligence"><span>Basket <wbr/>Intelligence</span></a></li></ul></li><li><a href="#use-cases"><span>Use <wbr/>Cases</span></a></li><li><a href="#extension-capabilities"><span>Extension <wbr/>Capabilities</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>

@@ -1,0 +1,184 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>demo/gemma-3n-genai/readme | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="demo_gemma-3n-genai_readme.html">demo/gemma-3n-genai/readme</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="gemma-3n-genai" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Gemma 3N GenAI<a href="#gemma-3n-genai" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Integration with Google Gemini and xAI models through modern web framework Hono with WebSocket support.</p>
+<a id="purpose" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Purpose<a href="#purpose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Demonstrates capabilities:</p>
+<ul>
+<li>Google Gemini AI integration</li>
+<li>xAI (Grok) model support</li>
+<li>Modern web API with Hono framework</li>
+<li>WebSocket real-time communication</li>
+<li>Multi-provider AI architecture</li>
+</ul>
+<a id="key-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Key Features<a href="#key-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Google Gemini Integration</strong>: Access to latest Gemini models</li>
+<li><strong>xAI Support</strong>: Grok models for advanced reasoning</li>
+<li><strong>Hono Web Framework</strong>: Fast, modern web API</li>
+<li><strong>WebSocket Support</strong>: Real-time bidirectional communication</li>
+<li><strong>REPL Interface</strong>: Interactive development environment</li>
+</ul>
+<a id="technology-stack" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Technology Stack<a href="#technology-stack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Runtime</strong>: Bun</li>
+<li><strong>Language</strong>: TypeScript</li>
+<li><strong>AI Framework</strong>: agent-swarm-kit</li>
+<li><strong>Web Framework</strong>: Hono</li>
+<li><strong>AI Providers</strong>: Google Gemini, xAI</li>
+<li><strong>Protocols</strong>: HTTP, WebSocket</li>
+</ul>
+<a id="project-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Project Structure<a href="#project-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code><span class="hl-2">src</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-2">repl</span><span class="hl-1">.</span><span class="hl-2">ts</span><span class="hl-1">            # </span><span class="hl-6">REPL</span><span class="hl-1"> </span><span class="hl-4">interface</span><br/><span class="hl-1">└── </span><span class="hl-7">lib</span><span class="hl-1">/</span><br/><span class="hl-1">    └── </span><span class="hl-7">swarm</span><span class="hl-1">.</span><span class="hl-7">ts</span><span class="hl-1">       # </span><span class="hl-7">Swarm</span><span class="hl-1"> </span><span class="hl-7">configuration</span>
+</code><button>Copy</button></pre>
+
+<a id="installation-and-setup" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Installation and Setup<a href="#installation-and-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="bash"><span class="hl-9"># Install dependencies</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">install</span><br/><br/><span class="hl-9"># Start REPL</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">src/repl.ts</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Configuration<a href="#configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Create a <code>.env</code> file:</p>
+<pre><code class="env">GOOGLE_API_KEY=your_google_api_key
+XAI_API_KEY=your_xai_api_key
+GEMINI_MODEL=gemini-pro
+GROK_MODEL=grok-2
+PORT=3000
+</code><button type="button">Copy</button></pre>
+
+<a id="google-gemini-setup" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Google Gemini Setup<a href="#google-gemini-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="getting-api-key" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Getting API Key<a href="#getting-api-key" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ol>
+<li>Go to <a href="https://makersuite.google.com/">Google AI Studio</a></li>
+<li>Create a new project</li>
+<li>Get API key</li>
+<li>Add to <code>.env</code> file</li>
+</ol>
+<a id="supported-models" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Supported Models<a href="#supported-models" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Gemini Pro</strong>: General purpose model</li>
+<li><strong>Gemini Pro Vision</strong>: Multimodal с image support</li>
+<li><strong>Gemini Ultra</strong>: Most capable model (when available)</li>
+</ul>
+<a id="xai-integration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">xAI Integration<a href="#xai-integration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="api-access" class="tsd-anchor"></a><h3 class="tsd-anchor-link">API Access<a href="#api-access" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ol>
+<li>Get access to <a href="https://x.ai/">xAI API</a></li>
+<li>Create API key</li>
+<li>Select Grok model</li>
+</ol>
+<a id="grok-models" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Grok Models<a href="#grok-models" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Grok-2</strong>: Latest reasoning model</li>
+<li><strong>Grok-2-Mini</strong>: Faster, cost-effective option</li>
+<li><strong>Grok-1</strong>: Previous generation</li>
+</ul>
+<a id="usage-examples" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Usage Examples<a href="#usage-examples" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="general-questions" class="tsd-anchor"></a><h3 class="tsd-anchor-link">General Questions<a href="#general-questions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Explain quantum computing&quot;</li>
+<li>&quot;Write a business plan for a startup&quot;</li>
+<li>&quot;Help solve a mathematical problem&quot;</li>
+</ul>
+<a id="creative-tasks" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Creative Tasks<a href="#creative-tasks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Write a poem about nature&quot;</li>
+<li>&quot;Create a movie plot&quot;</li>
+<li>&quot;Develop a character description&quot;</li>
+</ul>
+<a id="technical-assistance" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Technical Assistance<a href="#technical-assistance" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Explain microservices architecture&quot;</li>
+<li>&quot;How to optimize a React application?&quot;</li>
+<li>&quot;Best practices for TypeScript&quot;</li>
+</ul>
+<a id="model-comparison" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Model Comparison<a href="#model-comparison" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Gemini Pro</th>
+<th>Grok-2</th>
+<th>Grok-2-Mini</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reasoning</td>
+<td>Excellent</td>
+<td>Superior</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Fast</td>
+<td>Medium</td>
+<td>Very Fast</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Low</td>
+<td>High</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Multimodal</td>
+<td>Yes</td>
+<td>Limited</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<a id="web-api-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Web API Features<a href="#web-api-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="rest-endpoints" class="tsd-anchor"></a><h3 class="tsd-anchor-link">REST Endpoints<a href="#rest-endpoints" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Chat completion</span><br/><span class="hl-0">POST</span><span class="hl-1"> </span><span class="hl-3">/api/chat</span><br/><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-0">&quot;message&quot;</span><span class="hl-0">:</span><span class="hl-1"> </span><span class="hl-3">&quot;Hello, how are you?&quot;,</span><br/><span class="hl-1">  </span><span class="hl-0">&quot;model&quot;</span><span class="hl-0">:</span><span class="hl-1"> </span><span class="hl-3">&quot;gemini-pro&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="websocket" class="tsd-anchor"></a><h3 class="tsd-anchor-link">WebSocket<a href="#websocket" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-6">ws</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-0">WebSocket</span><span class="hl-1">(</span><span class="hl-3">&#39;ws://localhost:3000/ws&#39;</span><span class="hl-1">);</span><br/><span class="hl-2">ws</span><span class="hl-1">.</span><span class="hl-0">send</span><span class="hl-1">(</span><span class="hl-6">JSON</span><span class="hl-1">.</span><span class="hl-0">stringify</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">message:</span><span class="hl-1"> </span><span class="hl-3">&quot;Hello via WebSocket&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">model:</span><span class="hl-1"> </span><span class="hl-3">&quot;grok-2&quot;</span><br/><span class="hl-1">}));</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="performance-optimization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Optimization<a href="#performance-optimization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="model-selection-strategy" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Model Selection Strategy<a href="#model-selection-strategy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Fast Responses</strong>: Grok-2-Mini for quick interactions</li>
+<li><strong>Complex Reasoning</strong>: Grok-2 for advanced tasks</li>
+<li><strong>Multimodal</strong>: Gemini Pro Vision for image tasks</li>
+<li><strong>Cost Optimization</strong>: Gemini Pro for general use</li>
+</ul>
+<a id="caching" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Caching<a href="#caching" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Response caching for common queries</li>
+<li>Model warming for faster startup</li>
+<li>Connection pooling for efficiency</li>
+</ul>
+<a id="use-cases" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Use Cases<a href="#use-cases" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Ideal for:</p>
+<ul>
+<li>Advanced AI applications</li>
+<li>Research and experimentation</li>
+<li>Educational platforms</li>
+<li>Creative writing tools</li>
+<li>Technical consulting</li>
+</ul>
+<a id="development-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Development Features<a href="#development-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="hot-reload" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Hot Reload<a href="#hot-reload" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Development mode with auto-reload</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-4">--watch</span><span class="hl-1"> </span><span class="hl-3">src/repl.ts</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="debugging" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Debugging<a href="#debugging" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-9">// Enable debug logging</span><br/><span class="hl-2">process</span><span class="hl-1">.</span><span class="hl-2">env</span><span class="hl-1">.</span><span class="hl-6">DEBUG</span><span class="hl-1"> = </span><span class="hl-3">&quot;true&quot;</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="testing" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Testing<a href="#testing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Test different models</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">test:gemini</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">test:grok</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="production-deployment" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Production Deployment<a href="#production-deployment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="docker" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Docker<a href="#docker" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="dockerfile">FROM oven/bun:latest
+COPY . .
+RUN bun install
+EXPOSE 3000
+CMD ["bun", "run", "src/index.ts"]
+</code><button type="button">Copy</button></pre>
+
+<a id="environment" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Environment<a href="#environment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Production environment</span><br/><span class="hl-2">NODE_ENV</span><span class="hl-1">=</span><span class="hl-3">production</span><br/><span class="hl-2">LOG_LEVEL</span><span class="hl-1">=</span><span class="hl-3">info</span><br/><span class="hl-2">RATE_LIMIT</span><span class="hl-1">=</span><span class="hl-3">100</span>
+</code><button type="button">Copy</button></pre>
+
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#gemma-3n-genai"><span>Gemma 3<wbr/>N <wbr/>GenAI</span></a><ul><li><a href="#purpose"><span>Purpose</span></a></li><li><a href="#key-features"><span>Key <wbr/>Features</span></a></li><li><a href="#technology-stack"><span>Technology <wbr/>Stack</span></a></li><li><a href="#project-structure"><span>Project <wbr/>Structure</span></a></li><li><a href="#installation-and-setup"><span>Installation and <wbr/>Setup</span></a></li><li><a href="#configuration"><span>Configuration</span></a></li><li><a href="#google-gemini-setup"><span>Google <wbr/>Gemini <wbr/>Setup</span></a></li><li><ul><li><a href="#getting-api-key"><span>Getting API <wbr/>Key</span></a></li><li><a href="#supported-models"><span>Supported <wbr/>Models</span></a></li></ul></li><li><a href="#xai-integration"><span>xAI <wbr/>Integration</span></a></li><li><ul><li><a href="#api-access"><span>API <wbr/>Access</span></a></li><li><a href="#grok-models"><span>Grok <wbr/>Models</span></a></li></ul></li><li><a href="#usage-examples"><span>Usage <wbr/>Examples</span></a></li><li><ul><li><a href="#general-questions"><span>General <wbr/>Questions</span></a></li><li><a href="#creative-tasks"><span>Creative <wbr/>Tasks</span></a></li><li><a href="#technical-assistance"><span>Technical <wbr/>Assistance</span></a></li></ul></li><li><a href="#model-comparison"><span>Model <wbr/>Comparison</span></a></li><li><a href="#web-api-features"><span>Web API <wbr/>Features</span></a></li><li><ul><li><a href="#rest-endpoints"><span>REST <wbr/>Endpoints</span></a></li><li><a href="#websocket"><span>Web<wbr/>Socket</span></a></li></ul></li><li><a href="#performance-optimization"><span>Performance <wbr/>Optimization</span></a></li><li><ul><li><a href="#model-selection-strategy"><span>Model <wbr/>Selection <wbr/>Strategy</span></a></li><li><a href="#caching"><span>Caching</span></a></li></ul></li><li><a href="#use-cases"><span>Use <wbr/>Cases</span></a></li><li><a href="#development-features"><span>Development <wbr/>Features</span></a></li><li><ul><li><a href="#hot-reload"><span>Hot <wbr/>Reload</span></a></li><li><a href="#debugging"><span>Debugging</span></a></li><li><a href="#testing"><span>Testing</span></a></li></ul></li><li><a href="#production-deployment"><span>Production <wbr/>Deployment</span></a></li><li><ul><li><a href="#docker"><span>Docker</span></a></li><li><a href="#environment"><span>Environment</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>
