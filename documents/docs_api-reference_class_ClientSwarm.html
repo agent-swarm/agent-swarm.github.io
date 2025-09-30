@@ -34,7 +34,8 @@ Updated by setAgentName (push) and navigationPop (pop), persisted via params.set
 </code><button type="button">Copy</button></pre>
 
 <p>Subject for emitting output messages to subscribers, used by emit and connect methods.
-Provides an asynchronous stream of validated messages, supporting real-time updates to external connectors.</p>
+Provides an asynchronous stream of validated messages, supporting real-time updates to external connectors.
+*</p>
 <a id="_canceloutputsubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_cancelOutputSubject<a href="#_canceloutputsubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_cancelOutputSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;{ </span><span class="hl-11">agentName</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">; </span><span class="hl-11">output</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">; }&gt;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -69,7 +70,8 @@ Supports debugging and flow control in client applications.</p>
 
 <p>Emits a message to subscribers via _emitSubject after validating it against the policy (ClientPolicy).
 Emits the ban message if validation fails, notifying subscribers and logging via BusService.
-Supports SwarmConnectionService by broadcasting session outputs within the swarm.</p>
+Supports SwarmConnectionService by broadcasting session outputs within the swarm.
+*</p>
 <a id="navigationpop" class="tsd-anchor"></a><h3 class="tsd-anchor-link">navigationPop<a href="#navigationpop" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">navigationPop</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -95,11 +97,19 @@ Emits an event via BusService with the result, supporting ClientSession’s exec
 
 <p>Updates the reference to an agent in the swarm’s agent map (params.agentMap), notifying subscribers via _agentChangedSubject.
 Emits an event via BusService, supporting dynamic agent updates within ClientSession’s execution flow.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="setagentname" class="tsd-anchor"></a><h3 class="tsd-anchor-link">setAgentName<a href="#setagentname" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">setAgentName</span><span class="hl-1">(</span><span class="hl-2">agentName</span><span class="hl-1">: </span><span class="hl-2">AgentName</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Sets the active agent by name, updates the navigation stack, and persists the change via params.setActiveAgent/setNavigationStack.
-Invokes the onAgentChanged callback and emits an event via BusService, supporting ClientSession’s agent switching.</p>
+Invokes the onAgentChanged callback and emits an event via BusService, supporting ClientSession’s agent switching.
+*</p>
 <a id="dispose" class="tsd-anchor"></a><h3 class="tsd-anchor-link">dispose<a href="#dispose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">dispose</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 

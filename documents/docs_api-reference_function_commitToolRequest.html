@@ -4,6 +4,7 @@
 <p>Commits a tool request to the active agent in the swarm system.
 Validates the agent, session, and swarm, ensuring the current agent matches the provided agent before committing the request.
 Runs within a beginContext wrapper for execution context management, logging operations via LoggerService.</p>
+<p>Function overloads</p>
 <a id="parameters" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Parameters<a href="#parameters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
 <thead>
 <tr>
@@ -14,15 +15,15 @@ Runs within a beginContext wrapper for execution context management, logging ope
 <tbody>
 <tr>
 <td><code>request</code></td>
-<td>The tool request(s) to commit.</td>
+<td>The tool request(s) to be processed.</td>
 </tr>
 <tr>
 <td><code>clientId</code></td>
-<td>The client ID associated with the session.</td>
+<td>The unique identifier of the client session.</td>
 </tr>
 <tr>
 <td><code>agentName</code></td>
-<td>The agent name to commit the request for.</td>
+<td>The name of the agent to use or reference.</td>
 </tr>
 </tbody>
 </table>

@@ -21,34 +21,54 @@ ClientAgent (execution/history), ClientPolicy (validation), and BusService (even
 
 <p>Sends a notification message to connect listeners via the internal <code>_notifySubject</code>.
 Logs the notification if debugging is enabled.</p>
+<ul>
+<li></li>
+</ul>
 <a id="emit" class="tsd-anchor"></a><h3 class="tsd-anchor-link">emit<a href="#emit" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">emit</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Emits a message to subscribers via swarm _emitSubject after validating it against the policy (ClientPolicy).
 Emits the ban message if validation fails, notifying subscribers and logging via BusService.
-Supports SwarmConnectionService by broadcasting session outputs within the swarm.</p>
+Supports SwarmConnectionService by broadcasting session outputs within the swarm.
+*</p>
 <a id="execute" class="tsd-anchor"></a><h3 class="tsd-anchor-link">execute<a href="#execute" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">execute</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">, </span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Executes a message using the swarm's agent (ClientAgent) and returns the output after policy validation.
 Validates input and output via ClientPolicy, returning a ban message if either fails, with event logging via BusService.
 Coordinates with SwarmConnectionService to fetch the agent and wait for output, supporting session-level execution.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="run" class="tsd-anchor"></a><h3 class="tsd-anchor-link">run<a href="#run" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">run</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Runs a stateless completion of a message using the swarm's agent (ClientAgent) and returns the output.
 Does not emit the result but logs the execution via BusService, bypassing output validation for stateless use cases.
-Integrates with SwarmConnectionService to access the agent, supporting lightweight completions.</p>
+Integrates with SwarmConnectionService to access the agent, supporting lightweight completions.
+*</p>
 <a id="committooloutput" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitToolOutput<a href="#committooloutput" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitToolOutput</span><span class="hl-1">(</span><span class="hl-2">toolId</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">, </span><span class="hl-2">content</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits tool output to the agent's history via the swarm’s agent (ClientAgent), logging the action via BusService.
 Supports ToolSchemaService by linking tool output to tool calls, integrating with ClientAgent’s history management.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="commitusermessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitUserMessage<a href="#commitusermessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitUserMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">, </span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits a user message to the agent’s history via the swarm’s agent (ClientAgent) without triggering a response.
-Logs the action via BusService, supporting SessionConnectionService’s session history tracking.</p>
+Logs the action via BusService, supporting SessionConnectionService’s session history tracking.
+*</p>
 <a id="commitflush" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitFlush<a href="#commitflush" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitFlush</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -64,26 +84,33 @@ Supports ToolSchemaService by interrupting tool call chains, enhancing session c
 
 <p>Commits a tool request to the agent's history via the swarm’s agent (ClientAgent) and logs the action via BusService.
 Supports ToolSchemaService by linking tool requests to tool execution, integrating with ClientAgent’s history management.</p>
+<ul>
+<li></li>
+</ul>
 <a id="commitsystemmessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitSystemMessage<a href="#commitsystemmessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitSystemMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits a system message to the agent’s history via the swarm’s agent (ClientAgent), logging via BusService.
-Supports system-level updates within the session, coordinated with ClientHistory.</p>
+Supports system-level updates within the session, coordinated with ClientHistory.
+*</p>
 <a id="commitdevelopermessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitDeveloperMessage<a href="#commitdevelopermessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitDeveloperMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Commits a developer message to the agent’s history via the swarm’s agent (ClientAgent), logging the action via BusService.</p>
+<p>Commits a developer message to the agent's history via the swarm's agent (ClientAgent), logging the action via BusService.
+Supports internal debugging or developer notes within the session, enhancing ClientHistory.</p>
 <a id="commitassistantmessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitAssistantMessage<a href="#commitassistantmessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitAssistantMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits an assistant message to the agent’s history via the swarm’s agent (ClientAgent) without triggering execution.
-Logs the action via BusService, supporting ClientHistory for assistant response logging.</p>
+Logs the action via BusService, supporting ClientHistory for assistant response logging.
+*</p>
 <a id="connect" class="tsd-anchor"></a><h3 class="tsd-anchor-link">connect<a href="#connect" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">connect</span><span class="hl-1">(</span><span class="hl-2">connector</span><span class="hl-1">: </span><span class="hl-2">SendMessageFn</span><span class="hl-1">): </span><span class="hl-2">ReceiveMessageFn</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Connects the session to a message connector, subscribing to emitted messages and returning a receiver function.
 Links _emitSubject to the connector for outgoing messages and processes incoming messages via execute, supporting real-time interaction.
-Integrates with SessionConnectionService for session lifecycle and SwarmConnectionService for agent metadata.</p>
+Integrates with SessionConnectionService for session lifecycle and SwarmConnectionService for agent metadata.
+*</p>
 <a id="dispose" class="tsd-anchor"></a><h3 class="tsd-anchor-link">dispose<a href="#dispose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">dispose</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 

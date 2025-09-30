@@ -17,19 +17,19 @@ queued to ensure sequential processing, and the listener unsubscribes after the 
 <tbody>
 <tr>
 <td><code>clientId</code></td>
-<td>The ID of the client to listen for events from, or &quot;*&quot; to listen to all clients.</td>
+<td>The unique identifier of the client session, or &quot;*&quot; for all clients.</td>
 </tr>
 <tr>
 <td><code>topicName</code></td>
-<td>The name of the event topic to subscribe to (must not be a reserved source).</td>
+<td>The name of the event topic to listen for.</td>
 </tr>
 <tr>
 <td><code>filterFn</code></td>
-<td>A function that filters events, returning true to trigger the callback with that event's payload.</td>
+<td>Filter function that determines if the event should trigger the callback.</td>
 </tr>
 <tr>
 <td><code>fn</code></td>
-<td>The callback function to execute once when a matching event is received, passed the event payload.</td>
+<td>Callback function executed when a matching event is received.</td>
 </tr>
 </tbody>
 </table>

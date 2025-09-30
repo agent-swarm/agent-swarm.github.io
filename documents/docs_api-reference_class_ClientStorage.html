@@ -2,7 +2,8 @@
 <p>Class managing storage operations with embedding-based search capabilities in the swarm system.
 Implements IStorage, supporting upsert, remove, clear, and similarity-based search with queued operations and event-driven updates.
 Integrates with StorageConnectionService (instantiation), EmbeddingSchemaService (embeddings), ClientAgent (data storage),
-SwarmConnectionService (swarm-level storage), and BusService (event emission).</p>
+SwarmConnectionService (swarm-level storage), and BusService (event emission).
+*</p>
 <a id="constructor" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Constructor<a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="ts"><span class="hl-0">constructor</span><span class="hl-1">(</span><span class="hl-2">params</span><span class="hl-1">: </span><span class="hl-2">IStorageParams</span><span class="hl-1">&lt;</span><span class="hl-6">T</span><span class="hl-1">&gt;);</span>
 </code><button type="button">Copy</button></pre>
 
@@ -19,11 +20,25 @@ Populated during initialization (waitForInit) and modified by upsert, remove, an
 
 <p>Dispatches a storage action (upsert, remove, or clear) in a queued manner, delegating to DISPATCH_FN.
 Ensures sequential execution of storage operations, supporting thread-safe updates from ClientAgent or tools.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="_createembedding" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_createEmbedding<a href="#_createembedding" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_createEmbedding</span><span class="hl-1">: ((</span><span class="hl-2">item</span><span class="hl-1">: </span><span class="hl-7">T</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">readonly</span><span class="hl-1"> [</span><span class="hl-2">Embeddings</span><span class="hl-1">, </span><span class="hl-2">string</span><span class="hl-1">][]&gt;) &amp; </span><span class="hl-2">IClearableMemoize</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1"> | </span><span class="hl-2">number</span><span class="hl-1">&gt; &amp; </span><span class="hl-2">IControlMemoize</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1"> | </span><span class="hl-2">number</span><span class="hl-1">, </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">readonly</span><span class="hl-1"> [</span><span class="hl-2">Embeddings</span><span class="hl-1">, </span><span class="hl-2">string</span><span class="hl-1">][]&gt;&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Creates embeddings for the given item, memoized by item ID to avoid redundant calculations via CREATE_EMBEDDING_FN.
 Caches results for efficiency, cleared on upsert/remove to ensure freshness, supporting EmbeddingSchemaService.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="waitforinit" class="tsd-anchor"></a><h3 class="tsd-anchor-link">waitForInit<a href="#waitforinit" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">waitForInit</span><span class="hl-1">: (() </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;) &amp; </span><span class="hl-2">ISingleshotClearable</span>
 </code><button type="button">Copy</button></pre>
 
@@ -35,16 +50,19 @@ Ensures initialization happens only once using singleshot, supporting StorageCon
 <p>Retrieves a specified number of items based on similarity to a search string, using embeddings and SortedArray.
 Executes similarity calculations concurrently via execpool, respecting GLOBAL_CONFIG.CC_STORAGE_SEARCH_POOL, and filters by score.
 Emits an event via BusService, supporting ClientAgent’s search-driven tool execution.</p>
+<hr>
 <a id="upsert" class="tsd-anchor"></a><h3 class="tsd-anchor-link">upsert<a href="#upsert" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">upsert</span><span class="hl-1">(</span><span class="hl-2">item</span><span class="hl-1">: </span><span class="hl-6">T</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Upserts an item into the storage via the dispatch queue, delegating to UPSERT_FN.
-Schedules the operation for sequential execution, supporting ClientAgent’s data persistence needs.</p>
+Schedules the operation for sequential execution, supporting ClientAgent’s data persistence needs.
+*</p>
 <a id="remove" class="tsd-anchor"></a><h3 class="tsd-anchor-link">remove<a href="#remove" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">remove</span><span class="hl-1">(</span><span class="hl-2">itemId</span><span class="hl-1">: </span><span class="hl-2">IStorageData</span><span class="hl-1">[</span><span class="hl-3">&quot;id&quot;</span><span class="hl-1">]): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Removes an item from the storage by its ID via the dispatch queue, delegating to REMOVE_FN.
-Schedules the operation for sequential execution, supporting ClientAgent’s data management.</p>
+Schedules the operation for sequential execution, supporting ClientAgent’s data management.
+*</p>
 <a id="clear" class="tsd-anchor"></a><h3 class="tsd-anchor-link">clear<a href="#clear" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">clear</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -54,12 +72,14 @@ Schedules the operation for sequential execution, supporting storage reset opera
 </code><button type="button">Copy</button></pre>
 
 <p>Retrieves an item from the storage by its ID directly from _itemMap.
-Emits an event via BusService with the result, supporting quick lookups by ClientAgent or tools.</p>
+Emits an event via BusService with the result, supporting quick lookups by ClientAgent or tools.
+*</p>
 <a id="list" class="tsd-anchor"></a><h3 class="tsd-anchor-link">list<a href="#list" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">list</span><span class="hl-1">(</span><span class="hl-2">filter</span><span class="hl-1">?: (</span><span class="hl-2">item</span><span class="hl-1">: </span><span class="hl-7">T</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">boolean</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-6">T</span><span class="hl-1">[]&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Lists all items in the storage from _itemMap, optionally filtered by a predicate.
-Emits an event via BusService with the filtered result if a filter is provided, supporting ClientAgent’s data enumeration.</p>
+Emits an event via BusService with the filtered result if a filter is provided, supporting ClientAgent’s data enumeration.
+*</p>
 <a id="dispose" class="tsd-anchor"></a><h3 class="tsd-anchor-link">dispose<a href="#dispose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">dispose</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 

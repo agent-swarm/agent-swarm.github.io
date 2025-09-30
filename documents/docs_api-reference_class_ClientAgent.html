@@ -14,45 +14,61 @@ Uses Subjects from functools-kit for asynchronous state management (e.g., tool e
 
 <p>An instance of <code>ToolAbortController</code> used to manage the lifecycle of abort signals for tool executions.
 Provides an <code>AbortSignal</code> to signal and handle abort events for asynchronous operations.</p>
-<p>This property is used to control and cancel ongoing tool executions when necessary, such as during agent changes or tool stops.</p>
+<p>This property is used to control and cancel ongoing tool executions when necessary, such as during agent changes or tool stops.
+*</p>
 <a id="_agentchangesubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_agentChangeSubject<a href="#_agentchangesubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_agentChangeSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-2">unique</span><span class="hl-1"> </span><span class="hl-2">symbol</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for signaling agent changes, halting subsequent tool executions via commitAgentChange.</p>
+<p>Subject for signaling agent changes, halting subsequent tool executions via commitAgentChange.
+*</p>
 <a id="_resquesubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_resqueSubject<a href="#_resquesubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_resqueSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-2">unique</span><span class="hl-1"> </span><span class="hl-2">symbol</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for signaling model resurrection events, triggered by _resurrectModel during error recovery.</p>
+<p>Subject for signaling model resurrection events, triggered by _resurrectModel during error recovery.
+*</p>
 <a id="_toolerrorsubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_toolErrorSubject<a href="#_toolerrorsubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_toolErrorSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-2">unique</span><span class="hl-1"> </span><span class="hl-2">symbol</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for signaling tool execution errors, emitted by createToolCall on failure.</p>
+<p>Subject for signaling tool execution errors, emitted by createToolCall on failure.
+*</p>
 <a id="_toolstopsubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_toolStopSubject<a href="#_toolstopsubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_toolStopSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-2">unique</span><span class="hl-1"> </span><span class="hl-2">symbol</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for signaling tool execution stops, triggered by commitStopTools.</p>
+<p>Subject for signaling tool execution stops, triggered by commitStopTools.
+*</p>
 <a id="_canceloutputsubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_cancelOutputSubject<a href="#_canceloutputsubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_cancelOutputSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-2">unique</span><span class="hl-1"> </span><span class="hl-2">symbol</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for signaling tool execution stops, triggered by commitCancelOutput.</p>
+<p>Subject for signaling tool execution stops, triggered by commitCancelOutput.
+*</p>
 <a id="_toolcommitsubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_toolCommitSubject<a href="#_toolcommitsubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_toolCommitSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for signaling tool output commitments, triggered by commitToolOutput.</p>
+<p>Subject for signaling tool output commitments, triggered by commitToolOutput.
+*</p>
 <a id="_outputsubject" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_outputSubject<a href="#_outputsubject" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">_outputSubject</span><span class="hl-1">: </span><span class="hl-2">Subject</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Subject for emitting transformed outputs, used by _emitOutput and waitForOutput.</p>
+<p>Subject for emitting transformed outputs, used by _emitOutput and waitForOutput.
+*</p>
 <a id="execute" class="tsd-anchor"></a><h3 class="tsd-anchor-link">execute<a href="#execute" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">execute</span><span class="hl-1">: (</span><span class="hl-2">input</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-7">ExecutionMode</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Executes the incoming message and processes tool calls if present, queued to prevent overlapping executions.
 Implements IAgent.execute, delegating to EXECUTE_FN with queuing via functools-kit’s queued decorator.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="run" class="tsd-anchor"></a><h3 class="tsd-anchor-link">run<a href="#run" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">run</span><span class="hl-1">: (</span><span class="hl-2">input</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Runs a stateless completion for the incoming message, queued to prevent overlapping executions.
-Implements IAgent.run, delegating to RUN_FN with queuing via functools-kit’s queued decorator.</p>
+Implements IAgent.run, delegating to RUN_FN with queuing via functools-kit’s queued decorator.
+*</p>
 <a id="methods" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Methods<a href="#methods" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="_resolvetools" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_resolveTools<a href="#_resolvetools" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">_resolveTools</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">IAgentTool</span><span class="hl-1">[]&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -65,18 +81,23 @@ Static messages are directly included from the <code>systemStatic</code> paramet
 are fetched asynchronously using the <code>systemDynamic</code> function.</p>
 <p>This method is used to construct the system-level context for the agent, which can include
 predefined static messages and dynamically generated messages based on the agent's state or configuration.</p>
+<ul>
+<li>including both static and dynamically generated messages.</li>
+</ul>
 <a id="_emitoutput" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_emitOutput<a href="#_emitoutput" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">_emitOutput</span><span class="hl-1">(</span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">, </span><span class="hl-2">rawResult</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Emits the transformed output after validation, invoking callbacks and emitting events via BusService.
 Attempts model resurrection via _resurrectModel if validation fails, throwing an error if unrecoverable.
 Supports SwarmConnectionService by broadcasting agent outputs within the swarm.</p>
+<hr>
 <a id="_resurrectmodel" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_resurrectModel<a href="#_resurrectmodel" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">_resurrectModel</span><span class="hl-1">(</span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">, </span><span class="hl-2">reason</span><span class="hl-1">?: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Resurrects the model in case of failures using configured strategies (flush, recomplete, custom).
 Updates history with failure details and returns a placeholder or transformed result, signaling via _resqueSubject.
 Supports error recovery for CompletionSchemaService’s getCompletion calls.</p>
+<hr>
 <a id="waitforoutput" class="tsd-anchor"></a><h3 class="tsd-anchor-link">waitForOutput<a href="#waitforoutput" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">waitForOutput</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -86,12 +107,14 @@ Useful for external consumers (e.g., SwarmConnectionService) awaiting agent resp
 </code><button type="button">Copy</button></pre>
 
 <p>Retrieves a completion message from the model using the current history and tools.
-Applies validation and resurrection strategies (via _resurrectModel) if needed, integrating with CompletionSchemaService.</p>
+Applies validation and resurrection strategies (via _resurrectModel) if needed, integrating with CompletionSchemaService.
+*</p>
 <a id="commitusermessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitUserMessage<a href="#commitusermessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitUserMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">, </span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits a user message to the history without triggering a response, notifying the system via BusService.
-Supports SessionConnectionService by logging user interactions within a session.</p>
+Supports SessionConnectionService by logging user interactions within a session.
+*</p>
 <a id="commitflush" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitFlush<a href="#commitflush" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitFlush</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -115,28 +138,41 @@ Used to interrupt tool call chains, coordinated with ToolSchemaService tools.</p
 </code><button type="button">Copy</button></pre>
 
 <p>Commits a system message to the history, notifying the system via BusService without triggering execution.
-Supports system-level updates, coordinated with SessionConnectionService.</p>
+Supports system-level updates, coordinated with SessionConnectionService.
+*</p>
 <a id="commitdevelopermessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitDeveloperMessage<a href="#commitdevelopermessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitDeveloperMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits a developer message to the history, notifying the system via BusService without triggering execution.
-Useful for logging developer notes or debugging information, coordinated with SessionConnectionService.</p>
+Useful for logging developer notes or debugging information, coordinated with SessionConnectionService.
+*</p>
 <a id="committoolrequest" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitToolRequest<a href="#committoolrequest" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitToolRequest</span><span class="hl-1">(</span><span class="hl-2">request</span><span class="hl-1">: </span><span class="hl-2">IToolRequest</span><span class="hl-1">[]): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">[]&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits a tool request to the agent's history and emits an event via BusService.
 This method is used to log tool requests and notify the system of the requested tool calls.
 The tool requests are transformed into tool call objects using the <code>createToolRequest</code> utility.</p>
+<ul>
+<li></li>
+</ul>
 <a id="commitassistantmessage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitAssistantMessage<a href="#commitassistantmessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitAssistantMessage</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits an assistant message to the history without triggering execution, notifying the system via BusService.
-Useful for logging assistant responses, coordinated with HistoryConnectionService.</p>
+Useful for logging assistant responses, coordinated with HistoryConnectionService.
+*</p>
 <a id="committooloutput" class="tsd-anchor"></a><h3 class="tsd-anchor-link">commitToolOutput<a href="#committooloutput" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">commitToolOutput</span><span class="hl-1">(</span><span class="hl-2">toolId</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">, </span><span class="hl-2">content</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Commits tool output to the history, signaling completion via _toolCommitSubject and notifying the system via BusService.
 Integrates with ToolSchemaService by linking tool output to tool calls.</p>
+<ul>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="dispose" class="tsd-anchor"></a><h3 class="tsd-anchor-link">dispose<a href="#dispose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">dispose</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
