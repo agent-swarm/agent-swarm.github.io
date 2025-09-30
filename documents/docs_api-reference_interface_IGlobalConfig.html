@@ -32,43 +32,36 @@ Limits to 1 tool call by default, preventing excessive tool invocation loops in 
 
 <p>Function to map tool calls for an agent, used in <code>ClientAgent.mapToolCalls</code> (e.g., <code>EXECUTE_FN</code>).
 Default implementation returns tools unchanged, allowing customization of <code>IToolCall</code> processing via <code>setConfig</code>.</p>
-<hr>
 <a id="cc_get_agent_history_adapter" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_GET_AGENT_HISTORY_ADAPTER<a href="#cc_get_agent_history_adapter" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_GET_AGENT_HISTORY_ADAPTER</span><span class="hl-1">: (</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">agentName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">IHistoryAdapter</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Factory function to provide a history adapter for an agent, used in <code>ClientAgent.history</code> (e.g., <code>getCompletion</code>).
 Returns <code>HistoryAdapter</code> by default, implementing <code>IHistoryAdapter</code> for message storage and retrieval.</p>
-<hr>
 <a id="cc_get_client_logger_adapter" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_GET_CLIENT_LOGGER_ADAPTER<a href="#cc_get_client_logger_adapter" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_GET_CLIENT_LOGGER_ADAPTER</span><span class="hl-1">: () </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">ILoggerAdapter</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Factory function to provide a logger adapter for clients, used in <code>ClientAgent.logger</code> (e.g., debug logging).
-Returns <code>LoggerAdapter</code> by default, implementing <code>ILoggerAdapter</code> for logging control across the system.
-*</p>
+Returns <code>LoggerAdapter</code> by default, implementing <code>ILoggerAdapter</code> for logging control across the system.</p>
 <a id="cc_swarm_agent_changed" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_SWARM_AGENT_CHANGED<a href="#cc_swarm_agent_changed" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_SWARM_AGENT_CHANGED</span><span class="hl-1">: (</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">agentName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Callback function triggered when the active agent changes in a swarm, used in swarm-related logic (e.g., <code>ISwarmParams</code>).
 Default implementation is a no-op, observed indirectly in <code>ClientAgent.commitAgentChange</code> via <code>IBus.emit &quot;commit-agent-change&quot;</code>.</p>
-<hr>
 <a id="cc_swarm_default_agent" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_SWARM_DEFAULT_AGENT<a href="#cc_swarm_default_agent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_SWARM_DEFAULT_AGENT</span><span class="hl-1">: (</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">defaultAgent</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Function to determine the default agent for a swarm, used in swarm initialization (e.g., <code>ISwarmParams</code>).
 Default implementation returns the provided <code>defaultAgent</code>, aligning with swarm-agent hierarchy logic, though not directly observed in <code>ClientAgent</code>.</p>
-<hr>
 <a id="cc_swarm_default_stack" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_SWARM_DEFAULT_STACK<a href="#cc_swarm_default_stack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_SWARM_DEFAULT_STACK</span><span class="hl-1">: (</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">[]&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Function to provide the default navigation stack for a swarm, used in <code>ISwarmParams</code> initialization.
 Default implementation returns an empty array, part of swarm navigation setup, though not directly used in <code>ClientAgent</code>.</p>
-<hr>
 <a id="cc_swarm_stack_changed" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_SWARM_STACK_CHANGED<a href="#cc_swarm_stack_changed" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_SWARM_STACK_CHANGED</span><span class="hl-1">: (</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">navigationStack</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">[], </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Callback function triggered when the navigation stack changes in a swarm, used in <code>ISwarmParams</code> (e.g., <code>navigationPop</code>).
 Default implementation is a no-op, indirectly related to <code>ClientAgent.commitAgentChange</code> for stack updates.</p>
-<hr>
 <a id="cc_agent_default_validation" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_AGENT_DEFAULT_VALIDATION<a href="#cc_agent_default_validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_AGENT_DEFAULT_VALIDATION</span><span class="hl-1">: (</span><span class="hl-2">output</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">string</span><span class="hl-1"> | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -79,13 +72,6 @@ Imported from <code>validateDefault</code>, returns null if valid or an error st
 
 <p>Filter function for agent history, used in <code>ClientAgent.history.toArrayForAgent</code> to scope messages.
 Ensures only relevant messages (e.g., matching <code>agentName</code> for &quot;tool&quot; or <code>tool_calls</code>) are included in completions.</p>
-<ul>
-<li>
-<ul>
-<li></li>
-</ul>
-</li>
-</ul>
 <a id="cc_agent_output_transform" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_AGENT_OUTPUT_TRANSFORM<a href="#cc_agent_output_transform" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_AGENT_OUTPUT_TRANSFORM</span><span class="hl-1">: (</span><span class="hl-2">input</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">agentName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">string</span><span class="hl-1"> | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -96,13 +82,6 @@ Removes XML tags via <code>removeXmlTags</code> based on <code>CC_AGENT_DISALLOW
 
 <p>Function to map model messages for agent output, used in <code>ClientAgent.map</code> (e.g., <code>RUN_FN</code>, <code>EXECUTE_FN</code>).
 Default implementation returns the message unchanged, allowing customization of <code>IModelMessage</code> via <code>setConfig</code>.</p>
-<ul>
-<li>
-<ul>
-<li></li>
-</ul>
-</li>
-</ul>
 <a id="cc_agent_system_prompt" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_AGENT_SYSTEM_PROMPT<a href="#cc_agent_system_prompt" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_AGENT_SYSTEM_PROMPT</span><span class="hl-1">: </span><span class="hl-2">string</span><span class="hl-1">[]</span>
 </code><button type="button">Copy</button></pre>
 
@@ -163,13 +142,6 @@ Imported from <code>nameToTitle</code>, enhancing presentation of agent or swarm
 
 <p>Function to process PlantUML diagrams, potentially for visualization purposes.
 Default returns an empty string, allowing custom UML rendering logic via <code>setConfig</code>, though not directly in <code>ClientAgent</code>.</p>
-<ul>
-<li>
-<ul>
-<li></li>
-</ul>
-</li>
-</ul>
 <a id="cc_process_uuid" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_PROCESS_UUID<a href="#cc_process_uuid" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_PROCESS_UUID</span><span class="hl-1">: </span><span class="hl-2">string</span>
 </code><button type="button">Copy</button></pre>
 
@@ -185,7 +157,6 @@ Indicates refusal to engage, enhancing policy messaging, though not directly in 
 
 <p>A custom function to handle tool call exceptions by returning a model message or null, used in <code>ClientAgent.getCompletion</code> with the &quot;custom&quot; <code>CC_RESQUE_STRATEGY</code>.
 Default implementation returns null, allowing override via <code>setConfig</code> to implement specific recovery logic tailored to the application.</p>
-<hr>
 <a id="cc_persist_enabled_by_default" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_PERSIST_ENABLED_BY_DEFAULT<a href="#cc_persist_enabled_by_default" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_PERSIST_ENABLED_BY_DEFAULT</span><span class="hl-1">: </span><span class="hl-2">boolean</span>
 </code><button type="button">Copy</button></pre>
 
@@ -201,53 +172,34 @@ Disabled (false) by default, allowing manual ban control unless overridden, thou
 
 <p>Default function to set state values, used in <code>IState.setState</code> for state persistence.
 No-op by default, allowing state updates to be customized via <code>setConfig</code>, though not directly in <code>ClientAgent</code>.</p>
-<hr>
 <a id="cc_default_state_get" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_STATE_GET<a href="#cc_default_state_get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_STATE_GET</span><span class="hl-1">: &lt;</span><span class="hl-7">T</span><span class="hl-1"> = </span><span class="hl-7">any</span><span class="hl-1">&gt;(</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">stateName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">defaultState</span><span class="hl-1">: </span><span class="hl-7">T</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-6">T</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Default function to get state values, used in <code>IState.getState</code> for state retrieval.
 Returns <code>defaultState</code> by default, allowing state retrieval to be customized via <code>setConfig</code>, though not directly in <code>ClientAgent</code>.</p>
-<hr>
 <a id="cc_default_policy_get_ban_clients" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_POLICY_GET_BAN_CLIENTS<a href="#cc_default_policy_get_ban_clients" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_POLICY_GET_BAN_CLIENTS</span><span class="hl-1">: (</span><span class="hl-2">policyName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">string</span><span class="hl-1">[] | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">[]&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Default function to get banned clients for the policy</p>
-<ul>
-<li>
-<ul>
-<li></li>
-</ul>
-</li>
-</ul>
 <a id="cc_default_policy_get" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_POLICY_GET<a href="#cc_default_policy_get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_POLICY_GET</span><span class="hl-1">: (</span><span class="hl-2">policyName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">string</span><span class="hl-1">[] | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">[]&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Retrieves the list of currently banned clients under this policy.</p>
-<ul>
-<li>
-<ul>
-<li></li>
-</ul>
-</li>
-</ul>
 <a id="cc_default_policy_set" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_POLICY_SET<a href="#cc_default_policy_set" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_POLICY_SET</span><span class="hl-1">: (</span><span class="hl-2">clientIds</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">[], </span><span class="hl-2">policyName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">swarmName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-4">void</span><span class="hl-1"> | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Optional function to set the list of banned clients.
 Overrides default ban list management if provided.</p>
-<hr>
 <a id="cc_default_storage_get" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_STORAGE_GET<a href="#cc_default_storage_get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_STORAGE_GET</span><span class="hl-1">: &lt;</span><span class="hl-7">T</span><span class="hl-1"> </span><span class="hl-4">extends</span><span class="hl-1"> </span><span class="hl-7">IStorageData</span><span class="hl-1"> = </span><span class="hl-7">IStorageData</span><span class="hl-1">&gt;(</span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">storageName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">defaultValue</span><span class="hl-1">: </span><span class="hl-7">T</span><span class="hl-1">[]) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-6">T</span><span class="hl-1">[]&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Default function to get storage data, used in <code>IStorage.take</code> for storage retrieval.
 Returns <code>defaultValue</code> by default, allowing storage retrieval to be customized via <code>setConfig</code>, though not directly in <code>ClientAgent</code>.</p>
-<hr>
 <a id="cc_default_storage_set" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_STORAGE_SET<a href="#cc_default_storage_set" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_STORAGE_SET</span><span class="hl-1">: &lt;</span><span class="hl-7">T</span><span class="hl-1"> </span><span class="hl-4">extends</span><span class="hl-1"> </span><span class="hl-7">IStorageData</span><span class="hl-1"> = </span><span class="hl-7">IStorageData</span><span class="hl-1">&gt;(</span><span class="hl-2">data</span><span class="hl-1">: </span><span class="hl-7">T</span><span class="hl-1">[], </span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">storageName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Default function to set storage data, used in <code>IStorage.upsert</code> for storage persistence.
 No-op by default, allowing storage updates to be customized via <code>setConfig</code>, though not directly in <code>ClientAgent</code>.</p>
-<hr>
 <a id="cc_skip_posix_rename" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_SKIP_POSIX_RENAME<a href="#cc_skip_posix_rename" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_SKIP_POSIX_RENAME</span><span class="hl-1">: </span><span class="hl-2">boolean</span>
 </code><button type="button">Copy</button></pre>
 
@@ -268,19 +220,16 @@ Disabled (false) by default which faster for ollama local embeddings</p>
 
 <p>Retrieves the embedding vector for a specific string hash, returning null if not found.
 Used to check if a precomputed embedding exists in the cache.</p>
-<hr>
 <a id="cc_default_write_embedding_cache" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_WRITE_EMBEDDING_CACHE<a href="#cc_default_write_embedding_cache" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_WRITE_EMBEDDING_CACHE</span><span class="hl-1">: (</span><span class="hl-2">embeddings</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">[], </span><span class="hl-2">embeddingName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">stringHash</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-4">void</span><span class="hl-1"> | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Stores an embedding vector for a specific string hash, persisting it for future retrieval.
 Used to cache computed embeddings to avoid redundant processing.</p>
-<hr>
 <a id="cc_default_agent_tool_validate" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_DEFAULT_AGENT_TOOL_VALIDATE<a href="#cc_default_agent_tool_validate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_DEFAULT_AGENT_TOOL_VALIDATE</span><span class="hl-1">: (</span><span class="hl-2">dto</span><span class="hl-1">: { </span><span class="hl-2">clientId</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">; </span><span class="hl-2">agentName</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">; </span><span class="hl-2">toolCalls</span><span class="hl-1">: </span><span class="hl-7">IToolCall</span><span class="hl-1">[]; </span><span class="hl-2">params</span><span class="hl-1">: </span><span class="hl-7">unknown</span><span class="hl-1">; }) </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">boolean</span><span class="hl-1"> | </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">boolean</span><span class="hl-1">&gt;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Validates the tool parameters before execution.
 Can return synchronously or asynchronously based on validation complexity.</p>
-<hr>
 <a id="cc_throw_when_navigation_recursion" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CC_THROW_WHEN_NAVIGATION_RECURSION<a href="#cc_throw_when_navigation_recursion" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-11">CC_THROW_WHEN_NAVIGATION_RECURSION</span><span class="hl-1">: </span><span class="hl-2">boolean</span>
 </code><button type="button">Copy</button></pre>
 
