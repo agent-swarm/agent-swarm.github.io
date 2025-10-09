@@ -1,0 +1,171 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>demo/outline-format-output/readme | agent-swarm-kit</title><meta name="description" content="Documentation for agent-swarm-kit"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">agent-swarm-kit</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">agent-swarm-kit</a></li><li><a href="demo_outline-format-output_readme.html">demo/outline-format-output/readme</a></li></ul></div><div class="tsd-panel tsd-typography"><a id="structured-json-output" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Structured JSON Output<a href="#structured-json-output" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Integration with Ollama models through the agent-swarm-kit framework for structured data extraction and AI-driven processing.</p>
+<a id="purpose" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Purpose<a href="#purpose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Demonstrates capabilities:</p>
+<ul>
+<li>Ollama AI model integration</li>
+<li>Structured data extraction</li>
+<li>JSON-based response formatting</li>
+<li>Validation and error handling</li>
+<li>Asynchronous processing with history tracking</li>
+</ul>
+<a id="key-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Key Features<a href="#key-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Ollama Integration</strong>: Access to local Ollama models (e.g., Gemma3:4b)</li>
+<li><strong>Structured Data Extraction</strong>: Extracts formatted data from unstructured input</li>
+<li><strong>JSON Repair</strong>: Ensures valid JSON output using <code>jsonrepair</code></li>
+<li><strong>Validation</strong>: Custom rules for data integrity (e.g., positive age)</li>
+<li><strong>History Tracking</strong>: Maintains conversation context for processing</li>
+</ul>
+<a id="technology-stack" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Technology Stack<a href="#technology-stack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Runtime</strong>: Bun</li>
+<li><strong>Language</strong>: TypeScript</li>
+<li><strong>AI Framework</strong>: agent-swarm-kit</li>
+<li><strong>AI Provider</strong>: Ollama</li>
+<li><strong>Protocols</strong>: HTTP (Ollama API)</li>
+</ul>
+<a id="project-structure" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Project Structure<a href="#project-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code><span class="hl-2">src</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-2">repl</span><span class="hl-1">.</span><span class="hl-2">ts</span><span class="hl-1">            # </span><span class="hl-6">REPL</span><span class="hl-1"> </span><span class="hl-4">interface</span><span class="hl-1"> </span><span class="hl-7">for</span><span class="hl-1"> </span><span class="hl-7">testing</span><br/><span class="hl-1">└── </span><span class="hl-7">lib</span><span class="hl-1">/</span><br/><span class="hl-1">    └── </span><span class="hl-7">swarm</span><span class="hl-1">.</span><span class="hl-7">ts</span><span class="hl-1">       # </span><span class="hl-7">Swarm</span><span class="hl-1"> </span><span class="hl-7">and</span><span class="hl-1"> </span><span class="hl-7">completion</span><span class="hl-1"> </span><span class="hl-7">configuration</span>
+</code><button>Copy</button></pre>
+
+<a id="installation-and-setup" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Installation and Setup<a href="#installation-and-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="bash"><span class="hl-9"># Install dependencies</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">install</span><br/><br/><span class="hl-9"># Start REPL</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">src/repl.ts</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="configuration" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Configuration<a href="#configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Create a <code>.env</code> file:</p>
+<pre><code class="env">OLLAMA_HOST=http://127.0.0.1:11434
+OLLAMA_MODEL=gemma3:4b
+KEEP_ALIVE=24h
+</code><button type="button">Copy</button></pre>
+
+<a id="ollama-setup" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Ollama Setup<a href="#ollama-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="prerequisites" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Prerequisites<a href="#prerequisites" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ol>
+<li>Install <a href="https://ollama.ai/">Ollama</a> locally</li>
+<li>Pull the desired model (e.g., <code>ollama pull gemma3:4b</code>)</li>
+<li>Ensure Ollama server is running on <code>http://127.0.0.1:11434</code></li>
+</ol>
+<a id="supported-models" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Supported Models<a href="#supported-models" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Gemma3:4b</strong>: Lightweight, efficient model for structured tasks</li>
+<li><strong>Other Models</strong>: Any model supported by Ollama (e.g., LLaMA, Mistral)</li>
+</ul>
+<a id="usage-examples" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Usage Examples<a href="#usage-examples" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="data-extraction" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Data Extraction<a href="#data-extraction" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>&quot;Extract name and age from: John Doe is 30 years old&quot;</li>
+<li>&quot;Parse: Alice Smith, age 25, lives in New York&quot;</li>
+<li>&quot;Extract data from: Bob is a 40-year-old engineer&quot;</li>
+</ul>
+<a id="structured-output" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Structured Output<a href="#structured-output" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;name&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;John Doe&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-12">&quot;age&quot;</span><span class="hl-1">: </span><span class="hl-8">30</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="error-handling" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Error Handling<a href="#error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Input: &quot;Mike is -5 years old&quot;
+<ul>
+<li>Output: Error: &quot;Age must be positive&quot;</li>
+</ul>
+</li>
+</ul>
+<a id="model-comparison" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Model Comparison<a href="#model-comparison" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Gemma3:4b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reasoning</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Free (local)</td>
+</tr>
+<tr>
+<td>Multimodal</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<a id="api-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">API Features<a href="#api-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="completion-endpoint" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Completion Endpoint<a href="#completion-endpoint" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Extract structured data</span><br/><span class="hl-0">POST</span><span class="hl-1"> </span><span class="hl-3">/api/completion</span><br/><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-0">&quot;message&quot;</span><span class="hl-0">:</span><span class="hl-1"> </span><span class="hl-3">&quot;John Doe is 30 years old&quot;,</span><br/><span class="hl-1">  </span><span class="hl-0">&quot;completion&quot;</span><span class="hl-0">:</span><span class="hl-1"> </span><span class="hl-3">&quot;test_completion&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="response-format" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Response Format<a href="#response-format" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>JSON object with <code>name</code> and <code>age</code></li>
+<li>Validated to ensure positive age</li>
+<li>Repaired JSON for consistency</li>
+</ul>
+<a id="performance-optimization" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Performance Optimization<a href="#performance-optimization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="model-selection" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Model Selection<a href="#model-selection" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Gemma3:4b</strong>: Ideal for lightweight, local processing</li>
+<li><strong>Keep-Alive</strong>: Configurable model persistence (default: 24h)</li>
+<li><strong>Validation</strong>: Prevents invalid data from propagating</li>
+</ul>
+<a id="caching" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Caching<a href="#caching" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Outline history for context-aware processing</li>
+<li>Local model execution for low latency</li>
+<li>JSON repair for robust output</li>
+</ul>
+<a id="use-cases" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Use Cases<a href="#use-cases" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Ideal for:</p>
+<ul>
+<li>Data extraction from unstructured text</li>
+<li>Local AI processing without cloud dependency</li>
+<li>Rapid prototyping of AI-driven applications</li>
+<li>Educational tools for structured data handling</li>
+<li>Lightweight automation scripts</li>
+</ul>
+<a id="development-features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Development Features<a href="#development-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="hot-reload" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Hot Reload<a href="#hot-reload" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Development mode with auto-reload</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-4">--watch</span><span class="hl-1"> </span><span class="hl-3">src/repl.ts</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="debugging" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Debugging<a href="#debugging" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-9">// Enable debug logging</span><br/><span class="hl-2">process</span><span class="hl-1">.</span><span class="hl-2">env</span><span class="hl-1">.</span><span class="hl-6">DEBUG</span><span class="hl-1"> = </span><span class="hl-3">&quot;true&quot;</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="testing" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Testing<a href="#testing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Test data extraction</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-3">test:completion</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="production-deployment" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Production Deployment<a href="#production-deployment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="docker" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Docker<a href="#docker" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="dockerfile">FROM oven/bun:latest
+COPY . .
+RUN bun install
+EXPOSE 3000
+CMD ["bun", "run", "src/index.ts"]
+</code><button type="button">Copy</button></pre>
+
+<a id="environment" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Environment<a href="#environment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-9"># Production environment</span><br/><span class="hl-2">NODE_ENV</span><span class="hl-1">=</span><span class="hl-3">production</span><br/><span class="hl-2">LOG_LEVEL</span><span class="hl-1">=</span><span class="hl-3">info</span><br/><span class="hl-2">RATE_LIMIT</span><span class="hl-1">=</span><span class="hl-3">100</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="callbacks-and-validation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Callbacks and Validation<a href="#callbacks-and-validation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>onValidDocument</strong>: Saves valid results to <code>./dump/outline</code></li>
+<li><strong>Validations</strong>: Ensures age is positive, throws error if invalid</li>
+<li><strong>History Tracking</strong>: Pushes user input to conversation history</li>
+</ul>
+<a id="notes" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Notes<a href="#notes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Requires local Ollama server running</li>
+<li>JSON output is automatically repaired for consistency</li>
+<li>Extensible for additional validations or models</li>
+<li>Lightweight and suitable for low-resource environments</li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#structured-json-output"><span>Structured JSON <wbr/>Output</span></a><ul><li><a href="#purpose"><span>Purpose</span></a></li><li><a href="#key-features"><span>Key <wbr/>Features</span></a></li><li><a href="#technology-stack"><span>Technology <wbr/>Stack</span></a></li><li><a href="#project-structure"><span>Project <wbr/>Structure</span></a></li><li><a href="#installation-and-setup"><span>Installation and <wbr/>Setup</span></a></li><li><a href="#configuration"><span>Configuration</span></a></li><li><a href="#ollama-setup"><span>Ollama <wbr/>Setup</span></a></li><li><ul><li><a href="#prerequisites"><span>Prerequisites</span></a></li><li><a href="#supported-models"><span>Supported <wbr/>Models</span></a></li></ul></li><li><a href="#usage-examples"><span>Usage <wbr/>Examples</span></a></li><li><ul><li><a href="#data-extraction"><span>Data <wbr/>Extraction</span></a></li><li><a href="#structured-output"><span>Structured <wbr/>Output</span></a></li><li><a href="#error-handling"><span>Error <wbr/>Handling</span></a></li></ul></li><li><a href="#model-comparison"><span>Model <wbr/>Comparison</span></a></li><li><a href="#api-features"><span>API <wbr/>Features</span></a></li><li><ul><li><a href="#completion-endpoint"><span>Completion <wbr/>Endpoint</span></a></li><li><a href="#response-format"><span>Response <wbr/>Format</span></a></li></ul></li><li><a href="#performance-optimization"><span>Performance <wbr/>Optimization</span></a></li><li><ul><li><a href="#model-selection"><span>Model <wbr/>Selection</span></a></li><li><a href="#caching"><span>Caching</span></a></li></ul></li><li><a href="#use-cases"><span>Use <wbr/>Cases</span></a></li><li><a href="#development-features"><span>Development <wbr/>Features</span></a></li><li><ul><li><a href="#hot-reload"><span>Hot <wbr/>Reload</span></a></li><li><a href="#debugging"><span>Debugging</span></a></li><li><a href="#testing"><span>Testing</span></a></li></ul></li><li><a href="#production-deployment"><span>Production <wbr/>Deployment</span></a></li><li><ul><li><a href="#docker"><span>Docker</span></a></li><li><a href="#environment"><span>Environment</span></a></li></ul></li><li><a href="#callbacks-and-validation"><span>Callbacks and <wbr/>Validation</span></a></li><li><a href="#notes"><span>Notes</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html">agent-swarm-kit</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(100273846, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/100273846" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-85RYYZDT35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-85RYYZDT35');
+</script>
