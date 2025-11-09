@@ -56,7 +56,8 @@ Implements IAgent.run, delegating to RUN_FN with queuing via functools-kit’s q
 <a id="methods" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Methods<a href="#methods" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="_resolvetools" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_resolveTools<a href="#_resolvetools" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">_resolveTools</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">IAgentTool</span><span class="hl-1">[]&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
-<p>Resolves and combines tools from the agent's parameters and MCP tool list, ensuring no duplicate tool names.</p>
+<p>Resolves and combines tools from the agent's parameters and MCP tool list, ensuring no duplicate tool names.
+Ensures only one commit action tool is present in the list.</p>
 <a id="_resolvesystemprompt" class="tsd-anchor"></a><h3 class="tsd-anchor-link">_resolveSystemPrompt<a href="#_resolvesystemprompt" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">_resolveSystemPrompt</span><span class="hl-1">(): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">string</span><span class="hl-1">[]&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
@@ -83,7 +84,7 @@ Supports error recovery for CompletionSchemaService’s getCompletion calls.</p>
 
 <p>Waits for the next output to be emitted via _outputSubject, typically after execute or run.
 Useful for external consumers (e.g., SwarmConnectionService) awaiting agent responses.</p>
-<a id="getcompletion" class="tsd-anchor"></a><h3 class="tsd-anchor-link">getCompletion<a href="#getcompletion" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">getCompletion</span><span class="hl-1">(</span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">, </span><span class="hl-2">tools</span><span class="hl-1">: </span><span class="hl-2">IAgentTool</span><span class="hl-1">[]): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">IModelMessage</span><span class="hl-1">&gt;;</span>
+<a id="getcompletion" class="tsd-anchor"></a><h3 class="tsd-anchor-link">getCompletion<a href="#getcompletion" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-0">getCompletion</span><span class="hl-1">(</span><span class="hl-2">mode</span><span class="hl-1">: </span><span class="hl-2">ExecutionMode</span><span class="hl-1">, </span><span class="hl-2">tools</span><span class="hl-1">: </span><span class="hl-2">IAgentTool</span><span class="hl-1">[]): </span><span class="hl-7">Promise</span><span class="hl-1">&lt;</span><span class="hl-2">ISwarmMessage</span><span class="hl-1">&gt;;</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Retrieves a completion message from the model using the current history and tools.

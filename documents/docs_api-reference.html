@@ -58,8 +58,8 @@
 <li><a href="docs_api-reference_class_PolicyPublicService.html">PolicyPublicService</a></li>
 <li><a href="docs_api-reference_class_AliveService.html">AliveService</a></li>
 <li><a href="docs_api-reference_class_NavigationValidationService.html">NavigationValidationService</a></li>
-<li><a href="docs_api-reference_class_WikiValidationService.html">WikiValidationService</a></li>
-<li><a href="docs_api-reference_class_WikiSchemaService.html">WikiSchemaService</a></li>
+<li><a href="docs_api-reference_class_AdvisorValidationService.html">AdvisorValidationService</a></li>
+<li><a href="docs_api-reference_class_AdvisorSchemaService.html">AdvisorSchemaService</a></li>
 <li><a href="docs_api-reference_class_ClientMCP.html">ClientMCP</a></li>
 <li><a href="docs_api-reference_class_MCPConnectionService.html">MCPConnectionService</a></li>
 <li><a href="docs_api-reference_class_MCPSchemaService.html">MCPSchemaService</a></li>
@@ -77,6 +77,7 @@
 <li><a href="docs_api-reference_class_PipelineValidationService.html">PipelineValidationService</a></li>
 <li><a href="docs_api-reference_class_ExecutionValidationService.html">ExecutionValidationService</a></li>
 <li><a href="docs_api-reference_class_NavigationSchemaService.html">NavigationSchemaService</a></li>
+<li><a href="docs_api-reference_class_ActionSchemaService.html">ActionSchemaService</a></li>
 <li><a href="docs_api-reference_class_OutlineSchemaService.html">OutlineSchemaService</a></li>
 <li><a href="docs_api-reference_class_OutlineValidationService.html">OutlineValidationService</a></li>
 <li><a href="docs_api-reference_class_RoundRobin.html">RoundRobin</a></li>
@@ -95,7 +96,9 @@
 <a id="enums" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Enums<a href="#enums" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="functions" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Functions<a href="#functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
 <li><a href="docs_api-reference_function_addAgentNavigation.html">addAgentNavigation</a></li>
 <li><a href="docs_api-reference_function_addTriageNavigation.html">addTriageNavigation</a></li>
-<li><a href="docs_api-reference_function_addWiki.html">addWiki</a></li>
+<li><a href="docs_api-reference_function_addCommitAction.html">addCommitAction</a></li>
+<li><a href="docs_api-reference_function_addFetchInfo.html">addFetchInfo</a></li>
+<li><a href="docs_api-reference_function_addAdvisor.html">addAdvisor</a></li>
 <li><a href="docs_api-reference_function_addAgent.html">addAgent</a></li>
 <li><a href="docs_api-reference_function_addCompletion.html">addCompletion</a></li>
 <li><a href="docs_api-reference_function_addSwarm.html">addSwarm</a></li>
@@ -117,7 +120,7 @@
 <li><a href="docs_api-reference_function_overrideSwarm.html">overrideSwarm</a></li>
 <li><a href="docs_api-reference_function_overrideTool.html">overrideTool</a></li>
 <li><a href="docs_api-reference_function_overrideMCP.html">overrideMCP</a></li>
-<li><a href="docs_api-reference_function_overrideWiki.html">overrideWiki</a></li>
+<li><a href="docs_api-reference_function_overrideAdvisor.html">overrideAdvisor</a></li>
 <li><a href="docs_api-reference_function_overrideCompute.html">overrideCompute</a></li>
 <li><a href="docs_api-reference_function_overridePipeline.html">overridePipeline</a></li>
 <li><a href="docs_api-reference_function_overrideOutline.html">overrideOutline</a></li>
@@ -145,9 +148,9 @@
 <li><a href="docs_api-reference_function_commitToolRequestForce.html">commitToolRequestForce</a></li>
 <li><a href="docs_api-reference_function_emitForce.html">emitForce</a></li>
 <li><a href="docs_api-reference_function_executeForce.html">executeForce</a></li>
-<li><a href="docs_api-reference_function_question.html">question</a></li>
-<li><a href="docs_api-reference_function_questionForce.html">questionForce</a></li>
+<li><a href="docs_api-reference_function_ask.html">ask</a></li>
 <li><a href="docs_api-reference_function_json.html">json</a></li>
+<li><a href="docs_api-reference_function_chat.html">chat</a></li>
 <li><a href="docs_api-reference_function_execute.html">execute</a></li>
 <li><a href="docs_api-reference_function_emit.html">emit</a></li>
 <li><a href="docs_api-reference_function_notify.html">notify</a></li>
@@ -183,7 +186,7 @@
 <li><a href="docs_api-reference_function_getStorage.html">getStorage</a></li>
 <li><a href="docs_api-reference_function_getSwarm.html">getSwarm</a></li>
 <li><a href="docs_api-reference_function_getTool.html">getTool</a></li>
-<li><a href="docs_api-reference_function_getWiki.html">getWiki</a></li>
+<li><a href="docs_api-reference_function_getAdvisor.html">getAdvisor</a></li>
 <li><a href="docs_api-reference_function_getRawHistory.html">getRawHistory</a></li>
 <li><a href="docs_api-reference_function_event.html">event</a></li>
 <li><a href="docs_api-reference_function_listenEvent.html">listenEvent</a></li>
@@ -209,11 +212,11 @@
 <li><a href="docs_api-reference_interface_IStateSchema.html">IStateSchema</a></li>
 <li><a href="docs_api-reference_interface_IStateParams.html">IStateParams</a></li>
 <li><a href="docs_api-reference_interface_IState.html">IState</a></li>
+<li><a href="docs_api-reference_interface_IStateChangeEvent.html">IStateChangeEvent</a></li>
 <li><a href="docs_api-reference_interface_IPolicyCallbacks.html">IPolicyCallbacks</a></li>
 <li><a href="docs_api-reference_interface_IPolicy.html">IPolicy</a></li>
 <li><a href="docs_api-reference_interface_IPolicySchema.html">IPolicySchema</a></li>
 <li><a href="docs_api-reference_interface_IPolicyParams.html">IPolicyParams</a></li>
-<li><a href="docs_api-reference_interface_IStateChangeContract.html">IStateChangeContract</a></li>
 <li><a href="docs_api-reference_interface_IComputeMiddleware.html">IComputeMiddleware</a></li>
 <li><a href="docs_api-reference_interface_IComputeCallbacks.html">IComputeCallbacks</a></li>
 <li><a href="docs_api-reference_interface_IComputeSchema.html">IComputeSchema</a></li>
@@ -235,7 +238,8 @@
 <li><a href="docs_api-reference_interface_ISessionParams.html">ISessionParams</a></li>
 <li><a href="docs_api-reference_interface_ISessionSchema.html">ISessionSchema</a></li>
 <li><a href="docs_api-reference_interface_ISession.html">ISession</a></li>
-<li><a href="docs_api-reference_interface_IModelMessage.html">IModelMessage</a></li>
+<li><a href="docs_api-reference_interface_IBaseMessage.html">IBaseMessage</a></li>
+<li><a href="docs_api-reference_interface_ISwarmMessage.html">ISwarmMessage</a></li>
 <li><a href="docs_api-reference_interface_IEntity.html">IEntity</a></li>
 <li><a href="docs_api-reference_interface_IPersistBase.html">IPersistBase</a></li>
 <li><a href="docs_api-reference_interface_IPersistActiveAgentData.html">IPersistActiveAgentData</a></li>
@@ -260,10 +264,10 @@
 <li><a href="docs_api-reference_interface_IHistory.html">IHistory</a></li>
 <li><a href="docs_api-reference_interface_IHistoryParams.html">IHistoryParams</a></li>
 <li><a href="docs_api-reference_interface_IHistorySchema.html">IHistorySchema</a></li>
+<li><a href="docs_api-reference_interface_IOutlineMessage.html">IOutlineMessage</a></li>
 <li><a href="docs_api-reference_interface_IOutlineSchemaFormat.html">IOutlineSchemaFormat</a></li>
 <li><a href="docs_api-reference_interface_IOutlineObjectFormat.html">IOutlineObjectFormat</a></li>
 <li><a href="docs_api-reference_interface_IOutlineCallbacks.html">IOutlineCallbacks</a></li>
-<li><a href="docs_api-reference_interface_IOutlineMessage.html">IOutlineMessage</a></li>
 <li><a href="docs_api-reference_interface_IOutlineHistory.html">IOutlineHistory</a></li>
 <li><a href="docs_api-reference_interface_IOutlineArgs.html">IOutlineArgs</a></li>
 <li><a href="docs_api-reference_interface_IOutlineValidationArgs.html">IOutlineValidationArgs</a></li>
@@ -275,9 +279,6 @@
 <li><a href="docs_api-reference_interface_ICompletionArgs.html">ICompletionArgs</a></li>
 <li><a href="docs_api-reference_interface_ICompletionCallbacks.html">ICompletionCallbacks</a></li>
 <li><a href="docs_api-reference_interface_ICompletionSchema.html">ICompletionSchema</a></li>
-<li><a href="docs_api-reference_interface_IWikiCallbacks.html">IWikiCallbacks</a></li>
-<li><a href="docs_api-reference_interface_IChatArgs.html">IChatArgs</a></li>
-<li><a href="docs_api-reference_interface_IWikiSchema.html">IWikiSchema</a></li>
 <li><a href="docs_api-reference_interface_IMCPToolCallDto.html">IMCPToolCallDto</a></li>
 <li><a href="docs_api-reference_interface_IMCPTool.html">IMCPTool</a></li>
 <li><a href="docs_api-reference_interface_IMCP.html">IMCP</a></li>
@@ -297,6 +298,8 @@
 <li><a href="docs_api-reference_interface_IPayloadContext.html">IPayloadContext</a></li>
 <li><a href="docs_api-reference_interface_IOperatorSchema.html">IOperatorSchema</a></li>
 <li><a href="docs_api-reference_interface_IOperatorParams.html">IOperatorParams</a></li>
+<li><a href="docs_api-reference_interface_IAdvisorCallbacks.html">IAdvisorCallbacks</a></li>
+<li><a href="docs_api-reference_interface_IAdvisorSchema.html">IAdvisorSchema</a></li>
 <li><a href="docs_api-reference_interface_IPipelineSchema.html">IPipelineSchema</a></li>
 <li><a href="docs_api-reference_interface_IPipelineCallbacks.html">IPipelineCallbacks</a></li>
 <li><a href="docs_api-reference_interface_ISchemaContext.html">ISchemaContext</a></li>
@@ -319,8 +322,12 @@
 <li><a href="docs_api-reference_interface_IConfig.html">IConfig</a></li>
 <li><a href="docs_api-reference_interface_INavigateToTriageParams.html">INavigateToTriageParams</a></li>
 <li><a href="docs_api-reference_interface_INavigateToAgentParams.html">INavigateToAgentParams</a></li>
+<li><a href="docs_api-reference_interface_ICommitActionParams.html">ICommitActionParams</a></li>
+<li><a href="docs_api-reference_interface_IFetchInfoParams.html">IFetchInfoParams</a></li>
 <li><a href="docs_api-reference_interface_IAgentNavigationParams.html">IAgentNavigationParams</a></li>
 <li><a href="docs_api-reference_interface_ITriageNavigationParams.html">ITriageNavigationParams</a></li>
+<li><a href="docs_api-reference_interface_ICommitActionToolParams.html">ICommitActionToolParams</a></li>
+<li><a href="docs_api-reference_interface_IFetchInfoToolParams.html">IFetchInfoToolParams</a></li>
 <li><a href="docs_api-reference_interface_IMakeDisposeParams.html">IMakeDisposeParams</a></li>
 <li><a href="docs_api-reference_interface_IMakeConnectionConfig.html">IMakeConnectionConfig</a></li>
 <li><a href="docs_api-reference_interface_ISessionConfig.html">ISessionConfig</a></li>
@@ -358,6 +365,8 @@
 <li><a href="docs_api-reference_type_SessionId.html">SessionId</a></li>
 <li><a href="docs_api-reference_type_SessionMode.html">SessionMode</a></li>
 <li><a href="docs_api-reference_type_ExecutionMode.html">ExecutionMode</a></li>
+<li><a href="docs_api-reference_type_BaseMessageRole.html">BaseMessageRole</a></li>
+<li><a href="docs_api-reference_type_SwarmMessageRole.html">SwarmMessageRole</a></li>
 <li><a href="docs_api-reference_type_EntityId.html">EntityId</a></li>
 <li><a href="docs_api-reference_type_TPersistBaseCtor.html">TPersistBaseCtor</a></li>
 <li><a href="docs_api-reference_type_TPersistBase.html">TPersistBase</a></li>
@@ -365,12 +374,12 @@
 <li><a href="docs_api-reference_type_THistoryInstanceCtor.html">THistoryInstanceCtor</a></li>
 <li><a href="docs_api-reference_type_THistoryPersistInstance.html">THistoryPersistInstance</a></li>
 <li><a href="docs_api-reference_type_THistoryMemoryInstance.html">THistoryMemoryInstance</a></li>
+<li><a href="docs_api-reference_type_OutlineMessageRole.html">OutlineMessageRole</a></li>
 <li><a href="docs_api-reference_type_IOutlineParam.html">IOutlineParam</a></li>
 <li><a href="docs_api-reference_type_IOutlineData.html">IOutlineData</a></li>
 <li><a href="docs_api-reference_type_IOutlineFormat.html">IOutlineFormat</a></li>
 <li><a href="docs_api-reference_type_OutlineName.html">OutlineName</a></li>
 <li><a href="docs_api-reference_type_CompletionName.html">CompletionName</a></li>
-<li><a href="docs_api-reference_type_WikiName.html">WikiName</a></li>
 <li><a href="docs_api-reference_type_MCPToolValue.html">MCPToolValue</a></li>
 <li><a href="docs_api-reference_type_MCPToolOutput.html">MCPToolOutput</a></li>
 <li><a href="docs_api-reference_type_MCPToolProperties.html">MCPToolProperties</a></li>
@@ -382,6 +391,7 @@
 <li><a href="docs_api-reference_type_TMethodContextService.html">TMethodContextService</a></li>
 <li><a href="docs_api-reference_type_TExecutionContextService.html">TExecutionContextService</a></li>
 <li><a href="docs_api-reference_type_TPayloadContextService.html">TPayloadContextService</a></li>
+<li><a href="docs_api-reference_type_AdvisorName.html">AdvisorName</a></li>
 <li><a href="docs_api-reference_type_PipelineName.html">PipelineName</a></li>
 <li><a href="docs_api-reference_type_TSchemaContextService.html">TSchemaContextService</a></li>
 <li><a href="docs_api-reference_type_InternalKeys_b.html">InternalKeys$b</a></li>
@@ -422,7 +432,7 @@
 <li><a href="docs_api-reference_type_TSwarmSchema.html">TSwarmSchema</a></li>
 <li><a href="docs_api-reference_type_TAgentTool.html">TAgentTool</a></li>
 <li><a href="docs_api-reference_type_TMCPSchema.html">TMCPSchema</a></li>
-<li><a href="docs_api-reference_type_TWikiSchema.html">TWikiSchema</a></li>
+<li><a href="docs_api-reference_type_TAdvisorSchema.html">TAdvisorSchema</a></li>
 <li><a href="docs_api-reference_type_TComputeSchema.html">TComputeSchema</a></li>
 <li><a href="docs_api-reference_type_TOutlineSchema.html">TOutlineSchema</a></li>
 <li><a href="docs_api-reference_type_ScopeOptions.html">ScopeOptions</a></li>
